@@ -39,4 +39,12 @@ public class Junction {
     public class addLeft(Junction r) {
         this.left = left;
     }
+
+    public class getPositionX() {
+        return coordinates[0];
+    }
+
+    public class getPositionY() {
+        return coordinates[1];
+    }
 }
