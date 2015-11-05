@@ -16,6 +16,9 @@ public class Junction {
     private Junction down;
     private Junction left;
 
+    //---------------------------
+    // SETTER
+
     public void setPosition(int x,int y) {
         this.coordinates[0] = x;
         this.coordinates[1] = y;
@@ -44,13 +47,38 @@ public class Junction {
         this.left = left;
     }
 
-    public int setPositionX() {
-        return coordinates[0];
+    public void setPositionX(int x) {
+        this.coordinates[0] = x;
     }
 
-    public int setPositionY() {
-        return coordinates[1];
+    public void setPositionY(int y) {
+        this.coordinates[1] = y;
     }
+
+    //---------------------------
+    // GETTER
+    public int[] getCoordinates() {
+        return coordinates;
+    }
+
+    public Junction getUp() {
+        return up;
+    }
+
+    public Junction getRight() {
+        return right;
+    }
+
+    public Junction getDown() {
+        return down;
+    }
+
+    public Junction getLeft() {
+        return left;
+    }
+
+    //---------------------------
+    // IMPLEMENTATIONS
 
     @Override
     public boolean equals(Object o) {
