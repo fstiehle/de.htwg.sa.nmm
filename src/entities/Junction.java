@@ -16,16 +16,16 @@ public class Junction {
     Junction down;
     Junction left;
 
-    public void Junction(Junction up, Junction right, Junction down, Junction left) {
+    public void setPosition(int x,int y) {
+        this.coordinates[0] = x;
+        this.coordinates[1] = y;
+    }
+
+    public void setNeighbours(Junction up, Junction right, Junction down, Junction left) {
         this.up = up;
         this.right = right;
         this.down = down;
         this.left = left;
-    }
-
-    public void setPosition(int x,int y) {
-        this.coordinates[0] = x;
-        this.coordinates[1] = y;
     }
 
     public void setUp(Junction r) {
