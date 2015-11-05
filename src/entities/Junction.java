@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 /**
  * a Junction knows its neighbours
  */
@@ -7,7 +10,7 @@ public class Junction {
     // x,y
     int[] coordinates = new int[2];
 
-    Junction up;
+    Junction up = null;
     Junction right;
 
     Junction down;
@@ -47,5 +50,20 @@ public class Junction {
 
     public int getPositionY() {
         return coordinates[1];
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Junction junction = (Junction) o;
+
+        return Arrays.equals(coordinates, junction.coordinates);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(coordinates);
     }
 }
