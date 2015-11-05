@@ -10,7 +10,7 @@ public class Junction {
     // x,y
     private int[] coordinates = new int[2];
 
-    private Junction up = null;
+    private Junction up;
     private Junction right;
 
     private Junction down;
