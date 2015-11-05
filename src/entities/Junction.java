@@ -13,7 +13,7 @@ public class Junction {
     Junction down;
     Junction left;
 
-    public void Junction() {
+    public void Junction(Junction up, Junction right, Junction down, Junction left) {
         this.up = up;
         this.right = right;
         this.down = down;
