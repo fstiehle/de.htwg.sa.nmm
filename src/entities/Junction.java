@@ -4,7 +4,8 @@ package entities;
  * a Junction knows its neighbours
  */
 public class Junction {
-    coordinates = {x,y};
+    // x,y
+    int[] coordinates = new int[2];
 
     Junction up;
     Junction right;
@@ -12,39 +13,39 @@ public class Junction {
     Junction down;
     Junction left;
 
-    public class Junction() {
+    public void Junction() {
         this.up = up;
         this.right = right;
         this.down = down;
         this.left = left;
     }
 
-    public class setPosition(x,y) {
-        this.x = x;
-        this.y = y;
+    public void setPosition(int x,int y) {
+        this.coordinates[0] = x;
+        this.coordinates[1] = y;
     }
 
-    public class addUp(Junction r) {
+    public void addUp(Junction r) {
         this.up = up;
     }
 
-    public class addRight(Junction r) {
+    public void addRight(Junction r) {
         this.right = right;
     }
 
-    public class addDown(Junction r) {
+    public void addDown(Junction r) {
         this.down = down;
     }
 
-    public class addLeft(Junction r) {
+    public void addLeft(Junction r) {
         this.left = left;
     }
 
-    public class getPositionX() {
+    public int getPositionX() {
         return coordinates[0];
     }
 
-    public class getPositionY() {
+    public int getPositionY() {
         return coordinates[1];
     }
 }
