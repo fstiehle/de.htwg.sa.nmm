@@ -31,19 +31,19 @@ public class Junction {
         this.left = left;
     }
 
-    public void setUp(Junction r) {
+    public void setUp(Junction up) {
         this.up = up;
     }
 
-    public void setRight(Junction r) {
+    public void setRight(Junction right) {
         this.right = right;
     }
 
-    public void setDown(Junction r) {
+    public void setDown(Junction down) {
         this.down = down;
     }
 
-    public void setLeft(Junction r) {
+    public void setLeft(Junction left) {
         this.left = left;
     }
 
