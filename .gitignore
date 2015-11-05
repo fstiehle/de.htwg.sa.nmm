@@ -2,6 +2,7 @@
 .idea/
 *.iml
 *.iws
+de.htwg.se.nmm.iml
 
 # Mac
 .DS_Store
