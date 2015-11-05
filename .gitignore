@@ -1,8 +1,11 @@
-# Intellij
-.idea/
 *.iml
+
+## Directory-based project format:
+.idea/
+
+## File-based project format:
+*.ipr
 *.iws
-de.htwg.se.nmm.iml
 
 # Mac
 .DS_Store
