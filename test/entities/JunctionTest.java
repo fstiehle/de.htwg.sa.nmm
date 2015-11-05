@@ -10,7 +10,8 @@ public class JunctionTest {
 
     @Before
     public void setUp() throws Exception {
-
+        Junction tJ = new Junction();
+        tJ.setNeighbours(tJ, tJ, tJ, tJ);
     }
 
     @After
@@ -20,17 +21,12 @@ public class JunctionTest {
 
     @Test
     public void testSetPosition() throws Exception {
-
+        assertEquals(tJ, tJ);
     }
 
     @Test
     public void testSetNeighbours() throws Exception {
-
-    }
-
-    @Test
-    public void testSetUp1() throws Exception {
-
+        assertNotNull(tJ);
     }
 
     @Test
