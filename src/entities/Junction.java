@@ -28,27 +28,27 @@ public class Junction {
         this.coordinates[1] = y;
     }
 
-    public void addUp(Junction r) {
+    public void setUp(Junction r) {
         this.up = up;
     }
 
-    public void addRight(Junction r) {
+    public void setRight(Junction r) {
         this.right = right;
     }
 
-    public void addDown(Junction r) {
+    public void setDown(Junction r) {
         this.down = down;
     }
 
-    public void addLeft(Junction r) {
+    public void setLeft(Junction r) {
         this.left = left;
     }
 
-    public int getPositionX() {
+    public int setPositionX() {
         return coordinates[0];
     }
 
-    public int getPositionY() {
+    public int setPositionY() {
         return coordinates[1];
     }
 
