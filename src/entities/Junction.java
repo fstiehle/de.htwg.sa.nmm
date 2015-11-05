@@ -8,13 +8,13 @@ import java.util.HashMap;
  */
 public class Junction {
     // x,y
-    int[] coordinates = new int[2];
+    private int[] coordinates = new int[2];
 
-    Junction up = null;
-    Junction right;
+    private Junction up = null;
+    private Junction right;
 
-    Junction down;
-    Junction left;
+    private Junction down;
+    private Junction left;
 
     public void setPosition(int x,int y) {
         this.coordinates[0] = x;
