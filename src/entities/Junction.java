@@ -16,6 +16,8 @@ public class Junction {
     private Junction down;
     private Junction left;
 
+    private boolean occupied;
+
     //---------------------------
     // SETTER
 
@@ -55,8 +57,11 @@ public class Junction {
         this.coordinates[1] = y;
     }
 
+    public void setOccupation(boolean b) { this.occupied = b; }
+
     //---------------------------
     // GETTER
+
     public int[] getCoordinates() {
         return coordinates;
     }
@@ -73,9 +78,9 @@ public class Junction {
         return down;
     }
 
-    public Junction getLeft() {
-        return left;
-    }
+    public Junction getLeft() { return left; }
+
+    public boolean isOccupied() { return occupied; }
 
     //---------------------------
     // IMPLEMENTATIONS
