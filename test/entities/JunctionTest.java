@@ -1,9 +1,6 @@
 package entities;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
+import org.junit.*;
 import static org.junit.Assert.*;
 
 public class JunctionTest {
@@ -11,9 +8,9 @@ public class JunctionTest {
 
     @Before
     public void setUp() throws Exception {
-        Junction tJ = new Junction();
-        tJ.setNeighbours(tJ, tJ, tJ, tJ);
-        tJ.setPosition(1,2);
+        this.tJ = new Junction();
+        this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
+        this.tJ.setPosition(1,2);
     }
 
     @After
