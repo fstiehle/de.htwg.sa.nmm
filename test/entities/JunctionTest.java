@@ -20,7 +20,8 @@ public class JunctionTest {
 
     @Test
     public void testSetPosition() throws Exception {
-        assertArrayEquals(new int[2], tJ.getCoordinates());
+        int[] tmp = {1, 2};
+        assertArrayEquals(tmp, tJ.getCoordinates());
     }
 
     @Test
