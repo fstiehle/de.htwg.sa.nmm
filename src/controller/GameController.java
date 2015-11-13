@@ -3,7 +3,7 @@ package controller;
 import entities.*;
 import util.observer.Observable;
 
-public class GameController {
+public class GameController extends Observable {
 
     private String statusMessage = "Welcome to HTWG NMM!";
     private Board board;
@@ -24,4 +24,5 @@ public class GameController {
     public String getStatus() {
         return statusMessage;
     }
+
 }
