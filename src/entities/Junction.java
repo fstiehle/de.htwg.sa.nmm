@@ -20,7 +20,7 @@ public class Junction {
     //---------------------------
     // SETTER
 
-    public void setPosition(int x,int y) {
+    public void setPosition(int x, int y) {
         this.coordinates[0] = x;
         this.coordinates[1] = y;
     }
@@ -83,6 +83,8 @@ public class Junction {
 
     //---------------------------
     // IMPLEMENTATIONS
+
+
 
     @Override
     public boolean equals(Object o) {
