@@ -1,7 +1,28 @@
 package controller;
 
-/**
- * Created by mafunke on 23.10.2015.
- */
-public class GameController {
+import entities.*;
+import util.observer.Observable;
+
+public class GameController extends Observable {
+
+    private String statusMessage = "Welcome to HTWG NMM!";
+    private Board board;
+
+
+    public GameController(Board board) {
+        this.board = board;
+    }
+
+    private void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
+    public void setPuck(int a, int x, Puck puck) {
+
+    }
+
+    public String getStatus() {
+        return statusMessage;
+    }
+
 }

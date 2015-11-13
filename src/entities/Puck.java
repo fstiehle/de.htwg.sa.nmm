@@ -1,7 +1,15 @@
 package entities;
 
-/**
- * Created by mafunke on 23.10.2015.
- */
 public class Puck {
+
+    private int player;
+
+    public void setPlayer(int player) {
+        this.player = player;
+    }
+
+    public int getPlayer() {
+        return player;
+    }
+
 }
