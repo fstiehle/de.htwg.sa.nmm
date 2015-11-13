@@ -57,6 +57,10 @@ public class Board implements BoardSetup {
         //this.boardMap.put("");
     }
 
+    public Map<String, Junction> getBoardMap() {
+        return this.boardMap;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
