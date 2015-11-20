@@ -54,7 +54,37 @@ public class Board extends BoardSetup {
         g4.setNeighbours(g1, null, g7, f4);
         g7.setNeighbours(g4, null, null, d7);
 
-        //this.boardMap.put("");
+
+        this.boardMap.put("a1", a1);
+        this.boardMap.put("a4", a4);
+        this.boardMap.put("a7", a7);
+
+        this.boardMap.put("b2", b2);
+        this.boardMap.put("b4", b4);
+        this.boardMap.put("b6", b6);
+
+        this.boardMap.put("c3", c3);
+        this.boardMap.put("c4", c4);
+        this.boardMap.put("c5", c5);
+
+        this.boardMap.put("d1", d1);
+        this.boardMap.put("d2", d2);
+        this.boardMap.put("d3", d3);
+        this.boardMap.put("d5", d5);
+        this.boardMap.put("d6", d6);
+        this.boardMap.put("d7", d7);
+
+        this.boardMap.put("e3", e3);
+        this.boardMap.put("e4", e4);
+        this.boardMap.put("e5", e5);
+
+        this.boardMap.put("f2", f2);
+        this.boardMap.put("f4", f4);
+        this.boardMap.put("f6", f6);
+
+        this.boardMap.put("g1", g1);
+        this.boardMap.put("g4", g4);
+        this.boardMap.put("g7", g7);
     }
 
     public Map<String, Junction> getBoardMap() {
