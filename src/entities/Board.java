@@ -8,7 +8,7 @@ import java.util.Map;
  * The Board is comprised of Junctions
  * 24 junctions
  */
-public class Board implements BoardSetup {
+public class Board extends BoardSetup {
 
     private Map<String, Junction> boardMap = new HashMap<>();
 

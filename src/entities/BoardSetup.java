@@ -1,6 +1,6 @@
 package entities;
 
-public interface BoardSetup {
+public abstract class BoardSetup {
 
     //Initial Board Setup:
     //See Board Template for reference
