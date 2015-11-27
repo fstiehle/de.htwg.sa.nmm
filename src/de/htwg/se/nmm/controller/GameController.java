@@ -21,14 +21,14 @@ public class GameController extends Observable {
 
     }
 
-    public void update() {
-        board.refresh();
+    public Board update() {
         statusMessage = "Board was refreshed";
         notifyObservers();
+        return board;
     }
 
-    public void reset() {
-
+    public Board getBoard() {
+        return board;
     }
 
     public String getBoardString() {
