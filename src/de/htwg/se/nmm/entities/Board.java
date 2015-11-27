@@ -11,7 +11,6 @@ import java.util.Map;
 public class Board extends BoardSetup {
 
     private Map<String, Junction> boardMap = new HashMap<>();
-    String strBoard;
 
     public Board() {
 
@@ -86,47 +85,10 @@ public class Board extends BoardSetup {
         this.boardMap.put("g4", g4);
         this.boardMap.put("g7", g7);
 
-        StringBuilder strbuilderBoard = new StringBuilder();
-        strbuilderBoard.append("" +
-                "         a     b     c   d   e     f     g\n" +
-                "\n" +
-                "    1    a1--------------d1--------------g1\n" +
-                "         |               |               |\n" +
-                "    2    |     b2--------d2--------f2    |\n" +
-                "         |     |         |         |     |\n" +
-                "    3    |     |     c3--d3--e3    f3    |\n" +
-                "         |     |     |       |     |     |\n" +
-                "    4    a4----b4----c4      e4----f4----g4\n" +
-                "         |     |     |       |     |     |\n" +
-                "    5    |     |     c5--d5--e5    f5    g5\n" +
-                "         |     |         |         |     |\n" +
-                "    6    |     b6--------d6--------f6    g6\n" +
-                "         |               |               |\n" +
-                "    7    a7---------------d7-------------g7\n");
-
-        this.strBoard = strbuilderBoard.toString();
-
-    }
-
-    @Override
-    public String toString() {
-
-        return strBoard;
-    }
-
-    public void refresh() {
-        for (Map.Entry<String, Junction> entry : boardMap.entrySet()) {
-
-            if (this.strBoard.contains(entry.getKey())) {
-                this.strBoard = this.strBoard.toString().replace(entry.getKey(), entry.getValue().toString());
-            }
-
-            System.out.println(entry.getKey() + "/" + entry.getValue());
-        }
-
     }
 
     public Map<String, Junction> getBoardMap() {
-        return this.boardMap;
+        return boardMap;
     }
+
 }
