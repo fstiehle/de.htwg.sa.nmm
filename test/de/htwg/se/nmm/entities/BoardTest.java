@@ -1,4 +1,4 @@
-package entities;
+package de.htwg.se.nmm.entities;
 
 import org.junit.Before;
 import org.junit.Test;

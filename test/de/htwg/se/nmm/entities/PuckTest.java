@@ -1,4 +1,4 @@
-package entities;
+package de.htwg.se.nmm.entities;
 
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -27,7 +27,4 @@ public class PuckTest {
     public void testGetPlayer() {
         assertEquals(1, puck.getPlayer());
     }
-
-
-
 }

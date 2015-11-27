@@ -1,7 +1,7 @@
-package controller;
+package de.htwg.se.nmm.controller;
 
-import entities.*;
-import util.observer.Observable;
+import de.htwg.se.nmm.entities.*;
+import de.htwg.se.util.observer.Observable;
 
 public class GameController extends Observable {
 

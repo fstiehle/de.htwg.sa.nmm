@@ -1,4 +1,4 @@
-package util.observer;
+package de.htwg.se.util.observer;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +15,6 @@ public class ObservableTest {
         public void update() {
             ping=true;
         }
-
     }
 
     @Before

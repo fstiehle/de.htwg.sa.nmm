@@ -1,7 +1,7 @@
-package tui;
+package de.htwg.se.nmm.tui;
 
-import util.observer.IObserver;
-import controller.GameController;
+import de.htwg.se.util.observer.IObserver;
+import de.htwg.se.nmm.controller.GameController;
 
 public class TextUI implements IObserver {
 

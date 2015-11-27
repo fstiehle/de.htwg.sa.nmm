@@ -1,4 +1,4 @@
-package entities;
+package de.htwg.se.nmm.entities;
 
 public abstract class BoardSetup {
 

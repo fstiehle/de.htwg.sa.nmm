@@ -3,9 +3,9 @@
  */
 
 import java.util.Scanner;
-import controller.GameController;
-import entities.Board;
-import tui.TextUI;
+import de.htwg.se.nmm.controller.GameController;
+import de.htwg.se.nmm.entities.Board;
+import de.htwg.se.nmm.tui.TextUI;
 
 public class Game {
 

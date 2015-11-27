@@ -1,4 +1,4 @@
-package util.observer;
+package de.htwg.se.util.observer;
 
 import java.util.Iterator;
 import java.util.Vector;
