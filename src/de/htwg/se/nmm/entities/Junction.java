@@ -22,6 +22,7 @@ public class Junction {
         this.right = right;
         this.down = down;
         this.left = left;
+        this.puck = null;
     }
 
     public void setUp(Junction up) {
@@ -67,6 +68,13 @@ public class Junction {
 
     public Puck getPuck() {
         return puck;
+    }
+
+    public boolean hasPuck() {
+        if(this.puck == null) {
+            return false;
+        }
+        return true;
     }
 
     //---------------------------

@@ -13,8 +13,8 @@ public class GameController extends Observable {
     private Player WHITE;
     private Player BLACK;
 
-    public GameController(Map<String, Junction> board) {
-        this.board = board;
+    public GameController(Board board) {
+        this.board = board.getBoardMap();
     }
 
     private void setStatusMessage(String statusMessage) {
@@ -24,6 +24,25 @@ public class GameController extends Observable {
     public void setPuck(String s, Puck puck) {
         Junction j = board.get(s);
         j.setPuck(puck);
+    }
+
+    public boolean checkformil(Junction j) {
+        if(checkformillR(j,1) == 3) {
+            return true;
+        }
+        return false;
+    }
+
+    public int checkformillR(Junction j, int sum) {
+        int t = 0;
+        if (j.getDown() != null) {
+
+            if (j.getDown().hasPuck()) {
+                t += sum;
+                t += checkformillR(j.getDown(), sum + 1);
+            }
+        }
+        return t;
     }
 
     public void update() {

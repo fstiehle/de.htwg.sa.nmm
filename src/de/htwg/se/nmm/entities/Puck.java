@@ -11,4 +11,5 @@ public class Puck {
     public Player getPlayer() {
         return this.player;
     }
+
 }

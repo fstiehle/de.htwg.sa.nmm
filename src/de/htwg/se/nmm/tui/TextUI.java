@@ -13,9 +13,6 @@ public class TextUI implements IObserver {
     String strBoard;
     Map<String, Junction> board;
     
-
-
-
     public TextUI(GameController controller) {
 
         this.controller = controller;
@@ -89,8 +86,8 @@ public class TextUI implements IObserver {
             pos.append(s.charAt(6));
             pos.toString();
 
-            controller.createPuck()
-            controller.setPuck(pos, Puck p);
+            //controller.createPuck()
+            //controller.setPuck(pos, Puck p);
         }
         return game;
     }
