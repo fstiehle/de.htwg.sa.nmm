@@ -1,8 +1,11 @@
 package de.htwg.se.nmm.entities;
 
-import de.htwg.se.nmm.entities.Puck.*;
-
 public class Player {
+
+    public enum Men {
+        WHITE,
+        BLACK;
+    }
 
     public enum Status {
         Set,

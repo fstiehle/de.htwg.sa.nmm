@@ -2,19 +2,13 @@ package de.htwg.se.nmm.entities;
 
 public class Puck {
 
-    public enum Men {
-        WHITE,
-        BLACK;
-    }
+    private static Player player;
 
-    private int player;
-
-    public void setPlayer(int player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public int getPlayer() {
-        return player;
+    public Player getPlayer() {
+        return this.player;
     }
-
 }
