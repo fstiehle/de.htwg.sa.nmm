@@ -15,7 +15,7 @@ public class Junction {
     private Junction down;
     private Junction left;
 
-    private boolean occupied;
+    private Puck occupied;
 
     //---------------------------
     // SETTER
@@ -56,7 +56,7 @@ public class Junction {
         this.coordinates[1] = y;
     }
 
-    public void setOccupation(boolean b) { this.occupied = b; }
+    //public void setOccupation(boolean b) { this.occupied = b; }
 
     //---------------------------
     // GETTER
@@ -79,7 +79,7 @@ public class Junction {
 
     public Junction getLeft() { return left; }
 
-    public boolean isOccupied() { return occupied; }
+    //public boolean isOccupied() { return occupied; }
 
     //---------------------------
     // IMPLEMENTATIONS
@@ -99,5 +99,17 @@ public class Junction {
     @Override
     public int hashCode() {
         return Arrays.hashCode(coordinates);
+    }
+
+    @Override
+    public String toString() {
+        //StringBuilder sb = new StringBuilder();
+
+        if (this.occupied == null) {
+           return "x-";
+        } else {
+            return "o-";
+        }
+
     }
 }

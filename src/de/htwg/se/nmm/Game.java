@@ -12,5 +12,11 @@ public class Game {
     public static void main(String[] args) {
         TextUI textUI = new TextUI(new GameController(new Board()));
         textUI.printTUI();
+
+        boolean game = true; // quit on -q
+        scanner = new Scanner(System.in);
+        while (game) {
+            game = textUI.processInputLine(scanner.next());
+        }
     }
 }

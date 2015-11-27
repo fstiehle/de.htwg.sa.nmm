@@ -21,6 +21,20 @@ public class GameController extends Observable {
 
     }
 
+    public void update() {
+        board.refresh();
+        statusMessage = "Board was refreshed";
+        notifyObservers();
+    }
+
+    public void reset() {
+
+    }
+
+    public String getBoardString() {
+        return board.toString();
+    }
+
     public String getStatus() {
         return statusMessage;
     }

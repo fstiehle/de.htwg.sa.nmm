@@ -11,11 +11,12 @@ import java.util.Map;
 public class Board extends BoardSetup {
 
     private Map<String, Junction> boardMap = new HashMap<>();
+    String strBoard;
 
     public Board() {
 
         //Connections
-        // directions clockwise: up, right, down, left
+        //directions clockwise: up, right, down, left
         //a1---------a4--------a7
         a1.setNeighbours(null, d1, a4, null);
         a4.setNeighbours(a1, b2, a7, null);
@@ -54,7 +55,6 @@ public class Board extends BoardSetup {
         g4.setNeighbours(g1, null, g7, f4);
         g7.setNeighbours(g4, null, null, d7);
 
-
         this.boardMap.put("a1", a1);
         this.boardMap.put("a4", a4);
         this.boardMap.put("a7", a7);
@@ -85,16 +85,48 @@ public class Board extends BoardSetup {
         this.boardMap.put("g1", g1);
         this.boardMap.put("g4", g4);
         this.boardMap.put("g7", g7);
-    }
 
-    public Map<String, Junction> getBoardMap() {
-        return this.boardMap;
+        StringBuilder strbuilderBoard = new StringBuilder();
+        strbuilderBoard.append("" +
+                "         a     b     c   d   e     f     g\n" +
+                "\n" +
+                "    1    a1--------------d1--------------g1\n" +
+                "         |               |               |\n" +
+                "    2    |     b2--------d2--------f2    |\n" +
+                "         |     |         |         |     |\n" +
+                "    3    |     |     c3--d3--e3    f3    |\n" +
+                "         |     |     |       |     |     |\n" +
+                "    4    a4----b4----c4      e4----f4----g4\n" +
+                "         |     |     |       |     |     |\n" +
+                "    5    |     |     c5--d5--e5    f5    g5\n" +
+                "         |     |         |         |     |\n" +
+                "    6    |     b6--------d6--------f6    g6\n" +
+                "         |               |               |\n" +
+                "    7    a7---------------d7-------------g7\n");
+
+        this.strBoard = strbuilderBoard.toString();
+
     }
 
     @Override
     public String toString() {
-        return "Board{" +
-                "boardMap=" + boardMap +
-                '}';
+
+        return strBoard;
+    }
+
+    public void refresh() {
+        for (Map.Entry<String, Junction> entry : boardMap.entrySet()) {
+
+            if (this.strBoard.contains(entry.getKey())) {
+                this.strBoard = this.strBoard.toString().replace(entry.getKey(), entry.getValue().toString());
+            }
+
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+        }
+
+    }
+
+    public Map<String, Junction> getBoardMap() {
+        return this.boardMap;
     }
 }
