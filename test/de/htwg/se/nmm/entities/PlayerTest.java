@@ -2,9 +2,9 @@ package de.htwg.se.nmm.entities;
 
 import org.junit.Before;
 import org.junit.Test;
+import de.htwg.se.nmm.entities.Player.Men;
 
 import static org.junit.Assert.*;
-import de.htwg.se.nmm.entities.Puck.Men;
 
 public class PlayerTest {
 
