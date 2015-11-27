@@ -24,6 +24,6 @@ public class PuckTest {
 
     @Test
     public void testGetPlayer() {
-        
+
     }
 }

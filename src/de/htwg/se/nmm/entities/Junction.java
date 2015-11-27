@@ -6,8 +6,6 @@ import java.util.Arrays;
  * a Junction knows its neighbours
  */
 public class Junction {
-    // x,y
-    private int[] coordinates = new int[2];
 
     private Junction up;
     private Junction right;
@@ -15,16 +13,10 @@ public class Junction {
     private Junction down;
     private Junction left;
 
-    private Puck occupied;
+    private Puck puck;
 
     //---------------------------
     // SETTER
-
-    public void setPosition(int x, int y) {
-        this.coordinates[0] = x;
-        this.coordinates[1] = y;
-    }
-
     public void setNeighbours(Junction up, Junction right, Junction down, Junction left) {
         this.up = up;
         this.right = right;
@@ -48,22 +40,14 @@ public class Junction {
         this.left = left;
     }
 
-    public void setPositionX(int x) {
-        this.coordinates[0] = x;
-    }
-
-    public void setPositionY(int y) {
-        this.coordinates[1] = y;
+    public void setPuck(Puck puck) {
+        this.puck = puck;
     }
 
     //public void setOccupation(boolean b) { this.occupied = b; }
 
     //---------------------------
     // GETTER
-
-    public int[] getCoordinates() {
-        return coordinates;
-    }
 
     public Junction getUp() {
         return up;
@@ -77,13 +61,16 @@ public class Junction {
         return down;
     }
 
-    public Junction getLeft() { return left; }
+    public Junction getLeft() {
+        return left;
+    }
 
-    //public boolean isOccupied() { return occupied; }
+    public Puck getPuck() {
+        return puck;
+    }
 
     //---------------------------
     // IMPLEMENTATIONS
-
 
 
     @Override
@@ -93,19 +80,27 @@ public class Junction {
 
         Junction junction = (Junction) o;
 
-        return Arrays.equals(coordinates, junction.coordinates);
+        if (getUp() != null ? !getUp().equals(junction.getUp()) : junction.getUp() != null) return false;
+        if (getRight() != null ? !getRight().equals(junction.getRight()) : junction.getRight() != null) return false;
+        if (getDown() != null ? !getDown().equals(junction.getDown()) : junction.getDown() != null) return false;
+        return !(getLeft() != null ? !getLeft().equals(junction.getLeft()) : junction.getLeft() != null);
+
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(coordinates);
+        int result = getUp() != null ? getUp().hashCode() : 0;
+        result = 31 * result + (getRight() != null ? getRight().hashCode() : 0);
+        result = 31 * result + (getDown() != null ? getDown().hashCode() : 0);
+        result = 31 * result + (getLeft() != null ? getLeft().hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
         //StringBuilder sb = new StringBuilder();
 
-        if (this.occupied == null) {
+        if (this.puck == null) {
            return "x-";
         } else {
             return "o-";
