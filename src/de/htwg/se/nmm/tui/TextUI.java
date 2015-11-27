@@ -11,7 +11,10 @@ public class TextUI implements IObserver {
 
     private GameController controller;
     String strBoard;
-    Board board;
+    Map<String, Junction> board;
+    
+
+
 
     public TextUI(GameController controller) {
 
@@ -42,9 +45,11 @@ public class TextUI implements IObserver {
                 "q - quit,\n" +
                 "u - update,\n" +
                 "r - reset,\n" +
-                "ayz - set cell(a,y) to z\n\n");
+                "set xy - place puck on(x,y)\n\n");
 
         this.strBoard = strbuilderBoard.toString();
+
+        controller.createPlayer("Spieler1", "Spieler2");
 
     }
 
@@ -60,7 +65,7 @@ public class TextUI implements IObserver {
     }
 
     private void refreshBoard() {
-        for (Map.Entry<String, Junction> entry : board.getBoardMap().entrySet()) {
+        for (Map.Entry<String, Junction> entry : board.entrySet()) {
 
             if (this.strBoard.contains(entry.getKey())) {
                 this.strBoard = this.strBoard.toString().replace(entry.getKey(), entry.getValue().toString());
@@ -73,18 +78,19 @@ public class TextUI implements IObserver {
 
     public boolean processInputLine(String s) {
         boolean game = true;
-        switch (s) {
-            case "q":
-                game = false;
-                break;
-            case "u":
-                controller.update();
-                break;
-            case "r":
 
-            case "t":
-                System.out.println(" ");
-                break;
+        if (s.equals("q")) {
+            game = false;
+        } else if (s.equals("u")) {
+            controller.update();
+        } else if (s.matches("set\\([a-z],\\d\\)")) {
+            StringBuilder pos = new StringBuilder();
+            pos.append(s.charAt(4));
+            pos.append(s.charAt(6));
+            pos.toString();
+
+            controller.createPuck()
+            controller.setPuck(pos, Puck p);
         }
         return game;
     }

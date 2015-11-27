@@ -3,13 +3,17 @@ package de.htwg.se.nmm.controller;
 import de.htwg.se.nmm.entities.*;
 import de.htwg.se.util.observer.Observable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GameController extends Observable {
 
     private String statusMessage = "Welcome to HTWG NMM!";
-    private Board board;
+    private Map<String, Junction> board;
+    private Player WHITE;
+    private Player BLACK;
 
-
-    public GameController(Board board) {
+    public GameController(Map<String, Junction> board) {
         this.board = board;
     }
 
@@ -17,8 +21,9 @@ public class GameController extends Observable {
         this.statusMessage = statusMessage;
     }
 
-    public void setPuck(int a, int x, Puck puck) {
-
+    public void setPuck(String s, Puck puck) {
+        Junction j = board.get(s);
+        j.setPuck(puck);
     }
 
     public void update() {
@@ -26,8 +31,17 @@ public class GameController extends Observable {
         notifyObservers();
     }
 
-    public Board getBoard() {
+    public Map<String, Junction> getBoard() {
         return board;
+    }
+
+    public void createPlayer(String name1, String name2) {
+        this.WHITE = new Player(name1, Player.Man.WHITE);
+        this.BLACK = new Player(name2, Player.Man.BLACK);
+    }
+
+    public Puck createPuck(Player player) {
+        return new Puck(player);
     }
 
     public String getBoardString() {

@@ -2,9 +2,9 @@ package de.htwg.se.nmm.entities;
 
 public class Puck {
 
-    private static Player player;
+    private final Player player;
 
-    public void setPlayer(Player player) {
+    public Puck(Player player) {
         this.player = player;
     }
 
