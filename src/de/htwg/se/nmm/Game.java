@@ -1,6 +1,4 @@
-/**
- * Created by mafunke on 23.10.2015.
- */
+package de.htwg.se.nmm;
 
 import java.util.Scanner;
 import de.htwg.se.nmm.controller.GameController;
@@ -13,6 +11,6 @@ public class Game {
 
     public static void main(String[] args) {
         TextUI textUI = new TextUI(new GameController(new Board()));
-
+        textUI.printTUI();
     }
 }

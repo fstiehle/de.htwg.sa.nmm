@@ -18,15 +18,37 @@ public class TextUI implements IObserver {
     }
 
     public void printTUI() {
-        // TODO: System.out.println(controller.getBoardString());
+        StringBuilder s = new StringBuilder();
 
-        String s = "Please enter a command:\n" +
+        s.append("Please enter a command:\n" +
                 "q - quit,\n" +
                 "u - update,\n" +
                 "r - reset,\n" +
-                "ayz - set cell(a,y) to z";
+                "ayz - set cell(a,y) to z");
+        s.append(this.getBoard());
 
-        System.out.println(s);
+        System.out.println(s.toString());
+    }
+
+    public String getBoard() {
+        StringBuilder strBoard = new StringBuilder();
+        strBoard.append("         a     b     c   d   e     f     g\n" +
+                "\n" +
+                "    1    x---------------x---------------x\n" +
+                "         |               |               |\n" +
+                "    2    |     x---------x---------x     |\n" +
+                "         |     |         |         |     |\n" +
+                "    3    |     |     x---x---x     |     |\n" +
+                "         |     |     |       |     |     |\n" +
+                "    4    x-----x-----x       x-----x-----x\n" +
+                "         |     |     |       |     |     |\n" +
+                "    5    |     |     x---x---x     |     |\n" +
+                "         |     |         |         |     |\n" +
+                "    6    |     x---------x---------x     |\n" +
+                "         |               |               |\n" +
+                "    7    x---------------x---------------x\n");
+
+        return strBoard.toString();
     }
 
 }
