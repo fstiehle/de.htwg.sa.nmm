@@ -2,7 +2,7 @@ package de.htwg.se.nmm.entities;
 
 import org.junit.Before;
 import org.junit.Test;
-import de.htwg.se.nmm.entities.Player.Men;
+import de.htwg.se.nmm.entities.Player.Man;
 
 import static org.junit.Assert.*;
 
@@ -12,14 +12,14 @@ public class PlayerTest {
 
     @Before
     public void setUp() throws Exception {
-        player = new Player("testplayer", Men.BLACK);
+        player = new Player("testplayer", Man.BLACK);
     }
 
     @Test
     public void testPlayer() {
-        Player tmpplayer = new Player("tmpplayer", Men.WHITE);
+        Player tmpplayer = new Player("tmpplayer", Man.WHITE);
         assertTrue(tmpplayer.getName().equals("tmpplayer"));
-        assertTrue(tmpplayer.getMen().equals(Men.WHITE));
+        assertTrue(tmpplayer.getMan().equals(Man.WHITE));
         assertTrue(tmpplayer.getStatus() == Player.Status.Set);
     }
 
@@ -47,7 +47,7 @@ public class PlayerTest {
 
     @Test
     public void testGetMen() throws Exception {
-        assertTrue(player.getMen().equals(Men.BLACK));
+        assertTrue(player.getMan().equals(Man.BLACK));
     }
 
     @Test

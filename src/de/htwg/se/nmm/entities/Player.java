@@ -2,7 +2,7 @@ package de.htwg.se.nmm.entities;
 
 public class Player {
 
-    public enum Men {
+    public enum Man {
         WHITE,
         BLACK;
     }
@@ -14,13 +14,13 @@ public class Player {
         GameLost;
     }
 
-    private final Men men;
+    private final Man man;
     private final String name;
     private Status status;
 
-    public Player(String name, Men men) {
+    public Player(String name, Man man) {
         this.name = name;
-        this.men = men;
+        this.man = man;
         this.status = Status.Set;
     }
 
@@ -36,8 +36,8 @@ public class Player {
         this.status = status;
     }
 
-    public Men getMen() {
-        return this.men;
+    public Man getMan() {
+        return this.man;
     }
 
     public String getName() {
