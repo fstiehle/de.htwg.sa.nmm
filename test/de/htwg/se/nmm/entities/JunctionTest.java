@@ -5,11 +5,14 @@ import static org.junit.Assert.*;
 
 public class JunctionTest {
     Junction tJ;
+    Puck puck;
 
     @Before
     public void setUp() throws Exception {
         this.tJ = new Junction();
         this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
+
+        puck = new Puck(new Player("tmptest", Player.Man.BLACK));
     }
 
     @After
@@ -23,6 +26,12 @@ public class JunctionTest {
         assertNotNull(tJ.getRight());
         assertNotNull(tJ.getDown());
         assertNotNull(tJ.getLeft());
+    }
+
+    @Test
+    public void testSetUp() throws Exception {
+        tJ.setUp(new Junction());
+        assertNotNull(tJ.getRight());
     }
 
     @Test
@@ -41,6 +50,21 @@ public class JunctionTest {
     public void testSetLeft() throws Exception {
         tJ.setLeft(new Junction());
         assertNotNull(tJ.getRight());
+    }
+
+    @Test
+    public void testGetPuck() throws Exception {
+        assertNull(tJ.getPuck());
+        tJ.setPuck(puck);
+        assertTrue(tJ.getPuck().getPlayer().getName().equals("tmptest"));
+        assertTrue(tJ.getPuck().getPlayer().getMan() == Player.Man.BLACK);
+    }
+
+    @Test
+    public void testHasPuck() throws Exception {
+        assertFalse(tJ.hasPuck());
+        tJ.setPuck(puck);
+        assertTrue(tJ.hasPuck());
     }
 
     @Test
