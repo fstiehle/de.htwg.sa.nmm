@@ -1,6 +1,5 @@
 package de.htwg.se.nmm.tui;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import de.htwg.se.nmm.entities.Junction;
 import de.htwg.se.util.observer.IObserver;
 import de.htwg.se.nmm.controller.GameController;
