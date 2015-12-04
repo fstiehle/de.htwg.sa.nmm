@@ -77,26 +77,6 @@ public class Junction {
     //---------------------------
     // IMPLEMENTATIONS
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        Junction junction = (Junction) o;
-
-        if (getUp() != null ? !getUp().equals(junction.getUp()) : junction.getUp() != null)
-            return false;
-        if (getRight() != null ? !getRight().equals(junction.getRight()) : junction.getRight() != null)
-            return false;
-        if (getDown() != null ? !getDown().equals(junction.getDown()) : junction.getDown() != null)
-            return false;
-        return !(getLeft() != null ? !getLeft().equals(junction.getLeft()) : junction.getLeft() != null);
-
-    }
-
     @Override
     public int hashCode() {
         int result = getUp() != null ? getUp().hashCode() : 0;
