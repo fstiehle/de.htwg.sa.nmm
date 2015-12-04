@@ -3,6 +3,8 @@ package de.htwg.se.nmm.controller;
 import de.htwg.se.nmm.entities.*;
 import de.htwg.se.util.observer.Observable;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class GameController extends Observable {
@@ -27,23 +29,49 @@ public class GameController extends Observable {
         j.setPuck(puck);
     }
 
-    public boolean checkformil(Junction j) {
-        if(checkformillR(j,1) == 3) {
+    public boolean checkformill(Junction j) {
+        int mill = -1;
+        mill += checkformillR(j, 0, "Down");
+        mill += checkformillR(j, 0, "Up");
+        System.out.println("Verti: " + mill);
+        if(mill >= 3) {
             return true;
         }
+        mill = -1;
+        mill += checkformillR(j, 0, "Left");
+        mill += checkformillR(j, 0, "Right");
+        System.out.println("Hori: " + mill);
+        if(mill >= 3) {
+            return true;
+        }
+
         return false;
     }
 
-    public int checkformillR(Junction j, int sum) {
-        int t = 0;
-        if (j.getDown() != null) {
-            if (j.getDown().hasPuck()) {
-                t += sum;
-                t += checkformillR(j.getDown(), sum + 1);
+    private int checkformillR(Junction j, int sum, String direction) {
+        int t = 1;
+        Method method;
+
+        String m = "get" + direction;
+        try {
+            method = j.getClass().getMethod(m);
+
+            if (method.invoke(j) != null) {
+                if (((Junction) method.invoke(j)).hasPuck()) {
+                    t += sum;
+                    t += checkformillR((Junction) method.invoke(j), sum + 1, direction);
+                }
             }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
         }
         return t;
     }
+
 
     public void update() {
         statusMessage = "Board was refreshed";

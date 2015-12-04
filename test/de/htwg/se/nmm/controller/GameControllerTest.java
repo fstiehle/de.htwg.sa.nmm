@@ -19,6 +19,7 @@ public class GameControllerTest extends TestCase {
     Map<String, Junction> board;
     Junction j;
     GameController controller;
+    Junction mill1, mill2, mill3;
 
     @Before
     public void setUp() {
@@ -27,13 +28,22 @@ public class GameControllerTest extends TestCase {
         controller.setPuck("a1", new Puck(player));
         controller.setPuck("a4", new Puck(player));
         controller.setPuck("a7", new Puck(player));
+        controller.setPuck("b4", new Puck(player));
+        controller.setPuck("c4", new Puck(player));
+        controller.setPuck("b2", new Puck(player));
+        controller.setPuck("d2", new Puck(player));
+        controller.setPuck("f2", new Puck(player));
         this.board =  controller.getBoard();
-        j = this.board.get("a1");
+        mill1 = this.board.get("a4");
+        mill2 = this.board.get("d2");
+        mill3 = this.board.get("d1");
     }
 
     @Test
     public void testCheckformil() throws Exception {
-        assertEquals(controller.checkformil(j), true);
+        assertTrue(controller.checkformill(mill1));
+        assertTrue(controller.checkformill(mill2));
+        assertFalse(controller.checkformill(mill3));
 
     }
 }
