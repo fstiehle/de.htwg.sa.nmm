@@ -3,18 +3,19 @@ package de.htwg.se.nmm.controller;
 import de.htwg.se.nmm.entities.*;
 import de.htwg.se.util.observer.Observable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class GameController extends Observable {
 
     private String statusMessage = "Welcome to HTWG NMM!";
     private Map<String, Junction> board;
-    private Player WHITE;
-    private Player BLACK;
+    private Player white;
+    private Player black;
 
     public GameController(Board board) {
         this.board = board.getBoardMap();
+        this.white = null;
+        this.black = null;
     }
 
     private void setStatusMessage(String statusMessage) {
@@ -36,7 +37,6 @@ public class GameController extends Observable {
     public int checkformillR(Junction j, int sum) {
         int t = 0;
         if (j.getDown() != null) {
-
             if (j.getDown().hasPuck()) {
                 t += sum;
                 t += checkformillR(j.getDown(), sum + 1);
@@ -55,8 +55,8 @@ public class GameController extends Observable {
     }
 
     public void createPlayer(String name1, String name2) {
-        this.WHITE = new Player(name1, Player.Man.WHITE);
-        this.BLACK = new Player(name2, Player.Man.BLACK);
+        this.white = new Player(name1, Player.Man.WHITE);
+        this.black = new Player(name2, Player.Man.BLACK);
     }
 
     public Puck createPuck(Player player) {

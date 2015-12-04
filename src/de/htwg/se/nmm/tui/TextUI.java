@@ -1,6 +1,6 @@
 package de.htwg.se.nmm.tui;
 
-import de.htwg.se.nmm.entities.Board;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import de.htwg.se.nmm.entities.Junction;
 import de.htwg.se.util.observer.IObserver;
 import de.htwg.se.nmm.controller.GameController;
@@ -67,8 +67,6 @@ public class TextUI implements IObserver {
             if (this.strBoard.contains(entry.getKey())) {
                 this.strBoard = this.strBoard.toString().replace(entry.getKey(), entry.getValue().toString());
             }
-
-            //System.out.println(entry.getKey() + "/" + entry.getValue());
         }
 
     }
@@ -76,6 +74,9 @@ public class TextUI implements IObserver {
     public boolean processInputLine(String s) {
         boolean game = true;
 
+        if (s == null) {
+            throw new RuntimeException("Invalit input");
+        }
         if (s.equals("q")) {
             game = false;
         } else if (s.equals("u")) {

@@ -20,29 +20,29 @@ public class PlayerTest {
         Player tmpplayer = new Player("tmpplayer", Man.WHITE);
         assertTrue(tmpplayer.getName().equals("tmpplayer"));
         assertTrue(tmpplayer.getMan().equals(Man.WHITE));
-        assertTrue(tmpplayer.getStatus() == Player.Status.Set);
+        assertTrue(tmpplayer.getStatus() == Player.Status.SET);
     }
 
     @Test
     public void testGetStatus() throws Exception {
-        assertTrue(player.isStatus(Player.Status.Set));
-        player.setStatus(Player.Status.Pick);
-        assertTrue(player.isStatus(Player.Status.Pick));
+        assertTrue(player.isStatus(Player.Status.SET));
+        player.setStatus(Player.Status.PICK);
+        assertTrue(player.isStatus(Player.Status.PICK));
     }
 
     @Test
     public void testIsStatus() throws Exception {
-        assertTrue(player.isStatus(Player.Status.Set));
-        player.setStatus(Player.Status.Move);
-        assertTrue(player.isStatus(Player.Status.Move));
-        assertFalse(player.isStatus(Player.Status.Pick));
+        assertTrue(player.isStatus(Player.Status.SET));
+        player.setStatus(Player.Status.MOVE);
+        assertTrue(player.isStatus(Player.Status.MOVE));
+        assertFalse(player.isStatus(Player.Status.PICK));
     }
 
     @Test
     public void testSetStatus() throws Exception {
-        assertTrue(player.isStatus(Player.Status.Set));
-        player.setStatus(Player.Status.Move);
-        assertTrue(player.isStatus(Player.Status.Move));
+        assertTrue(player.isStatus(Player.Status.SET));
+        player.setStatus(Player.Status.MOVE);
+        assertTrue(player.isStatus(Player.Status.MOVE));
     }
 
     @Test

@@ -8,10 +8,10 @@ public class Player {
     }
 
     public enum Status {
-        Set,
-        Move,
-        Pick,
-        GameLost;
+        SET,
+        MOVE,
+        PICK,
+        GAME_LOST;
     }
 
     private final Man man;
@@ -21,7 +21,7 @@ public class Player {
     public Player(String name, Man man) {
         this.name = name;
         this.man = man;
-        this.status = Status.Set;
+        this.status = Status.SET;
     }
 
     public Status getStatus() {

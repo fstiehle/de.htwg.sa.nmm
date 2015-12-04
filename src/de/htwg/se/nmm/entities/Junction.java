@@ -1,6 +1,5 @@
 package de.htwg.se.nmm.entities;
 
-import java.util.Arrays;
 
 /**
  * a Junction knows its neighbours
@@ -45,8 +44,6 @@ public class Junction {
         this.puck = puck;
     }
 
-    //public void setOccupation(boolean b) { this.occupied = b; }
-
     //---------------------------
     // GETTER
 
@@ -83,14 +80,19 @@ public class Junction {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Junction junction = (Junction) o;
 
-        if (getUp() != null ? !getUp().equals(junction.getUp()) : junction.getUp() != null) return false;
-        if (getRight() != null ? !getRight().equals(junction.getRight()) : junction.getRight() != null) return false;
-        if (getDown() != null ? !getDown().equals(junction.getDown()) : junction.getDown() != null) return false;
+        if (getUp() != null ? !getUp().equals(junction.getUp()) : junction.getUp() != null)
+            return false;
+        if (getRight() != null ? !getRight().equals(junction.getRight()) : junction.getRight() != null)
+            return false;
+        if (getDown() != null ? !getDown().equals(junction.getDown()) : junction.getDown() != null)
+            return false;
         return !(getLeft() != null ? !getLeft().equals(junction.getLeft()) : junction.getLeft() != null);
 
     }
@@ -106,13 +108,10 @@ public class Junction {
 
     @Override
     public String toString() {
-        //StringBuilder sb = new StringBuilder();
-
         if (this.puck == null) {
            return "x-";
         } else {
             return "o-";
         }
-
     }
 }
