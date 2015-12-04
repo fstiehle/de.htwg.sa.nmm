@@ -58,6 +58,7 @@ public class TextUI implements IObserver {
 
         refreshBoard();
         System.out.println(strBoard);
+        System.out.println(controller.getStatus());
     }
 
     private void refreshBoard() {
