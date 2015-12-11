@@ -2,7 +2,7 @@ package de.htwg.se.nmm.entities;
 
 public class Player {
 
-    private static final int NUM_PUCKS = 9;
+    private static final int NUM_PUCKS = 3;
 
     public enum Man {
         WHITE,

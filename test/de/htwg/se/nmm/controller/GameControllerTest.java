@@ -87,4 +87,39 @@ public class GameControllerTest extends TestCase {
         check = this.board.get("d7");
         assertFalse(check.hasPuck());
     }
+
+    @Test
+    public void testMovePucks() throws Exception {
+        controller.setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("b2", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("b6", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.setPuck("c3", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("c5", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("e3", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("e4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("e5", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.setPuck("f2", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("f4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("f6", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("g4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("g7", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.movePuck("g7", "d7");
+
+        Junction check;
+        check = this.board.get("g7");
+        assertFalse(check.hasPuck());
+        check = this.board.get("d7");
+        assertTrue(check.hasPuck());
+    }
 }

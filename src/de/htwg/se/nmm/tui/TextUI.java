@@ -40,8 +40,8 @@ public class TextUI implements IObserver {
 
         strbuilderBoard.append("Please enter a command:\n" +
                 "q - quit,\n" +
-                "u - update,\n" +
-                "r - reset,\n" +
+                "pick(x,y) - pick puck from (x,y)\n" +
+                "move(xy,xy) -  move puck from (xy) to (xy)\n" +
                 "set(x,y) - place puck on (x,y)\n\n");
 
         this.strBoard = strbuilderBoard.toString();
@@ -65,9 +65,9 @@ public class TextUI implements IObserver {
     private String refreshBoard() {
         String tmpBoard = this.strBoard;
         for (Map.Entry<String, Junction> entry : board.entrySet()) {
-
             tmpBoard = tmpBoard.replace(entry.getKey(), entry.getValue().toString());
         }
+        tmpBoard += "Pucks " + controller.getCurrentPlayer().getName() + ": " + controller.getCurrentPlayer().getNumPucks() + "\n";
         return tmpBoard;
     }
 
@@ -75,7 +75,7 @@ public class TextUI implements IObserver {
         boolean game = true;
 
         if (s == null) {
-            throw new RuntimeException("Invalit input");
+            throw new RuntimeException("Invalid input");
         }
         if (s.equals("q")) {
             game = false;
@@ -88,6 +88,24 @@ public class TextUI implements IObserver {
 
             Puck p = controller.createPuck();
             controller.setPuck(pos.toString(), p);
+            controller.update();
+        } else if (s.matches("pick\\([a-z],\\d\\)")) {
+            StringBuilder pos = new StringBuilder();
+            pos.append(s.charAt(5));
+            pos.append(s.charAt(7));
+
+            controller.pickPuck(pos.toString());
+            controller.update();
+        } else if (s.matches("move\\([a-z]\\d,[a-z]\\d\\)")) {
+            StringBuilder posFrom = new StringBuilder();
+            posFrom.append(s.charAt(5));
+            posFrom.append(s.charAt(6));
+
+            StringBuilder posTo = new StringBuilder();
+            posTo.append(s.charAt(8));
+            posTo.append(s.charAt(9));
+
+            controller.movePuck(posFrom.toString(), posTo.toString());
             controller.update();
         }
 

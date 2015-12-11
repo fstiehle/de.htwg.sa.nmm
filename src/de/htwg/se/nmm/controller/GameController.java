@@ -31,7 +31,12 @@ public class GameController extends Observable {
             this.currentPlayer = this.white;
         }
         this.clearStatusMessage();
-        this.addStatusMessage("Its " + this.currentPlayer.getName());
+        this.addStatusMessage("It's " + this.currentPlayer.getName() + "'s turn.");
+
+        if (!this.currentPlayer.hasPucks()) {
+            this.currentPlayer.setStatus(Player.Status.MOVE);
+            this.addStatusMessage("It's now time to move.");
+        }
     }
 
     public Player getCurrentPlayer() {
@@ -56,11 +61,44 @@ public class GameController extends Observable {
 
             if (checkformill(j)) {
                 this.addStatusMessage("Congratulations, Sir!");
+                this.currentPlayer.setStatus(Player.Status.PICK);
+            } else {
+                this.changePlayer();
             }
-
-            this.changePlayer();
         } else {
             this.addStatusMessage("There already is a Puck.");
+        }
+    }
+
+    public void pickPuck(String s) {
+        Junction j = board.get(s);
+
+        if (j.hasPuck() && this.currentPlayer.isStatus(Player.Status.PICK) &&
+                !j.getPuck().getPlayer().equals(this.currentPlayer)) {
+            j.setPuck(null);
+            this.changePlayer();
+        } else {
+            this.addStatusMessage("Can not take away.");
+        }
+    }
+
+    public void movePuck(String from, String to) {
+        Junction jFrom = board.get(from);
+        Junction jTo = board.get(to);
+
+        if (!jTo.hasPuck() && this.currentPlayer.isStatus(Player.Status.MOVE)) {
+            jTo.setPuck(jFrom.getPuck());
+            jFrom.setPuck(null);
+            this.changePlayer();
+
+            if (checkformill(jTo)) {
+                this.addStatusMessage("Congratulations, Sir!");
+                this.currentPlayer.setStatus(Player.Status.PICK);
+            } else {
+                this.changePlayer();
+            }
+        } else {
+            this.addStatusMessage("Can not move.");
         }
     }
 
