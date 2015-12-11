@@ -28,6 +28,8 @@ public class GameController extends Observable {
         } else {
             this.currentPlayer = this.white;
         }
+
+        this.statusMessage = "Its " + this.currentPlayer.getName();
     }
 
     private void setStatusMessage(String statusMessage) {
@@ -91,7 +93,6 @@ public class GameController extends Observable {
     }
 
     public void update() {
-        statusMessage = "Board was refreshed";
         notifyObservers();
     }
 

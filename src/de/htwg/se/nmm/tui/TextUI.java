@@ -42,7 +42,7 @@ public class TextUI implements IObserver {
                 "q - quit,\n" +
                 "u - update,\n" +
                 "r - reset,\n" +
-                "set xy - place puck on(x,y)\n\n");
+                "set(x,y) - place puck on (x,y)\n\n");
 
         this.strBoard = strbuilderBoard.toString();
 
@@ -88,9 +88,10 @@ public class TextUI implements IObserver {
 
             Puck p = controller.createPuck();
             controller.setPuck(pos.toString(), p);
-
-            System.out.println(controller.getBoard());
+            controller.update();
         }
+
+
         return game;
     }
 
