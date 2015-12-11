@@ -2,6 +2,8 @@ package de.htwg.se.nmm.entities;
 
 public class Player {
 
+    private static final int NUM_PUCKS = 9;
+
     public enum Man {
         WHITE,
         BLACK;
@@ -17,11 +19,28 @@ public class Player {
     private final Man man;
     private final String name;
     private Status status;
+    private int numPucks;
 
     public Player(String name, Man man) {
         this.name = name;
         this.man = man;
         this.status = Status.SET;
+        this.numPucks = NUM_PUCKS;
+    }
+
+    public int getNumPucks() {
+        return this.numPucks;
+    }
+
+    public void decrementPucks() {
+        if (this.numPucks == 0) {
+            throw new RuntimeException("No Pucks left");
+        }
+        this.numPucks--;
+    }
+
+    public boolean hasPucks() {
+        return this.numPucks > 0;
     }
 
     public Status getStatus() {

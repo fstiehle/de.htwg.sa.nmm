@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.tui;
 
 import de.htwg.se.nmm.entities.Junction;
+import de.htwg.se.nmm.entities.Puck;
 import de.htwg.se.util.observer.IObserver;
 import de.htwg.se.nmm.controller.GameController;
 
@@ -56,19 +57,18 @@ public class TextUI implements IObserver {
 
     public void printTUI() {
 
-        refreshBoard();
-        System.out.println(strBoard);
+        String tmpBoard = refreshBoard();
+        System.out.println(tmpBoard);
         System.out.println(controller.getStatus());
     }
 
-    private void refreshBoard() {
+    private String refreshBoard() {
+        String tmpBoard = this.strBoard;
         for (Map.Entry<String, Junction> entry : board.entrySet()) {
 
-            if (this.strBoard.contains(entry.getKey())) {
-                this.strBoard = this.strBoard.toString().replace(entry.getKey(), entry.getValue().toString());
-            }
+            tmpBoard = tmpBoard.replace(entry.getKey(), entry.getValue().toString());
         }
-
+        return tmpBoard;
     }
 
     public boolean processInputLine(String s) {
@@ -85,10 +85,11 @@ public class TextUI implements IObserver {
             StringBuilder pos = new StringBuilder();
             pos.append(s.charAt(4));
             pos.append(s.charAt(6));
-            pos.toString();
 
-            //controller.createPuck()
-            //controller.setPuck(pos, Puck p);
+            Puck p = controller.createPuck();
+            controller.setPuck(pos.toString(), p);
+
+            System.out.println(controller.getBoard());
         }
         return game;
     }

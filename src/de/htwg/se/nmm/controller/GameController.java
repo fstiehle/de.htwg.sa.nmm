@@ -13,11 +13,21 @@ public class GameController extends Observable {
     private Map<String, Junction> board;
     private Player white;
     private Player black;
+    private Player currentPlayer;
 
     public GameController(Board board) {
         this.board = board.getBoardMap();
         this.white = null;
         this.black = null;
+        this.currentPlayer = null;
+    }
+
+    private void changePlayer() {
+        if (this.currentPlayer == this.white) {
+            this.currentPlayer = this.black;
+        } else {
+            this.currentPlayer = this.white;
+        }
     }
 
     private void setStatusMessage(String statusMessage) {
@@ -25,8 +35,12 @@ public class GameController extends Observable {
     }
 
     public void setPuck(String s, Puck puck) {
-        Junction j = board.get(s);
-        j.setPuck(puck);
+        if (this.currentPlayer.isStatus(Player.Status.SET) && this.currentPlayer.hasPucks()) {
+            Junction j = board.get(s);
+            j.setPuck(puck);
+            this.currentPlayer.decrementPucks();
+            this.changePlayer();
+        }
     }
 
     public boolean checkformill(Junction j) {
@@ -72,6 +86,9 @@ public class GameController extends Observable {
         return t;
     }
 
+    public void setTurn(Player player, Player.Status status) {
+        player.setStatus(status);
+    }
 
     public void update() {
         statusMessage = "Board was refreshed";
@@ -85,10 +102,11 @@ public class GameController extends Observable {
     public void createPlayer(String name1, String name2) {
         this.white = new Player(name1, Player.Man.WHITE);
         this.black = new Player(name2, Player.Man.BLACK);
+        this.currentPlayer = this.white;
     }
 
-    public Puck createPuck(Player player) {
-        return new Puck(player);
+    public Puck createPuck() {
+        return new Puck(this.currentPlayer);
     }
 
     public String getBoardString() {
