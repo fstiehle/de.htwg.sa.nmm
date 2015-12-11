@@ -40,9 +40,9 @@ public class TextUI implements IObserver {
 
         strbuilderBoard.append("Please enter a command:\n" +
                 "q - quit,\n" +
-                "pick(x,y) - pick puck from (x,y)\n" +
+                "pick(xy) - pick puck from (xy)\n" +
                 "move(xy,xy) -  move puck from (xy) to (xy)\n" +
-                "set(x,y) - place puck on (x,y)\n\n");
+                "set(xy) - place puck on (xy)\n\n");
 
         this.strBoard = strbuilderBoard.toString();
 
@@ -81,18 +81,18 @@ public class TextUI implements IObserver {
             game = false;
         } else if (s.equals("u")) {
             controller.update();
-        } else if (s.matches("set\\([a-z],\\d\\)")) {
+        } else if (s.matches("set\\([a-z]\\d\\)")) {
             StringBuilder pos = new StringBuilder();
             pos.append(s.charAt(4));
-            pos.append(s.charAt(6));
+            pos.append(s.charAt(5));
 
             Puck p = controller.createPuck();
             controller.setPuck(pos.toString(), p);
             controller.update();
-        } else if (s.matches("pick\\([a-z],\\d\\)")) {
+        } else if (s.matches("pick\\([a-z]\\d\\)")) {
             StringBuilder pos = new StringBuilder();
             pos.append(s.charAt(5));
-            pos.append(s.charAt(7));
+            pos.append(s.charAt(6));
 
             controller.pickPuck(pos.toString());
             controller.update();

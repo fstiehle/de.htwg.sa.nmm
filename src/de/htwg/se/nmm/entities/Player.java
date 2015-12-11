@@ -2,7 +2,7 @@ package de.htwg.se.nmm.entities;
 
 public class Player {
 
-    private static final int NUM_PUCKS = 3;
+    private static final int NUM_PUCKS = 9;
 
     public enum Man {
         WHITE,
@@ -13,23 +13,35 @@ public class Player {
         SET,
         MOVE,
         PICK,
-        GAME_LOST;
+        HOP,
+        GAME_LOST
     }
 
     private final Man man;
     private final String name;
     private Status status;
     private int numPucks;
+    private int numPucksTakenAway;
 
     public Player(String name, Man man) {
         this.name = name;
+
         this.man = man;
         this.status = Status.SET;
         this.numPucks = NUM_PUCKS;
+        this.numPucksTakenAway = 0;
     }
 
     public int getNumPucks() {
         return this.numPucks;
+    }
+
+    public int getPucksTakenAway() {
+        return numPucksTakenAway;
+    }
+
+    public void setNumPucks(int numPucks) {
+        this.numPucks = numPucks;
     }
 
     public void decrementPucks() {
@@ -37,6 +49,10 @@ public class Player {
             throw new RuntimeException("No Pucks left");
         }
         this.numPucks--;
+    }
+
+    public void incrementPucksTakenAway() {
+        this.numPucksTakenAway++;
     }
 
     public boolean hasPucks() {

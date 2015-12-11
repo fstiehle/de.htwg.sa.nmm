@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class GameController extends Observable {
 
+    private static final int HOP_THRESHOLD = 6;
+
     private StringBuilder statusMessage;
     private Map<String, Junction> board;
     private Player white;
@@ -36,6 +38,9 @@ public class GameController extends Observable {
         if (!this.currentPlayer.hasPucks()) {
             this.currentPlayer.setStatus(Player.Status.MOVE);
             this.addStatusMessage("It's now time to move.");
+        } else if (this.currentPlayer.getPucksTakenAway() == HOP_THRESHOLD) {
+            this.currentPlayer.setStatus(Player.Status.HOP);
+            this.addStatusMessage("It's now time to hop.");
         }
     }
 
@@ -73,10 +78,12 @@ public class GameController extends Observable {
     public void pickPuck(String s) {
         Junction j = board.get(s);
 
+        // TODO check for mill
         if (j.hasPuck() && this.currentPlayer.isStatus(Player.Status.PICK) &&
                 !j.getPuck().getPlayer().equals(this.currentPlayer)) {
             j.setPuck(null);
             this.changePlayer();
+            this.currentPlayer.incrementPucksTakenAway();
         } else {
             this.addStatusMessage("Can not take away.");
         }
@@ -86,7 +93,14 @@ public class GameController extends Observable {
         Junction jFrom = board.get(from);
         Junction jTo = board.get(to);
 
-        if (!jTo.hasPuck() && this.currentPlayer.isStatus(Player.Status.MOVE)) {
+        if(currentPlayer.isStatus(Player.Status.MOVE) || this.currentPlayer.isStatus(Player.Status.HOP)) {
+            // TODO: check if move is allowed, else r
+        } else {
+            this.addStatusMessage("Can not move.");
+            return;
+        }
+
+        if (!jTo.hasPuck()) {
             jTo.setPuck(jFrom.getPuck());
             jFrom.setPuck(null);
             this.changePlayer();
@@ -97,8 +111,6 @@ public class GameController extends Observable {
             } else {
                 this.changePlayer();
             }
-        } else {
-            this.addStatusMessage("Can not move.");
         }
     }
 
