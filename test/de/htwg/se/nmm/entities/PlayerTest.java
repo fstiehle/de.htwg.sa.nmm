@@ -54,4 +54,11 @@ public class PlayerTest {
     public void testGetName() throws Exception {
         assertTrue(player.getName().equals("testplayer"));
     }
+
+    @Test
+    public void testEquals() throws Exception {
+        Player p1 = new Player("p1", Man.WHITE);
+        Player p2 = new Player("p2", Man.WHITE);
+        assertTrue(p1.equals(p2));
+    }
 }

@@ -62,4 +62,20 @@ public class Player {
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        return getMan() == player.getMan();
+
+    }
+
+    @Override
+    public int hashCode() {
+        return getMan().hashCode();
+    }
 }

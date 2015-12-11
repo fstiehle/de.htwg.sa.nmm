@@ -24,26 +24,67 @@ public class GameControllerTest extends TestCase {
     @Before
     public void setUp() {
         controller = new GameController(new Board());
-        Player player = new Player("test", Player.Man.WHITE);
-        controller.setPuck("a1", new Puck(player));
-        controller.setPuck("a4", new Puck(player));
-        controller.setPuck("a7", new Puck(player));
-        controller.setPuck("b4", new Puck(player));
-        controller.setPuck("c4", new Puck(player));
-        controller.setPuck("b2", new Puck(player));
-        controller.setPuck("d2", new Puck(player));
-        controller.setPuck("f2", new Puck(player));
+        controller.createPlayer("p1", "p2");
         this.board =  controller.getBoard();
-        mill1 = this.board.get("a4");
-        mill2 = this.board.get("d2");
-        mill3 = this.board.get("d1");
+        mill1 = this.board.get("a1");
+        mill2 = this.board.get("a4");
+        //mill3 = this.board.get("d1");
     }
 
     @Test
     public void testCheckformil() throws Exception {
-        assertTrue(controller.checkformill(mill1));
-        assertTrue(controller.checkformill(mill2));
-        assertFalse(controller.checkformill(mill3));
+        controller.setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("d7", new Puck(controller.getCurrentPlayer())); // p1
+        mill1 = this.board.get("a1"); // p2
+        assertFalse(controller.checkformill(mill1)); // p2
+        controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p1
+        mill2 = this.board.get("c4"); // p2
+        assertTrue(controller.checkformill(mill2)); // p2
+    }
 
+    @Test
+    public void testEmptyPucks() throws Exception {
+        controller.setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("b2", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("b6", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.setPuck("c3", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("c5", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("e3", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("e4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("e5", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.setPuck("f2", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("f4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("f6", new Puck(controller.getCurrentPlayer())); // p1
+
+        controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p2
+        controller.setPuck("g4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("g7", new Puck(controller.getCurrentPlayer())); // p2
+
+        controller.setPuck("d1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.setPuck("d7", new Puck(controller.getCurrentPlayer())); // p2
+
+        Junction check;
+
+        check = this.board.get("g4");
+        assertTrue(check.hasPuck());
+        check = this.board.get("g7");
+        assertTrue(check.hasPuck());
+
+        check = this.board.get("d1");
+        assertFalse(check.hasPuck());
+        check = this.board.get("d7");
+        assertFalse(check.hasPuck());
     }
 }

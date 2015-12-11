@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class GameController extends Observable {
 
-    private String statusMessage = "Welcome to HTWG NMM!";
+    private StringBuilder statusMessage;
     private Map<String, Junction> board;
     private Player white;
     private Player black;
@@ -20,6 +20,8 @@ public class GameController extends Observable {
         this.white = null;
         this.black = null;
         this.currentPlayer = null;
+        this.statusMessage = new StringBuilder();
+        this.statusMessage.append("Welcome to HTWG NMM!");
     }
 
     private void changePlayer() {
@@ -28,20 +30,37 @@ public class GameController extends Observable {
         } else {
             this.currentPlayer = this.white;
         }
-
-        this.statusMessage = "Its " + this.currentPlayer.getName();
+        this.clearStatusMessage();
+        this.addStatusMessage("Its " + this.currentPlayer.getName());
     }
 
-    private void setStatusMessage(String statusMessage) {
-        this.statusMessage = statusMessage;
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
+    }
+
+    private void addStatusMessage(String statusMessage) {
+        this.statusMessage.append("\n");
+        this.statusMessage.append(statusMessage);
+    }
+
+    private void clearStatusMessage() {
+        this.statusMessage = new StringBuilder();
     }
 
     public void setPuck(String s, Puck puck) {
-        if (this.currentPlayer.isStatus(Player.Status.SET) && this.currentPlayer.hasPucks()) {
-            Junction j = board.get(s);
+        Junction j = board.get(s);
+
+        if (!j.hasPuck() && this.currentPlayer.isStatus(Player.Status.SET) && this.currentPlayer.hasPucks()) {
             j.setPuck(puck);
             this.currentPlayer.decrementPucks();
+
+            if (checkformill(j)) {
+                this.addStatusMessage("Congratulations, Sir!");
+            }
+
             this.changePlayer();
+        } else {
+            this.addStatusMessage("There already is a Puck.");
         }
     }
 
@@ -49,14 +68,13 @@ public class GameController extends Observable {
         int mill = -1;
         mill += checkformillR(j, 0, "Down");
         mill += checkformillR(j, 0, "Up");
-        System.out.println("Verti: " + mill);
         if(mill >= 3) {
             return true;
         }
+
         mill = -1;
         mill += checkformillR(j, 0, "Left");
         mill += checkformillR(j, 0, "Right");
-        System.out.println("Hori: " + mill);
         if(mill >= 3) {
             return true;
         }
@@ -73,7 +91,8 @@ public class GameController extends Observable {
             method = j.getClass().getMethod(m);
 
             if (method.invoke(j) != null) {
-                if (((Junction) method.invoke(j)).hasPuck()) {
+                if (((Junction) method.invoke(j)).hasPuck() &&
+                        ((Junction) method.invoke(j)).getPuck().getPlayer().equals(this.currentPlayer)) {
                     t += sum;
                     t += checkformillR((Junction) method.invoke(j), sum + 1, direction);
                 }
@@ -115,7 +134,7 @@ public class GameController extends Observable {
     }
 
     public String getStatus() {
-        return statusMessage;
+        return this.statusMessage.toString();
     }
 
 }
