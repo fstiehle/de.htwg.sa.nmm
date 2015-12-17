@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class GameControllerTest extends TestCase {
 
     Map<String, Junction> board;
@@ -35,11 +38,11 @@ public class GameControllerTest extends TestCase {
         controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p2
         controller.setPuck("d7", new Puck(controller.getCurrentPlayer())); // p1
         mill1 = this.board.get("a1"); // p2
-        assertFalse(controller.checkformill(mill1)); // p2
+        assertFalse(controller.checkformill(mill1, controller.getCurrentPlayer())); // p2
         controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
         controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p1
         mill2 = this.board.get("c4"); // p2
-        assertTrue(controller.checkformill(mill2)); // p2
+        assertTrue(controller.checkformill(mill2, controller.getCurrentPlayer())); // p2
     }
 
     @Test
@@ -97,4 +100,5 @@ public class GameControllerTest extends TestCase {
         check = this.board.get("d7");
         assertTrue(check.hasPuck());
     }
+
 }

@@ -91,21 +91,4 @@ public class Board extends BoardSetup {
         return boardMap;
     }
 
-    public boolean checkMovement(String from, String to) {
-
-        Junction jFrom = boardMap.get(from);
-        Junction jTo = boardMap.get(to);
-
-        if(jFrom.getDown() != null && jFrom.getDown().equals(jTo)) {
-            return true;
-        } else if(jFrom.getUp() != null && jFrom.getUp().equals(jTo)) {
-            return true;
-        } else if(jFrom.getRight() != null && jFrom.getRight().equals(jTo)) {
-            return true;
-        } else if(jFrom.getLeft() != null && jFrom.getLeft().equals(jTo)) {
-            return true;
-        }
-        return false;
-    }
-
 }

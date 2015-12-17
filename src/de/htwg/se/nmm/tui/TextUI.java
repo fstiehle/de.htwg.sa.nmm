@@ -38,11 +38,11 @@ public class TextUI implements IObserver {
                 "    7    a7--------------d7--------------g7\n");
 
 
-        strbuilderBoard.append("Please enter a command:\n" +
-                "q - quit,\n" +
+        strbuilderBoard.append("\nPlease enter a command:\n" +
                 "pick(xy) - pick puck from (xy)\n" +
                 "move(xy,xy) -  move puck from (xy) to (xy)\n" +
-                "set(xy) - place puck on (xy)\n\n");
+                "set(xy) - place puck on (xy),\n" +
+                "q - quit\n\n");
 
         this.strBoard = strbuilderBoard.toString();
 
@@ -67,7 +67,9 @@ public class TextUI implements IObserver {
         for (Map.Entry<String, Junction> entry : board.entrySet()) {
             tmpBoard = tmpBoard.replace(entry.getKey(), entry.getValue().toString());
         }
-        tmpBoard += "Pucks " + controller.getCurrentPlayer().getName() + ": " + controller.getCurrentPlayer().getNumPucks() + "\n";
+        tmpBoard += "Puck's left:  "  + controller.getCurrentPlayer().getNumPucks() + "\n";
+        tmpBoard += "You're: " + controller.getCurrentPlayer().getMan().toString() + "\n";
+        tmpBoard += "You're in modus: " + controller.getCurrentPlayer().getStatus().toString() + "\n";
         return tmpBoard;
     }
 
@@ -108,7 +110,6 @@ public class TextUI implements IObserver {
             controller.movePuck(posFrom.toString(), posTo.toString());
             controller.update();
         }
-
 
         return game;
     }

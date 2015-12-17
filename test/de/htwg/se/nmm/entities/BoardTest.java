@@ -20,10 +20,5 @@ public class BoardTest {
         assertNotNull(this.testBoard.getBoardMap());
     }
 
-    @Test
-    public void testCheckMovement() throws Exception {
-        Map<String, Junction> boardMap = testBoard.getBoardMap();
-        assertTrue(testBoard.checkMovement("a1","a4"));
-        assertFalse(testBoard.checkMovement("a1","g4"));
-    }
+
 }

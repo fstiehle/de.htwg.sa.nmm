@@ -26,21 +26,36 @@ public class GameController extends Observable {
         this.statusMessage.append("Welcome to HTWG NMM!");
     }
 
-    private void changePlayer() {
+    private Player getOtherPlayer() {
         if (this.currentPlayer == this.white) {
-            this.currentPlayer = this.black;
+            return this.black;
         } else {
-            this.currentPlayer = this.white;
+            return this.white;
         }
+    }
+
+    private void changePlayer() {
+        this.currentPlayer = getOtherPlayer();
+
         this.clearStatusMessage();
         this.addStatusMessage("It's " + this.currentPlayer.getName() + "'s turn.");
 
-        if (!this.currentPlayer.hasPucks()) {
+        if(this.currentPlayer.hasPucks()) {
+            this.currentPlayer.setStatus(Player.Status.SET);
+
+        } else if (!this.currentPlayer.hasPucks()) {
             this.currentPlayer.setStatus(Player.Status.MOVE);
             this.addStatusMessage("It's now time to move.");
+
         } else if (this.currentPlayer.getPucksTakenAway() == HOP_THRESHOLD) {
             this.currentPlayer.setStatus(Player.Status.HOP);
             this.addStatusMessage("It's now time to hop.");
+
+        } else if (this.currentPlayer.getPucksTakenAway() == 7) {
+            this.currentPlayer.setStatus(Player.Status.GAME_LOST);
+            this.clearStatusMessage();
+            this.addStatusMessage("Oh Look! " + this.currentPlayer.getName() + " lost. Sadface.");
+            notifyObservers();
         }
     }
 
@@ -57,74 +72,125 @@ public class GameController extends Observable {
         this.statusMessage = new StringBuilder();
     }
 
+    private void millAfterMove(Junction j) {
+        if (checkformill(j, this.currentPlayer)) {
+            this.addStatusMessage("Congratulations, Sir!\n" +
+                    "You may now pick one of your opponents pucks that is not part of a mill.");
+            this.currentPlayer.setStatus(Player.Status.PICK);
+        } else {
+            this.changePlayer();
+        }
+    }
+
     public void setPuck(String s, Puck puck) {
         Junction j = board.get(s);
 
-        if (!j.hasPuck() && this.currentPlayer.isStatus(Player.Status.SET) && this.currentPlayer.hasPucks()) {
-            j.setPuck(puck);
-            this.currentPlayer.decrementPucks();
-
-            if (checkformill(j)) {
-                this.addStatusMessage("Congratulations, Sir!");
-                this.currentPlayer.setStatus(Player.Status.PICK);
-            } else {
-                this.changePlayer();
-            }
-        } else {
-            this.addStatusMessage("There already is a Puck.");
+        if(j == null) {
+            this.addStatusMessage("Illegal move, please check your coordinates.");
+            return;
         }
+
+        if (j.hasPuck()) {
+            this.addStatusMessage("There already is a Puck.");
+            return;
+        }
+        if (!this.currentPlayer.isStatus(Player.Status.SET)) {
+            this.addStatusMessage("You're not allowed to set a puck.");
+            return;
+        }
+
+        j.setPuck(puck);
+        this.currentPlayer.decrementPucks();
+
+        millAfterMove(j);
     }
 
     public void pickPuck(String s) {
         Junction j = board.get(s);
 
-        // TODO check for mill
-        if (j.hasPuck() && this.currentPlayer.isStatus(Player.Status.PICK) &&
-                !j.getPuck().getPlayer().equals(this.currentPlayer)) {
-            j.setPuck(null);
-            this.changePlayer();
-            this.currentPlayer.incrementPucksTakenAway();
-        } else {
-            this.addStatusMessage("Can not take away.");
+        if(j == null) {
+            this.addStatusMessage("Illegal move, please check your coordinates.");
+            return;
         }
+
+        if (!j.hasPuck() || !this.currentPlayer.isStatus(Player.Status.PICK) ||
+                j.getPuck().getPlayer().equals(this.currentPlayer)) {
+            this.addStatusMessage("Can't take away Puck.");
+            return;
+        }
+
+
+        if(checkformill(j, getOtherPlayer())) {
+            this.addStatusMessage("Can't take away a puck if it is part of a mill.");
+            return;
+        }
+
+        j.setPuck(null);
+        this.changePlayer();
+        this.currentPlayer.incrementPucksTakenAway();
     }
 
     public void movePuck(String from, String to) {
         Junction jFrom = board.get(from);
         Junction jTo = board.get(to);
 
-        if(currentPlayer.isStatus(Player.Status.MOVE) || this.currentPlayer.isStatus(Player.Status.HOP)) {
-            // TODO: check if move is allowed, else r
-        } else {
-            this.addStatusMessage("Can not move.");
+        if(jFrom == null || jTo == null) {
+            this.addStatusMessage("Illegal move, please check your coordinates.");
             return;
         }
 
-        if (!jTo.hasPuck()) {
-            jTo.setPuck(jFrom.getPuck());
-            jFrom.setPuck(null);
-            this.changePlayer();
+        if((!currentPlayer.isStatus(Player.Status.MOVE) && !this.currentPlayer.isStatus(Player.Status.HOP))) {
+            this.addStatusMessage("Can't move.");
+            return;
+        }
 
-            if (checkformill(jTo)) {
-                this.addStatusMessage("Congratulations, Sir!");
-                this.currentPlayer.setStatus(Player.Status.PICK);
-            } else {
-                this.changePlayer();
+        if(jTo.hasPuck()) {
+            this.addStatusMessage("There already is a Puck.");
+            return;
+        }
+
+        if (currentPlayer.isStatus(Player.Status.MOVE)) {
+            if (!checkMovement(from, to)) {
+                this.addStatusMessage("Move is not allowed.");
+                return;
             }
         }
+
+        jTo.setPuck(jFrom.getPuck());
+        jFrom.setPuck(null);
+
+        millAfterMove(jTo);
+
     }
 
-    public boolean checkformill(Junction j) {
+    private boolean checkMovement(String from, String to) {
+
+        Junction jFrom = board.get(from);
+        Junction jTo = board.get(to);
+
+        if(jFrom.getDown() != null && jFrom.getDown().equals(jTo)) {
+            return true;
+        } else if(jFrom.getUp() != null && jFrom.getUp().equals(jTo)) {
+            return true;
+        } else if(jFrom.getRight() != null && jFrom.getRight().equals(jTo)) {
+            return true;
+        } else if(jFrom.getLeft() != null && jFrom.getLeft().equals(jTo)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkformill(Junction j, Player p) {
         int mill = -1;
-        mill += checkformillR(j, 0, "Down");
-        mill += checkformillR(j, 0, "Up");
+        mill += checkformillR(j, 0, "Down", p);
+        mill += checkformillR(j, 0, "Up", p);
         if(mill >= 3) {
             return true;
         }
 
         mill = -1;
-        mill += checkformillR(j, 0, "Left");
-        mill += checkformillR(j, 0, "Right");
+        mill += checkformillR(j, 0, "Left", p);
+        mill += checkformillR(j, 0, "Right", p);
         if(mill >= 3) {
             return true;
         }
@@ -132,7 +198,7 @@ public class GameController extends Observable {
         return false;
     }
 
-    private int checkformillR(Junction j, int sum, String direction) {
+    private int checkformillR(Junction j, int sum, String direction, Player p) {
         int t = 1;
         Method method;
 
@@ -142,9 +208,9 @@ public class GameController extends Observable {
 
             if (method.invoke(j) != null) {
                 if (((Junction) method.invoke(j)).hasPuck() &&
-                        ((Junction) method.invoke(j)).getPuck().getPlayer().equals(this.currentPlayer)) {
+                        ((Junction) method.invoke(j)).getPuck().getPlayer().equals(p)) {
                     t += sum;
-                    t += checkformillR((Junction) method.invoke(j), sum + 1, direction);
+                    t += checkformillR((Junction) method.invoke(j), sum + 1, direction, p);
                 }
             }
         } catch (NoSuchMethodException e) {
