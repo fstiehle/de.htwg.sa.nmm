@@ -210,11 +210,7 @@ public class GameController extends Observable {
                     t += checkformillR((Junction) method.invoke(j), sum + 1, direction, p);
                 }
             }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return t;
