@@ -10,6 +10,7 @@ import java.util.Map;
 public class GameController extends Observable {
 
     private static final int HOP_THRESHOLD = 6;
+    private static final int LOST_THRESHOLD = 7;
 
     private StringBuilder statusMessage;
     private Map<String, Junction> board;
@@ -35,7 +36,7 @@ public class GameController extends Observable {
     }
 
     private void changePlayer() {
-        if (this.getOtherPlayer().getPucksTakenAway() == 1) {
+        if (this.getOtherPlayer().getPucksTakenAway() == LOST_THRESHOLD) {
             this.getOtherPlayer().setStatus(Player.Status.GAME_LOST);
         }
 
