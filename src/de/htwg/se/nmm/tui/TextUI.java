@@ -48,9 +48,9 @@ public class TextUI implements IObserver {
 
         StringBuilder strbuilderMenu = new StringBuilder();
         strbuilderMenu.append("\nPlease enter a command:\n" +
-                "pick(xy) - pick puck from (xy)\n" +
-                "move(xy,xy) -  move puck from (xy) to (xy)\n" +
-                "set(xy) - place puck on (xy),\n" +
+                ANSI_HIGHLIGHT + "pick(xy)" + ANSI_RESET + ": pick puck from (xy)\n" +
+                ANSI_HIGHLIGHT + "move(xy,xy)" + ANSI_RESET + ": move puck from (xy) to (xy)\n" +
+                ANSI_HIGHLIGHT + "set(xy)" + ANSI_RESET + ": place puck on (xy),\n" +
                 "q - quit\n\n");
 
         this.strMenu = strbuilderMenu.toString();
