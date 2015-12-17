@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GameControllerTest extends TestCase {
@@ -28,6 +29,13 @@ public class GameControllerTest extends TestCase {
         this.board =  controller.getBoard();
         mill1 = this.board.get("a1");
         mill2 = this.board.get("a4");
+    }
+
+    @Test
+    public void testGetOtherPlayer() {
+        Player p = controller.getCurrentPlayer();
+        Player o = controller.getOtherPlayer();
+        assertNotEquals(p, o);
     }
 
     @Test
