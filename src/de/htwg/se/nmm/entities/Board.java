@@ -18,7 +18,7 @@ public class Board extends BoardSetup {
         //directions clockwise: up, right, down, left
         //a1---------a4--------a7
         a1.setNeighbours(null, d1, a4, null);
-        a4.setNeighbours(a1, b2, a7, null);
+        a4.setNeighbours(a1, b4, a7, null);
         a7.setNeighbours(a4, d7, null, null);
 
         //----b2-----b4-----b6----

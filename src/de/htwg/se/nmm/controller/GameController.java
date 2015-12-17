@@ -35,27 +35,28 @@ public class GameController extends Observable {
     }
 
     private void changePlayer() {
+        System.out.println(this.currentPlayer.getPucksTakenAway());
         this.currentPlayer = getOtherPlayer();
 
         this.clearStatusMessage();
         this.addStatusMessage("It's " + this.currentPlayer.getName() + "'s turn.");
 
-        if(this.currentPlayer.hasPucks()) {
-            this.currentPlayer.setStatus(Player.Status.SET);
-
-        } else if (!this.currentPlayer.hasPucks()) {
+        if (!this.currentPlayer.hasPucks() && this.currentPlayer.getPucksTakenAway() < HOP_THRESHOLD) {
             this.currentPlayer.setStatus(Player.Status.MOVE);
             this.addStatusMessage("It's now time to move.");
 
-        } else if (this.currentPlayer.getPucksTakenAway() == HOP_THRESHOLD) {
+        } else if (this.currentPlayer.getPucksTakenAway() == HOP_THRESHOLD ) {
             this.currentPlayer.setStatus(Player.Status.HOP);
             this.addStatusMessage("It's now time to hop.");
 
-        } else if (this.currentPlayer.getPucksTakenAway() == 7) {
-            this.currentPlayer.setStatus(Player.Status.GAME_LOST);
+        } else if (this.getOtherPlayer().getPucksTakenAway() == 7) {
+            this.getOtherPlayer().setStatus(Player.Status.GAME_LOST);
             this.clearStatusMessage();
-            this.addStatusMessage("Oh Look! " + this.currentPlayer.getName() + " lost. Sadface.");
-            notifyObservers();
+            this.addStatusMessage("Oh Look! " + this.getOtherPlayer().getName() + " lost. Sadface.");
+
+        } else if(this.currentPlayer.hasPucks()) {
+            this.currentPlayer.setStatus(Player.Status.SET);
+            this.addStatusMessage("It's now time to set.");
         }
     }
 
@@ -89,7 +90,6 @@ public class GameController extends Observable {
             this.addStatusMessage("Illegal move, please check your coordinates.");
             return;
         }
-
         if (j.hasPuck()) {
             this.addStatusMessage("There already is a Puck.");
             return;
@@ -100,9 +100,10 @@ public class GameController extends Observable {
         }
 
         j.setPuck(puck);
-        this.currentPlayer.decrementPucks();
-
-        millAfterMove(j);
+        if(currentPlayer.getStatus() == Player.Status.SET) {
+            this.currentPlayer.decrementPucks();
+            millAfterMove(j);
+        }
     }
 
     public void pickPuck(String s) {
@@ -112,14 +113,11 @@ public class GameController extends Observable {
             this.addStatusMessage("Illegal move, please check your coordinates.");
             return;
         }
-
         if (!j.hasPuck() || !this.currentPlayer.isStatus(Player.Status.PICK) ||
                 j.getPuck().getPlayer().equals(this.currentPlayer)) {
             this.addStatusMessage("Can't take away Puck.");
             return;
         }
-
-
         if(checkformill(j, getOtherPlayer())) {
             this.addStatusMessage("Can't take away a puck if it is part of a mill.");
             return;
@@ -138,29 +136,27 @@ public class GameController extends Observable {
             this.addStatusMessage("Illegal move, please check your coordinates.");
             return;
         }
-
         if((!currentPlayer.isStatus(Player.Status.MOVE) && !this.currentPlayer.isStatus(Player.Status.HOP))) {
             this.addStatusMessage("Can't move.");
             return;
         }
-
         if(jTo.hasPuck()) {
             this.addStatusMessage("There already is a Puck.");
             return;
         }
-
+        if(!jFrom.getPuck().getPlayer().equals(currentPlayer)) {
+            this.addStatusMessage("That's not your puck unfortunately.");
+            return;
+        }
         if (currentPlayer.isStatus(Player.Status.MOVE)) {
             if (!checkMovement(from, to)) {
                 this.addStatusMessage("Move is not allowed.");
                 return;
             }
         }
-
         jTo.setPuck(jFrom.getPuck());
         jFrom.setPuck(null);
-
         millAfterMove(jTo);
-
     }
 
     private boolean checkMovement(String from, String to) {
