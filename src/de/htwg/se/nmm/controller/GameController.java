@@ -220,10 +220,6 @@ public class GameController extends Observable {
         return t;
     }
 
-    public void setTurn(Player player, Player.Status status) {
-        player.setStatus(status);
-    }
-
     public void update() {
         notifyObservers();
     }
