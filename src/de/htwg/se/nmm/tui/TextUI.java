@@ -1,6 +1,8 @@
 package de.htwg.se.nmm.tui;
 
+import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 import de.htwg.se.nmm.entities.Junction;
+import de.htwg.se.nmm.entities.Player;
 import de.htwg.se.nmm.entities.Puck;
 import de.htwg.se.util.observer.IObserver;
 import de.htwg.se.nmm.controller.GameController;
@@ -11,7 +13,12 @@ public class TextUI implements IObserver {
 
     private GameController controller;
     String strBoard;
+    String strMenu;
     Map<String, Junction> board;
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static String ANSI_HIGHLIGHT = "\u001B[32m";
     
     public TextUI(GameController controller) {
 
@@ -37,16 +44,18 @@ public class TextUI implements IObserver {
                 "         |               |               |\n" +
                 "    7    a7--------------d7--------------g7\n");
 
+        this.strBoard = strbuilderBoard.toString();
 
-        strbuilderBoard.append("\nPlease enter a command:\n" +
+        StringBuilder strbuilderMenu = new StringBuilder();
+        strbuilderMenu.append("\nPlease enter a command:\n" +
                 "pick(xy) - pick puck from (xy)\n" +
                 "move(xy,xy) -  move puck from (xy) to (xy)\n" +
                 "set(xy) - place puck on (xy),\n" +
                 "q - quit\n\n");
 
-        this.strBoard = strbuilderBoard.toString();
+        this.strMenu = strbuilderMenu.toString();
 
-        controller.createPlayer("Spieler1", "Spieler2");
+        controller.createPlayer("Spieler 1", "Spieler 2");
 
     }
 
@@ -56,9 +65,19 @@ public class TextUI implements IObserver {
     }
 
     public void printTUI() {
-
         String tmpBoard = refreshBoard();
+
+        if(controller.getCurrentPlayer().getStatus().equals(Player.Status.GAME_LOST)) {
+            System.out.println(ANSI_RED);
+            System.out.println(tmpBoard);
+            System.out.println(controller.getStatus());
+            System.exit(0);
+        }
+
+        String tmpMenu = refreshMenu();
+
         System.out.println(tmpBoard);
+        System.out.println(tmpMenu);
         System.out.println(controller.getStatus());
     }
 
@@ -67,10 +86,17 @@ public class TextUI implements IObserver {
         for (Map.Entry<String, Junction> entry : board.entrySet()) {
             tmpBoard = tmpBoard.replace(entry.getKey(), entry.getValue().toString());
         }
-        tmpBoard += "Puck's left:  "  + controller.getCurrentPlayer().getNumPucks() + "\n";
-        tmpBoard += "You're: " + controller.getCurrentPlayer().getMan().toString() + "\n";
-        tmpBoard += "You're in modus: " + controller.getCurrentPlayer().getStatus().toString() + "\n";
+
         return tmpBoard;
+    }
+
+    private String refreshMenu() {
+        String tmpMenu = this.strMenu;
+        tmpMenu += "Puck's left:  "  + ANSI_HIGHLIGHT +  controller.getCurrentPlayer().getNumPucks() + ANSI_RESET + "\n";
+        tmpMenu += "You're: " + ANSI_HIGHLIGHT + controller.getCurrentPlayer().getMan().toString() + ANSI_RESET + "\n";
+        tmpMenu += "You're in modus: " + ANSI_HIGHLIGHT + controller.getCurrentPlayer().getStatus().toString() + ANSI_RESET + "\n";
+
+        return tmpMenu;
     }
 
     public boolean processInputLine(String s) {

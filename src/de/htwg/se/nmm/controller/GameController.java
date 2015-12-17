@@ -23,10 +23,10 @@ public class GameController extends Observable {
         this.black = null;
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
-        this.statusMessage.append("Welcome to HTWG NMM!");
+        this.statusMessage.append("Welcome!");
     }
 
-    private Player getOtherPlayer() {
+    public Player getOtherPlayer() {
         if (this.currentPlayer == this.white) {
             return this.black;
         } else {
@@ -35,28 +35,27 @@ public class GameController extends Observable {
     }
 
     private void changePlayer() {
-        System.out.println(this.currentPlayer.getPucksTakenAway());
+        if (this.getOtherPlayer().getPucksTakenAway() == 1) {
+            this.getOtherPlayer().setStatus(Player.Status.GAME_LOST);
+        }
+
         this.currentPlayer = getOtherPlayer();
+        String name = this.currentPlayer.getName();
 
-        this.clearStatusMessage();
-        this.addStatusMessage("It's " + this.currentPlayer.getName() + "'s turn.");
+        if(this.getCurrentPlayer().getStatus().equals(Player.Status.GAME_LOST)) {
+            this.addStatusMessage(name + ": You failed.");
 
-        if (!this.currentPlayer.hasPucks() && this.currentPlayer.getPucksTakenAway() < HOP_THRESHOLD) {
+        } else if (!this.currentPlayer.hasPucks() && this.currentPlayer.getPucksTakenAway() < HOP_THRESHOLD) {
             this.currentPlayer.setStatus(Player.Status.MOVE);
-            this.addStatusMessage("It's now time to move.");
+            this.addStatusMessage(name + ": It's now time to move.");
 
         } else if (this.currentPlayer.getPucksTakenAway() == HOP_THRESHOLD ) {
             this.currentPlayer.setStatus(Player.Status.HOP);
-            this.addStatusMessage("It's now time to hop.");
+            this.addStatusMessage(name + ": It's now time to hop.");
 
-        } else if (this.getOtherPlayer().getPucksTakenAway() == 7) {
-            this.getOtherPlayer().setStatus(Player.Status.GAME_LOST);
-            this.clearStatusMessage();
-            this.addStatusMessage("Oh Look! " + this.getOtherPlayer().getName() + " lost. Sadface.");
-
-        } else if(this.currentPlayer.hasPucks()) {
+        }  else if(this.currentPlayer.hasPucks()) {
             this.currentPlayer.setStatus(Player.Status.SET);
-            this.addStatusMessage("It's now time to set.");
+            this.addStatusMessage(name + ": It's now time to set.");
         }
     }
 
@@ -65,6 +64,7 @@ public class GameController extends Observable {
     }
 
     private void addStatusMessage(String statusMessage) {
+        this.clearStatusMessage();
         this.statusMessage.append("\n");
         this.statusMessage.append(statusMessage);
     }
@@ -124,8 +124,8 @@ public class GameController extends Observable {
         }
 
         j.setPuck(null);
+        this.getOtherPlayer().incrementPucksTakenAway();
         this.changePlayer();
-        this.currentPlayer.incrementPucksTakenAway();
     }
 
     public void movePuck(String from, String to) {
