@@ -91,7 +91,8 @@ public class GameControllerTest extends TestCase {
     public void testMovePucks() throws Exception {
 
         controller.setPuck("g7", new Puck(controller.getCurrentPlayer())); // p1
-        controller.getCurrentPlayer().setStatus(Player.Status.MOVE);
+        controller.setPuck("g4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setStatus(Player.Status.MOVE); // p1
         controller.movePuck("g7", "d7");
 
         Junction check;
