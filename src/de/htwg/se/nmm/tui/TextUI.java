@@ -18,7 +18,7 @@ public class TextUI implements IObserver {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
-    public static String ANSI_HIGHLIGHT = "\u001B[32m";
+    public static final String ANSI_HIGHLIGHT = "\u001B[32m";
     
     public TextUI(GameController controller) {
 
@@ -56,7 +56,6 @@ public class TextUI implements IObserver {
         this.strMenu = strbuilderMenu.toString();
 
         controller.createPlayer("Spieler 1", "Spieler 2");
-
     }
 
     @Override
@@ -136,7 +135,6 @@ public class TextUI implements IObserver {
             controller.movePuck(posFrom.toString(), posTo.toString());
             controller.update();
         }
-
         return game;
     }
 
