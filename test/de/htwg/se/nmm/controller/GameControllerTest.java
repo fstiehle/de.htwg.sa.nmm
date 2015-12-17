@@ -30,19 +30,19 @@ public class GameControllerTest extends TestCase {
     }
 
     @Test
-    public void testGetOtherPlayer() {
+    public void testGetOtherPlayer() throws Exception {
         Player p = controller.getCurrentPlayer();
         Player o = controller.getOtherPlayer();
         assertNotEquals(p, o);
     }
     @Test
-    public void testCreatePlayer() {
+    public void testCreatePlayer() throws Exception {
         controller.createPlayer("name1", "name2");
         assertTrue(controller.getCurrentPlayer().getName().equals("name1"));
         assertTrue(controller.getOtherPlayer().getName().equals("name2"));
     }
     @Test
-    public void testGetStatus() {
+    public void testGetStatus() throws Exception {
         assertEquals(controller.getStatus(), "Welcome!");
     }
 
