@@ -11,9 +11,7 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameControllerTest extends TestCase {
 
@@ -42,6 +40,10 @@ public class GameControllerTest extends TestCase {
         controller.createPlayer("name1", "name2");
         assertTrue(controller.getCurrentPlayer().getName().equals("name1"));
         assertTrue(controller.getOtherPlayer().getName().equals("name2"));
+    }
+    @Test
+    public void testGetStatus() {
+        assertEquals(controller.getStatus(), "Welcome!");
     }
 
     @Test
