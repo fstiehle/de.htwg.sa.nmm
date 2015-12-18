@@ -1,6 +1,5 @@
 package de.htwg.se.nmm.tui;
 
-import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 import de.htwg.se.nmm.entities.Junction;
 import de.htwg.se.nmm.entities.Player;
 import de.htwg.se.nmm.entities.Puck;
