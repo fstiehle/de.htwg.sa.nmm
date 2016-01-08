@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.model.IBoard;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +10,7 @@ import java.util.Map;
  * The Board is comprised of Junctions
  * 24 junctions
  */
-public class Board extends BoardSetup {
+public class Board extends BoardSetup implements IBoard {
 
     private Map<String, Junction> boardMap = new HashMap<>();
 
@@ -87,6 +89,7 @@ public class Board extends BoardSetup {
 
     }
 
+    @Override
     public Map<String, Junction> getBoardMap() {
         return boardMap;
     }

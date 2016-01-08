@@ -1,6 +1,6 @@
 package de.htwg.se.nmm.controller.impl;
 
-import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.model.impl.Puck;
@@ -20,8 +20,8 @@ public class GameController extends Observable {
     private Player black;
     private Player currentPlayer;
 
-    public GameController(Board board) {
-        this.board = board.getBoardMap();
+    public GameController(IBoard IBoard) {
+        this.board = IBoard.getBoardMap();
         this.white = null;
         this.black = null;
         this.currentPlayer = null;

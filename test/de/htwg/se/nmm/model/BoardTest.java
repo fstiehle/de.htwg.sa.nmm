@@ -7,16 +7,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BoardTest {
-    private Board testBoard;
+    private IBoard testIBoard;
 
     @Before
     public void setUp() throws Exception {
-        this.testBoard = new Board();
+        this.testIBoard = new Board();
     }
 
     @Test
     public void testGetBoardMap() throws Exception {
-        assertNotNull(this.testBoard.getBoardMap());
+        assertNotNull(this.testIBoard.getBoardMap());
     }
 
 
