@@ -9,9 +9,7 @@ public class Game {
 
     static Scanner scanner;
 
-    private Game() {
-        // nothing to do
-    }
+    private Game() {}
 
     public static void main(String[] args) {
         TextUI textUI = new TextUI(new GameController(new Board()));

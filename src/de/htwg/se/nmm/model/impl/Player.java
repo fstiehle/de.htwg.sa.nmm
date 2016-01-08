@@ -22,7 +22,6 @@ public class Player {
 
     private final Man man;
     private final String name;
-    //private Status status;
     private int numPucks;
     private int numPucksTakenAway;
 
@@ -47,10 +46,6 @@ public class Player {
 
     public int getPucksTakenAway() {
         return numPucksTakenAway;
-    }
-
-    public void setNumPucks(int numPucks) {
-        this.numPucks = numPucks;
     }
 
     public void decrementPucks() {
