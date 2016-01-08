@@ -65,7 +65,7 @@ public class TextUI implements IObserver {
     public void printTUI() {
         String tmpBoard = refreshBoard();
 
-        if(controller.getCurrentPlayer().getStatus().equals(Player.Status.GAME_LOST)) {
+        if(controller.getCurrentPlayer().hasLost()) {
             System.out.println(ANSI_RED);
             System.out.println(tmpBoard);
             System.out.println(controller.getStatus());
@@ -113,14 +113,14 @@ public class TextUI implements IObserver {
             pos.append(s.charAt(5));
 
             Puck p = controller.createPuck();
-            controller.setPuck(pos.toString(), p);
+            controller.getCurrentPlayer().setPuck(pos.toString(), p);
             controller.update();
         } else if (s.matches("pick\\([a-z]\\d\\)")) {
             StringBuilder pos = new StringBuilder();
             pos.append(s.charAt(5));
             pos.append(s.charAt(6));
 
-            controller.pickPuck(pos.toString());
+            controller.getCurrentPlayer().pickPuck(pos.toString());
             controller.update();
         } else if (s.matches("move\\([a-z]\\d,[a-z]\\d\\)")) {
             StringBuilder posFrom = new StringBuilder();
@@ -131,7 +131,7 @@ public class TextUI implements IObserver {
             posTo.append(s.charAt(8));
             posTo.append(s.charAt(9));
 
-            controller.movePuck(posFrom.toString(), posTo.toString());
+            controller.getCurrentPlayer().movePuck(posFrom.toString(), posTo.toString());
             controller.update();
         }
         return game;

@@ -47,47 +47,47 @@ public class GameControllerTest extends TestCase {
 
     @Test
     public void testCheckformill() throws Exception {
-        controller.setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("d7", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("b4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("d7", new Puck(controller.getCurrentPlayer())); // p1
         mill1 = this.board.get("a1"); // p2
         assertFalse(controller.checkformill(mill1, controller.getCurrentPlayer())); // p2
-        controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("g1", new Puck(controller.getCurrentPlayer())); // p1
         mill2 = this.board.get("c4"); // p2
         assertTrue(controller.checkformill(mill2, controller.getCurrentPlayer())); // p2
     }
 
     @Test
     public void testEmptyPucks() throws Exception {
-        controller.setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("a1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("a4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("a7", new Puck(controller.getCurrentPlayer())); // p1
 
-        controller.setPuck("b2", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("b4", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("b6", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("b2", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("b4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("b6", new Puck(controller.getCurrentPlayer())); // p2
 
-        controller.setPuck("c3", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("c5", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("c3", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("c4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("c5", new Puck(controller.getCurrentPlayer())); // p1
 
-        controller.setPuck("e3", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("e4", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("e5", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("e3", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("e4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("e5", new Puck(controller.getCurrentPlayer())); // p2
 
-        controller.setPuck("f2", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("f4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("f6", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("f2", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("f4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("f6", new Puck(controller.getCurrentPlayer())); // p1
 
-        controller.setPuck("g1", new Puck(controller.getCurrentPlayer())); // p2
-        controller.setPuck("g4", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("g7", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("g1", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("g4", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("g7", new Puck(controller.getCurrentPlayer())); // p2
 
-        controller.setPuck("d1", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("d7", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setPuck("d1", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("d7", new Puck(controller.getCurrentPlayer())); // p2
 
         Junction check;
 
@@ -105,10 +105,10 @@ public class GameControllerTest extends TestCase {
     @Test
     public void testMovePucks() throws Exception {
 
-        controller.setPuck("g7", new Puck(controller.getCurrentPlayer())); // p1
-        controller.setPuck("g4", new Puck(controller.getCurrentPlayer())); // p2
-        controller.getCurrentPlayer().setStatus(Player.Status.MOVE); // p1
-        controller.movePuck("g7", "d7");
+        controller.getCurrentPlayer().setPuck("g7", new Puck(controller.getCurrentPlayer())); // p1
+        controller.getCurrentPlayer().setPuck("g4", new Puck(controller.getCurrentPlayer())); // p2
+        controller.getCurrentPlayer().setStatus(controller.getCurrentPlayer().getMOVE()); // p1
+        controller.getCurrentPlayer().movePuck("g7", "d7");
 
         Junction check;
         check = this.board.get("g7");

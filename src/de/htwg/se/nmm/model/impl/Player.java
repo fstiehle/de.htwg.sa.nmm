@@ -1,35 +1,44 @@
 package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.IPlayerState;
+
 public class Player {
 
     private static final int NUM_PUCKS = 9;
 
     public enum Man {
         WHITE,
-        BLACK;
+        BLACK,
     }
 
-    public enum Status {
-        SET,
-        MOVE,
-        PICK,
-        HOP,
-        GAME_LOST
-    }
+    private IPlayerState SET;
+    private IPlayerState MOVE;
+    private IPlayerState PICK;
+    private IPlayerState HOP;
+
+    private IPlayerState currentState;
+    boolean gameLost;
 
     private final Man man;
     private final String name;
-    private Status status;
+    //private Status status;
     private int numPucks;
     private int numPucksTakenAway;
 
-    public Player(String name, Man man) {
+    public Player(String name, Man man, GameController controller) {
         this.name = name;
-
         this.man = man;
-        this.status = Status.SET;
         this.numPucks = NUM_PUCKS;
         this.numPucksTakenAway = 0;
+
+        this.SET = new PlayerSET(this, controller);
+        this.MOVE = new PlayerMOVE(this, controller);
+        this.PICK = new PlayerPICK(this, controller);
+        this.HOP = new PlayerHOP(this, controller);
+
+        this.currentState = this.SET;
+        this.gameLost = false;
     }
 
     public int getNumPucks() {
@@ -59,16 +68,20 @@ public class Player {
         return this.numPucks > 0;
     }
 
-    public Status getStatus() {
-        return this.status;
+    public IPlayerState getStatus() {
+        return this.currentState;
     }
 
-    public boolean isStatus(Status status) {
-        return this.status == status;
+    public boolean isStatus(IPlayerState status) {
+        return this.currentState.equals(status);
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(IPlayerState status) {
+        this.currentState = status;
+    }
+
+    public boolean hasLost() {
+        return gameLost;
     }
 
     public Man getMan() {
@@ -77,6 +90,35 @@ public class Player {
 
     public String getName() {
         return this.name;
+    }
+
+    /* State behaviour */
+    public void setPuck(String s, Puck puck) {
+        currentState.setPuck(s, puck);
+    }
+
+    public void pickPuck(String s) {
+        currentState.pickPuck(s);
+    }
+
+    public void movePuck(String from, String to) {
+        currentState.movePuck(from, to);
+    }
+
+    public IPlayerState getHOP() {
+        return HOP;
+    }
+
+    public IPlayerState getSET() {
+        return SET;
+    }
+
+    public IPlayerState getMOVE() {
+        return MOVE;
+    }
+
+    public IPlayerState getPICK() {
+        return PICK;
     }
 
     @Override

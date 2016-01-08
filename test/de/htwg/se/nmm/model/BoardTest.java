@@ -1,5 +1,6 @@
-package de.htwg.se.nmm.model.impl;
+package de.htwg.se.nmm.model;
 
+import de.htwg.se.nmm.model.impl.Board;
 import org.junit.Before;
 import org.junit.Test;
 

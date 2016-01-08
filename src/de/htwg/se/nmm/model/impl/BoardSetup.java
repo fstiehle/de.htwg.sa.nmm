@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.model.impl.Junction;
+
 public abstract class BoardSetup {
 
     //Initial Board Setup:

@@ -1,5 +1,10 @@
-package de.htwg.se.nmm.model.impl;
+package de.htwg.se.nmm.model;
 
+import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.model.impl.Junction;
+import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.model.impl.Puck;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -12,7 +17,7 @@ public class JunctionTest {
         this.tJ = new Junction();
         this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
 
-        puck = new Puck(new Player("tmptest", Player.Man.BLACK));
+        puck = new Puck(new Player("tmptest", Player.Man.BLACK, new GameController(new Board())));
     }
 
     @After
