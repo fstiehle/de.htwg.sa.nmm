@@ -1,4 +1,4 @@
-package de.htwg.se.util.observer;
+package de.htwg.se.nmm.util.observer;
 
 import static org.junit.Assert.*;
 

@@ -1,9 +1,8 @@
-package de.htwg.se.nmm.controller;
+package de.htwg.se.nmm.controller.impl;
 
-import de.htwg.se.nmm.entities.*;
-import de.htwg.se.util.observer.Observable;
+import de.htwg.se.nmm.model.impl.*;
+import de.htwg.se.nmm.util.observer.Observable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 

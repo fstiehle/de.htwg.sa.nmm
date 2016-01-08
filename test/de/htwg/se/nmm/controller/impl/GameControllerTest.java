@@ -1,10 +1,9 @@
-package de.htwg.se.nmm.controller;
+package de.htwg.se.nmm.controller.impl;
 
-import de.htwg.se.nmm.entities.Board;
-import de.htwg.se.nmm.entities.Junction;
-import de.htwg.se.nmm.entities.Player;
-import de.htwg.se.nmm.entities.Puck;
-import de.htwg.se.nmm.tui.TextUI;
+import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.model.impl.Junction;
+import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.model.impl.Puck;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;

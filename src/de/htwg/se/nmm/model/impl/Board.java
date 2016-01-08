@@ -1,4 +1,4 @@
-package de.htwg.se.nmm.entities;
+package de.htwg.se.nmm.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;

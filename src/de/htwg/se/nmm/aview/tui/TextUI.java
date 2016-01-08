@@ -1,10 +1,10 @@
-package de.htwg.se.nmm.tui;
+package de.htwg.se.nmm.aview.tui;
 
-import de.htwg.se.nmm.entities.Junction;
-import de.htwg.se.nmm.entities.Player;
-import de.htwg.se.nmm.entities.Puck;
-import de.htwg.se.util.observer.IObserver;
-import de.htwg.se.nmm.controller.GameController;
+import de.htwg.se.nmm.model.impl.Junction;
+import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.model.impl.Puck;
+import de.htwg.se.nmm.util.observer.IObserver;
+import de.htwg.se.nmm.controller.impl.GameController;
 
 import java.util.Map;
 

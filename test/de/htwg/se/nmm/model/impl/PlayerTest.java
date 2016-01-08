@@ -1,8 +1,8 @@
-package de.htwg.se.nmm.entities;
+package de.htwg.se.nmm.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-import de.htwg.se.nmm.entities.Player.Man;
+import de.htwg.se.nmm.model.impl.Player.Man;
 
 import static org.junit.Assert.*;
 

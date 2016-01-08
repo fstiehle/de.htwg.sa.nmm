@@ -1,9 +1,7 @@
-package de.htwg.se.nmm.entities;
+package de.htwg.se.nmm.model.impl;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Map;
 
 import static org.junit.Assert.*;
 

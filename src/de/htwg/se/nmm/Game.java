@@ -1,9 +1,9 @@
 package de.htwg.se.nmm;
 
 import java.util.Scanner;
-import de.htwg.se.nmm.controller.GameController;
-import de.htwg.se.nmm.entities.Board;
-import de.htwg.se.nmm.tui.TextUI;
+import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.aview.tui.TextUI;
 
 public class Game {
 
