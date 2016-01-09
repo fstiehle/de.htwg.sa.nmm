@@ -4,8 +4,8 @@ import de.htwg.se.nmm.model.impl.Junction;
 
 public abstract class BoardSetup {
 
-    //Initial Board Setup:
-    //See Board Template for reference
+    //Initial BoardImage Setup:
+    //See BoardImage Template for reference
     //a1---------a4--------a7
     Junction a1 = new Junction();
     Junction a4 = new Junction();

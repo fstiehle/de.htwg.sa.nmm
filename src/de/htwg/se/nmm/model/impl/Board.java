@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * Builds and Returns the main board
- * The Board is comprised of Junctions
+ * The BoardImage is comprised of Junctions
  * 24 junctions
  */
 public class Board extends BoardSetup implements IBoard {

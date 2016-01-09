@@ -2,6 +2,7 @@ package de.htwg.se.nmm;
 
 import java.util.Scanner;
 
+import de.htwg.se.nmm.aview.gui.MasterFrame;
 import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.aview.tui.TextUI;
 
@@ -13,6 +14,7 @@ public final class Game {
 
     private static Scanner scanner;
     private static TextUI tui;
+    private static MasterFrame gui;
     private IGameController controller;
     private static Game instance = null;
 
@@ -38,7 +40,7 @@ public final class Game {
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
-
+        gui = injector.getInstance(MasterFrame.class);
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();
     }
