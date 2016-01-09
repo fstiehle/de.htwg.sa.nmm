@@ -1,24 +1,56 @@
 package de.htwg.se.nmm;
 
 import java.util.Scanner;
-import de.htwg.se.nmm.controller.impl.GameController;
-import de.htwg.se.nmm.model.impl.Board;
+
+import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.aview.tui.TextUI;
 
-public class Game {
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
-    static Scanner scanner;
 
-    private Game() {}
+public final class Game {
+
+    private static Scanner scanner;
+    private static TextUI tui;
+    private IGameController controller;
+    private static Game instance = null;
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    public IGameController getController() {
+        return controller;
+    }
+
+    public TextUI getTUI() {
+        return tui;
+    }
+
+    private Game() {
+        // Set up Google Guice Dependency Injector
+        Injector injector = Guice.createInjector(new GameModule());
+
+        // Build up the application, resolving dependencies automatically by Guice
+        controller = injector.getInstance(IGameController.class);
+        controller.setInjector(injector);
+
+        tui = injector.getInstance(TextUI.class);
+        tui.printTUI();
+    }
 
     public static void main(String[] args) {
-        TextUI textUI = new TextUI(new GameController(new Board()));
-        textUI.printTUI();
+
+        Game.getInstance();
 
         boolean game = true; // quit on -q
         scanner = new Scanner(System.in);
         while (game) {
-            game = textUI.processInputLine(scanner.next());
+            game = tui.processInputLine(scanner.next());
         }
     }
 }

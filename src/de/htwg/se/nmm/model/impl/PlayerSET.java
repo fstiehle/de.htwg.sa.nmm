@@ -15,7 +15,7 @@ public class PlayerSET implements IPlayerState {
 
     @Override
     public void setPuck(String s, Puck puck) {
-        Junction j = controller.getBoard().get(s);
+        Junction j = controller.getBoard().getBoardMap().get(s);
 
         if(j == null) {
             controller.addStatusMessage("Illegal move, please check your coordinates.");

@@ -1,27 +1,33 @@
 package de.htwg.se.nmm.controller.impl;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
+import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.model.IBoard;
-import de.htwg.se.nmm.model.impl.Junction;
+import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.impl.Player;
-import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
-public class GameController extends Observable {
+@Singleton
+public class GameController extends Observable implements IGameController {
 
     private static final int HOP_THRESHOLD = 6;
     private static final int LOST_THRESHOLD = 7;
 
     private StringBuilder statusMessage;
-    private Map<String, Junction> board;
-    private Player white;
-    private Player black;
-    private Player currentPlayer;
+    private IPlayer white;
+    private IPlayer black;
+    private IPlayer currentPlayer;
+    private Injector injector;
+    private IBoard board;
 
-    public GameController(IBoard IBoard) {
-        this.board = IBoard.getBoardMap();
+    @Inject
+    public GameController(IBoard board) {
+        this.board = board;
         this.white = null;
         this.black = null;
         this.currentPlayer = null;
@@ -29,7 +35,16 @@ public class GameController extends Observable {
         this.statusMessage.append("Welcome!");
     }
 
-    public Player getOtherPlayer() {
+    public void setInjector(Injector injector) {
+        this.injector = injector;
+    }
+
+    public Injector getInjector() {
+        return this.injector;
+    }
+
+    @Override
+    public IPlayer getOtherPlayer() {
         if (this.currentPlayer == this.white) {
             return this.black;
         } else {
@@ -37,14 +52,15 @@ public class GameController extends Observable {
         }
     }
 
+    @Override
     public void changePlayer() {
-        Player otherPlayer = this.getOtherPlayer();
+        IPlayer otherPlayer = this.getOtherPlayer();
         if (otherPlayer.getPucksTakenAway() == LOST_THRESHOLD) {
             otherPlayer.setStatus(otherPlayer.getSET());
         }
 
         this.currentPlayer = otherPlayer;
-        Player current = otherPlayer;
+        IPlayer current = otherPlayer;
         String name = this.currentPlayer.getName();
 
         if(current.hasLost()) {
@@ -64,10 +80,16 @@ public class GameController extends Observable {
         }
     }
 
-    public Player getCurrentPlayer() {
+    @Override
+    public IPlayer getCurrentIPlayer() {
         return this.currentPlayer;
     }
 
+    public Player getCurrentPlayer() {
+        return (Player) this.currentPlayer;
+    }
+
+    @Override
     public void addStatusMessage(String statusMessage) {
         this.clearStatusMessage();
         this.statusMessage.append("\n");
@@ -78,7 +100,8 @@ public class GameController extends Observable {
         this.statusMessage = new StringBuilder();
     }
 
-    public void millAfterMove(Junction j) {
+    @Override
+    public void millAfterMove(IJunction j) {
         if (checkformill(j, this.currentPlayer)) {
             this.addStatusMessage("Congratulations, Sir!\n" +
                     "You may now pick one of your opponents pucks that is not part of a mill.");
@@ -88,7 +111,8 @@ public class GameController extends Observable {
         }
     }
 
-    public boolean checkformill(Junction j, Player p) {
+    @Override
+    public boolean checkformill(IJunction j, IPlayer p) {
         int mill = -1;
         mill += checkformillR(j, 0, "Down", p);
         mill += checkformillR(j, 0, "Up", p);
@@ -106,7 +130,7 @@ public class GameController extends Observable {
         return false;
     }
 
-    private int checkformillR(Junction j, int sum, String direction, Player p) {
+    private int checkformillR(IJunction j, int sum, String direction, IPlayer p) {
         int t = 1;
         Method method;
 
@@ -115,10 +139,10 @@ public class GameController extends Observable {
             method = j.getClass().getMethod(m);
 
             if (method.invoke(j) != null) {
-                if (((Junction) method.invoke(j)).hasPuck() &&
-                        ((Junction) method.invoke(j)).getPuck().getPlayer().equals(p)) {
+                if (((IJunction) method.invoke(j)).hasPuck() &&
+                        ((IJunction) method.invoke(j)).getPuck().getPlayer().equals(p)) {
                     t += sum;
-                    t += checkformillR((Junction) method.invoke(j), sum + 1, direction, p);
+                    t += checkformillR((IJunction) method.invoke(j), sum + 1, direction, p);
                 }
             }
         } catch (Exception e) {
@@ -127,28 +151,29 @@ public class GameController extends Observable {
         return t;
     }
 
+    @Override
     public void update() {
         notifyObservers();
     }
 
-    public Map<String, Junction> getBoard() {
+    @Override
+    public IBoard getBoard() {
         return board;
     }
 
+    @Override
     public void createPlayer(String name1, String name2) {
         this.white = new Player(name1, Player.Man.WHITE, this);
         this.black = new Player(name2, Player.Man.BLACK, this);
         this.currentPlayer = this.white;
     }
 
-    public Puck createPuck() {
-        return new Puck(this.currentPlayer);
-    }
-
+    @Override
     public String getBoardString() {
         return board.toString();
     }
 
+    @Override
     public String getStatus() {
         return this.statusMessage.toString();
     }

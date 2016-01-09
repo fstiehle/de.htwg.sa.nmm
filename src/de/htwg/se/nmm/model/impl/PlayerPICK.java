@@ -20,7 +20,7 @@ public class PlayerPICK implements IPlayerState {
 
     @Override
     public void pickPuck(String s) {
-        Junction j = controller.getBoard().get(s);
+        Junction j = controller.getBoard().getBoardMap().get(s);
 
         if(j == null) {
             controller.addStatusMessage("Illegal move, please check your coordinates.");

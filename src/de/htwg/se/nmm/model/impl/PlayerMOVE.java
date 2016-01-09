@@ -25,8 +25,8 @@ public class PlayerMOVE implements IPlayerState {
 
     @Override
     public void movePuck(String from, String to) {
-        Junction jFrom = controller.getBoard().get(from);
-        Junction jTo = controller.getBoard().get(to);
+        Junction jFrom = controller.getBoard().getBoardMap().get(from);
+        Junction jTo = controller.getBoard().getBoardMap().get(to);
 
         if(jFrom == null || jTo == null) {
             controller.addStatusMessage("Illegal move, please check your coordinates.");

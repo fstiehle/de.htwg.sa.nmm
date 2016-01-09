@@ -2,15 +2,11 @@ package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.controller.impl.GameController;
 import de.htwg.se.nmm.model.IPlayerState;
+import de.htwg.se.nmm.model.IPuck;
 
-public class Player {
+public class Player implements de.htwg.se.nmm.model.IPlayer {
 
     private static final int NUM_PUCKS = 9;
-
-    public enum Man {
-        WHITE,
-        BLACK,
-    }
 
     private IPlayerState SET;
     private IPlayerState MOVE;
@@ -40,14 +36,17 @@ public class Player {
         this.gameLost = false;
     }
 
+    @Override
     public int getNumPucks() {
         return this.numPucks;
     }
 
+    @Override
     public int getPucksTakenAway() {
         return numPucksTakenAway;
     }
 
+    @Override
     public void decrementPucks() {
         if (this.numPucks == 0) {
             throw new RuntimeException("No Pucks left");
@@ -55,63 +54,78 @@ public class Player {
         this.numPucks--;
     }
 
+    @Override
     public void incrementPucksTakenAway() {
         this.numPucksTakenAway++;
     }
 
+    @Override
     public boolean hasPucks() {
         return this.numPucks > 0;
     }
 
+    @Override
     public IPlayerState getStatus() {
         return this.currentState;
     }
 
+    @Override
     public boolean isStatus(IPlayerState status) {
         return this.currentState.equals(status);
     }
 
+    @Override
     public void setStatus(IPlayerState status) {
         this.currentState = status;
     }
 
+    @Override
     public boolean hasLost() {
         return gameLost;
     }
 
+    @Override
     public Man getMan() {
         return this.man;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
     /* State behaviour */
-    public void setPuck(String s, Puck puck) {
-        currentState.setPuck(s, puck);
+    @Override
+    public void setPuck(String s, IPuck puck) {
+        currentState.setPuck(s, (Puck) puck);
     }
 
+    @Override
     public void pickPuck(String s) {
         currentState.pickPuck(s);
     }
 
+    @Override
     public void movePuck(String from, String to) {
         currentState.movePuck(from, to);
     }
 
+    @Override
     public IPlayerState getHOP() {
         return HOP;
     }
 
+    @Override
     public IPlayerState getSET() {
         return SET;
     }
 
+    @Override
     public IPlayerState getMOVE() {
         return MOVE;
     }
 
+    @Override
     public IPlayerState getPICK() {
         return PICK;
     }

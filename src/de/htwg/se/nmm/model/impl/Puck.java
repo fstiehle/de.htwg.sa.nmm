@@ -1,15 +1,23 @@
 package de.htwg.se.nmm.model.impl;
+import com.google.inject.Inject;
+import de.htwg.se.nmm.model.IPlayer;
 
-public class Puck {
+public class Puck implements de.htwg.se.nmm.model.IPuck {
 
-    private final Player player;
+    private IPlayer player;
 
-    public Puck(Player player) {
+    @Inject
+    public Puck() {
+        this.player = null;
+    }
+
+    public void setPlayer(IPlayer player) {
         this.player = player;
     }
 
+    @Override
     public Player getPlayer() {
-        return this.player;
+        return (Player) this.player;
     }
 
 }

@@ -16,8 +16,6 @@ public class JunctionTest {
     public void setUp() throws Exception {
         this.tJ = new Junction();
         this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
-
-        puck = new Puck(new Player("tmptest", Player.Man.BLACK, new GameController(new Board())));
     }
 
     @After
