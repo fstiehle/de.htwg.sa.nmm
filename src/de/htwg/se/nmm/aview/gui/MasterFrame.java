@@ -2,6 +2,7 @@ package de.htwg.se.nmm.aview.gui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.util.observer.IObserver;
 
 import javax.imageio.ImageIO;
@@ -11,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MasterFrame extends JFrame implements IObserver {
 
@@ -19,6 +22,8 @@ public class MasterFrame extends JFrame implements IObserver {
     private final String resourcePath = "src/de/htwg/se/nmm/aview/gui/";
     private final String boardImageUrl = "board.png";
     private final String puckImageUrl = "puck.png";
+
+    Map<String, JunctionPanel> jpMap = new HashMap<>();
 
     /* Where everything comes together */
     JPanel MasterPanel;
@@ -78,66 +83,42 @@ public class MasterFrame extends JFrame implements IObserver {
         seventhRow = gColumn = 849;
 
         //a1---------a4--------a7
-        JunctionPanel a1 = new JunctionPanel(puckImage, firstRow, aColumn, mA);
-        a1.setName("a1");
-        JunctionPanel a4 = new JunctionPanel(puckImage, fourthRow, aColumn, mA);
-        a4.setName("a4");
-        JunctionPanel a7 = new JunctionPanel(puckImage, seventhRow, aColumn, mA);
-        a7.setName("a7");
+        JunctionPanel a1 = new JunctionPanel("a1", jpMap, firstRow, aColumn, mA);
+        JunctionPanel a4 = new JunctionPanel("a4", jpMap, fourthRow, aColumn, mA);
+        JunctionPanel a7 = new JunctionPanel("a7", jpMap, seventhRow, aColumn, mA);
 
         //----b2-----b4-----b6----
-        JunctionPanel b2 = new JunctionPanel(puckImage, secondRow, bColumn, mA);
-        b2.setName("b2");
-        JunctionPanel b4 = new JunctionPanel(puckImage, fourthRow, bColumn, mA);
-        b4.setName("b4");
-        JunctionPanel b6 = new JunctionPanel(puckImage, sixthRow, bColumn, mA);
-        b6.setName("b6");
+        JunctionPanel b2 = new JunctionPanel("b2", jpMap, secondRow, bColumn, mA);
+        JunctionPanel b4 = new JunctionPanel("b4", jpMap, fourthRow, bColumn, mA);
+        JunctionPanel b6 = new JunctionPanel("b6", jpMap, sixthRow, bColumn, mA);
 
         //-------c3--c4--c5-------
-        JunctionPanel c3 = new JunctionPanel(puckImage, thirdRow, cColumn, mA);
-        c3.setName("c3");
-        JunctionPanel c4 = new JunctionPanel(puckImage, fourthRow, cColumn, mA);
-        c4.setName("c4");
-        JunctionPanel c5 = new JunctionPanel(puckImage, fifthRow, cColumn, mA);
-        c5.setName("c5");
+        JunctionPanel c3 = new JunctionPanel("c3", jpMap, thirdRow, cColumn, mA);
+        JunctionPanel c4 = new JunctionPanel("c4", jpMap, fourthRow, cColumn, mA);
+        JunctionPanel c5 = new JunctionPanel("c5", jpMap, fifthRow, cColumn, mA);
 
         //d1--d2--d3-----d5--d6--d7
-        JunctionPanel d1 = new JunctionPanel(puckImage, firstRow, dColumn, mA);
-        d1.setName("d1");
-        JunctionPanel d2 = new JunctionPanel(puckImage, secondRow, dColumn, mA);
-        d2.setName("d2");
-        JunctionPanel d3 = new JunctionPanel(puckImage, thirdRow, dColumn, mA);
-        d3.setName("d3");
-        JunctionPanel d5 = new JunctionPanel(puckImage, fifthRow, dColumn, mA);
-        d5.setName("d5");
-        JunctionPanel d6 = new JunctionPanel(puckImage, sixthRow, dColumn, mA);
-        d6.setName("d6");
-        JunctionPanel d7 = new JunctionPanel(puckImage, seventhRow, dColumn, mA);
-        d7.setName("d7");
+        JunctionPanel d1 = new JunctionPanel("d1", jpMap, firstRow, dColumn, mA);
+        JunctionPanel d2 = new JunctionPanel("d2", jpMap, secondRow, dColumn, mA);
+        JunctionPanel d3 = new JunctionPanel("d3", jpMap, thirdRow, dColumn, mA);
+        JunctionPanel d5 = new JunctionPanel("d5", jpMap, fifthRow, dColumn, mA);
+        JunctionPanel d6 = new JunctionPanel("d6", jpMap, sixthRow, dColumn, mA);
+        JunctionPanel d7 = new JunctionPanel("d7", jpMap, seventhRow, dColumn, mA);;
 
         //-------e3--e4--e5-------
-        JunctionPanel e3 = new JunctionPanel(puckImage, thirdRow, eColumn, mA);
-        e3.setName("e3");
-        JunctionPanel e4 = new JunctionPanel(puckImage, fourthRow, eColumn, mA);
-        e4.setName("e4");
-        JunctionPanel e5 = new JunctionPanel(puckImage, fifthRow, eColumn, mA);
-        e5.setName("e5");
+        JunctionPanel e3 = new JunctionPanel("e3", jpMap, thirdRow, eColumn, mA);
+        JunctionPanel e4 = new JunctionPanel("e4", jpMap, fourthRow, eColumn, mA);
+        JunctionPanel e5 = new JunctionPanel("e5", jpMap, fifthRow, eColumn, mA);
 
         //----f2-----f4-----f6----
-        JunctionPanel f2 = new JunctionPanel(puckImage, secondRow, fColumn, mA);
-        f2.setName("f2");
-        JunctionPanel f4 = new JunctionPanel(puckImage, fourthRow, fColumn, mA);
-        f4.setName("f4");
-        JunctionPanel f6 = new JunctionPanel(puckImage, sixthRow, fColumn, mA);
-        f6.setName("f6");
+        JunctionPanel f2 = new JunctionPanel("f2", jpMap, secondRow, fColumn, mA);
+        JunctionPanel f4 = new JunctionPanel("f4", jpMap, fourthRow, fColumn, mA);
+        JunctionPanel f6 = new JunctionPanel("f6", jpMap, sixthRow, fColumn, mA);
 
         //g1---------g4--------g7
-        JunctionPanel g1 = new JunctionPanel(puckImage, firstRow, gColumn, mA);
-        g1.setName("g1");
-        JunctionPanel g4 = new JunctionPanel(puckImage, fourthRow, gColumn, mA);
-        g4.setName("g4");
-        JunctionPanel g7 = new JunctionPanel(puckImage, seventhRow, gColumn, mA);
-        g7.setName("g7");
+        JunctionPanel g1 = new JunctionPanel("g1", jpMap, firstRow, gColumn, mA);
+        JunctionPanel g4 = new JunctionPanel("g4", jpMap, fourthRow, gColumn, mA);
+        JunctionPanel g7 = new JunctionPanel("g7", jpMap, seventhRow, gColumn, mA);
 
         /* Console */
         consolePanel = new JPanel();
@@ -154,11 +135,9 @@ public class MasterFrame extends JFrame implements IObserver {
         JComponent board = new BoardImage(boardImage);
         board.setLayout(null);
 
-        board.add(a1); board.add(a4); board.add(a7); board.add(b2); board.add(b4);
-        board.add(c3); board.add(c4); board.add(c5); board.add(d1); board.add(d2);
-        board.add(d3); board.add(d5); board.add(d6); board.add(d7); board.add(e3);
-        board.add(e4); board.add(e5); board.add(f2); board.add(f4); board.add(f6);
-        board.add(g1); board.add(g4); board.add(g7); board.add(b6);
+        for (Map.Entry<String, JunctionPanel> entry: jpMap.entrySet()) {
+            board.add(entry.getValue());
+        }
 
         JPanel InteractiveBoard = new JPanel();
         InteractiveBoard.setLayout(new BoxLayout(InteractiveBoard, BoxLayout.X_AXIS));
@@ -180,6 +159,15 @@ public class MasterFrame extends JFrame implements IObserver {
     }
 
     private void refreshGUI() {
+        Map<String, Junction> board = controller.getBoard().getBoardMap();
+
+        for (Map.Entry<String, Junction> entryx : board.entrySet()) {
+            for (Map.Entry<String, JunctionPanel> entryy: jpMap.entrySet()) {
+                if(entryx.getKey().equals(entryy.getKey()) && entryx.getValue().hasPuck()) {
+                    entryy.getValue().say();
+                }
+            }
+        }
 
     }
 }

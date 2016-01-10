@@ -26,8 +26,5 @@ public class MouseAdapterHandler extends MouseAdapter {
             controller.getCurrentIPlayer().setPuck(name, p);
             controller.update();
         }
-
-        System.out.println(controller.getBoard().getBoardMap());
-
     }
 }

@@ -4,15 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 public class JunctionPanel extends AbstractButton {
 
-    BufferedImage image;
     int x;
     int y;
 
-    public JunctionPanel(BufferedImage image, int y, int x, MouseAdapter m) {
-        this.image = image;
+    public JunctionPanel(String name, Map map, int y, int x, MouseAdapter m) {
+
+        map.put(name, this);
+        this.setName(name);
         this.x = x;
         this.y = y;
         this.setBounds(x-15, y-15, 50, 50);
@@ -26,4 +28,7 @@ public class JunctionPanel extends AbstractButton {
         setBorder(BorderFactory.createTitledBorder(this.getName()));
     }
 
+    public void say() {
+        System.out.println(getName());
+    }
 }
