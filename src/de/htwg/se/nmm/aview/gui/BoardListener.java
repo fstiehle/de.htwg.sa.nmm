@@ -10,9 +10,8 @@ public class BoardListener implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent arg0) {
-        Rectangle b = arg0.getComponent().getBounds();
-        arg0.getComponent().setBounds(b.x, b.y, b.width, b.width);
-
+        //Rectangle b = arg0.getComponent().getBounds();
+        //arg0.getComponent().setBounds(b.x, b.y, b.width, b.width);
     }
 
     @Override
