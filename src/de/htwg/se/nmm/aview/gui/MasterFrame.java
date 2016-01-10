@@ -7,7 +7,6 @@ import de.htwg.se.nmm.util.observer.IObserver;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,11 +27,6 @@ public class MasterFrame extends JFrame implements IObserver {
     JPanel consolePanel;
     String statusMessage;
     BufferedImage puckImage;
-
-    @Override
-    public void update() {
-
-    }
 
     @Inject
     public MasterFrame(final IGameController controller) {
@@ -64,6 +58,9 @@ public class MasterFrame extends JFrame implements IObserver {
             e.printStackTrace();
         }
 
+        /* Mouse Adapter */
+        java.awt.event.MouseAdapter mA = new MouseAdapterHandler(controller);
+
         /* Junctions y / x */
         final int firstRow, aColumn;
         firstRow = aColumn = 30;
@@ -81,42 +78,66 @@ public class MasterFrame extends JFrame implements IObserver {
         seventhRow = gColumn = 849;
 
         //a1---------a4--------a7
-        JunctionPanel a1 = new JunctionPanel(puckImage, firstRow, aColumn);
-        JunctionPanel a4 = new JunctionPanel(puckImage, fourthRow, aColumn);
-        JunctionPanel a7 = new JunctionPanel(puckImage, seventhRow, aColumn);
+        JunctionPanel a1 = new JunctionPanel(puckImage, firstRow, aColumn, mA);
+        a1.setName("a1");
+        JunctionPanel a4 = new JunctionPanel(puckImage, fourthRow, aColumn, mA);
+        a4.setName("a4");
+        JunctionPanel a7 = new JunctionPanel(puckImage, seventhRow, aColumn, mA);
+        a7.setName("a7");
 
         //----b2-----b4-----b6----
-        JunctionPanel b2 = new JunctionPanel(puckImage, secondRow, bColumn);
-        JunctionPanel b4 = new JunctionPanel(puckImage, fourthRow, bColumn);
-        JunctionPanel b6 = new JunctionPanel(puckImage, sixthRow, bColumn);
+        JunctionPanel b2 = new JunctionPanel(puckImage, secondRow, bColumn, mA);
+        b2.setName("b2");
+        JunctionPanel b4 = new JunctionPanel(puckImage, fourthRow, bColumn, mA);
+        b4.setName("b4");
+        JunctionPanel b6 = new JunctionPanel(puckImage, sixthRow, bColumn, mA);
+        b6.setName("b6");
 
         //-------c3--c4--c5-------
-        JunctionPanel c3 = new JunctionPanel(puckImage, thirdRow, cColumn);
-        JunctionPanel c4 = new JunctionPanel(puckImage, fourthRow, cColumn);
-        JunctionPanel c5 = new JunctionPanel(puckImage, fifthRow, cColumn);
+        JunctionPanel c3 = new JunctionPanel(puckImage, thirdRow, cColumn, mA);
+        c3.setName("c3");
+        JunctionPanel c4 = new JunctionPanel(puckImage, fourthRow, cColumn, mA);
+        c4.setName("c4");
+        JunctionPanel c5 = new JunctionPanel(puckImage, fifthRow, cColumn, mA);
+        c5.setName("c5");
 
         //d1--d2--d3-----d5--d6--d7
-        JunctionPanel d1 = new JunctionPanel(puckImage, firstRow, dColumn);
-        JunctionPanel d2 = new JunctionPanel(puckImage, secondRow, dColumn);
-        JunctionPanel d3 = new JunctionPanel(puckImage, thirdRow, dColumn);
-        JunctionPanel d5 = new JunctionPanel(puckImage, fifthRow, dColumn);
-        JunctionPanel d6 = new JunctionPanel(puckImage, sixthRow, dColumn);
-        JunctionPanel d7 = new JunctionPanel(puckImage, seventhRow, dColumn);
+        JunctionPanel d1 = new JunctionPanel(puckImage, firstRow, dColumn, mA);
+        d1.setName("d1");
+        JunctionPanel d2 = new JunctionPanel(puckImage, secondRow, dColumn, mA);
+        d2.setName("d2");
+        JunctionPanel d3 = new JunctionPanel(puckImage, thirdRow, dColumn, mA);
+        d3.setName("d3");
+        JunctionPanel d5 = new JunctionPanel(puckImage, fifthRow, dColumn, mA);
+        d5.setName("d5");
+        JunctionPanel d6 = new JunctionPanel(puckImage, sixthRow, dColumn, mA);
+        d6.setName("d6");
+        JunctionPanel d7 = new JunctionPanel(puckImage, seventhRow, dColumn, mA);
+        d7.setName("d7");
 
         //-------e3--e4--e5-------
-        JunctionPanel e3 = new JunctionPanel(puckImage, thirdRow, eColumn);
-        JunctionPanel e4 = new JunctionPanel(puckImage, fourthRow, eColumn);
-        JunctionPanel e5 = new JunctionPanel(puckImage, fifthRow, eColumn);
+        JunctionPanel e3 = new JunctionPanel(puckImage, thirdRow, eColumn, mA);
+        e3.setName("e3");
+        JunctionPanel e4 = new JunctionPanel(puckImage, fourthRow, eColumn, mA);
+        e4.setName("e4");
+        JunctionPanel e5 = new JunctionPanel(puckImage, fifthRow, eColumn, mA);
+        e5.setName("e5");
 
         //----f2-----f4-----f6----
-        JunctionPanel f2 = new JunctionPanel(puckImage, secondRow, fColumn);
-        JunctionPanel f4 = new JunctionPanel(puckImage, fourthRow, fColumn);
-        JunctionPanel f6 = new JunctionPanel(puckImage, sixthRow, fColumn);
+        JunctionPanel f2 = new JunctionPanel(puckImage, secondRow, fColumn, mA);
+        f2.setName("f2");
+        JunctionPanel f4 = new JunctionPanel(puckImage, fourthRow, fColumn, mA);
+        f4.setName("f4");
+        JunctionPanel f6 = new JunctionPanel(puckImage, sixthRow, fColumn, mA);
+        f6.setName("f6");
 
         //g1---------g4--------g7
-        JunctionPanel g1 = new JunctionPanel(puckImage, firstRow, gColumn);
-        JunctionPanel g4 = new JunctionPanel(puckImage, fourthRow, gColumn);
-        JunctionPanel g7 = new JunctionPanel(puckImage, seventhRow, gColumn);
+        JunctionPanel g1 = new JunctionPanel(puckImage, firstRow, gColumn, mA);
+        g1.setName("g1");
+        JunctionPanel g4 = new JunctionPanel(puckImage, fourthRow, gColumn, mA);
+        g4.setName("g4");
+        JunctionPanel g7 = new JunctionPanel(puckImage, seventhRow, gColumn, mA);
+        g7.setName("g7");
 
         /* Console */
         consolePanel = new JPanel();
@@ -131,7 +152,7 @@ public class MasterFrame extends JFrame implements IObserver {
 
         /* Board */
         JComponent board = new BoardImage(boardImage);
-        board.setLayout(new OverlayLayout(board));
+        board.setLayout(null);
 
         board.add(a1); board.add(a4); board.add(a7); board.add(b2); board.add(b4);
         board.add(c3); board.add(c4); board.add(c5); board.add(d1); board.add(d2);
@@ -150,5 +171,15 @@ public class MasterFrame extends JFrame implements IObserver {
         MasterPanel.setLayout(new BoxLayout(MasterPanel, BoxLayout.Y_AXIS));
         this.setContentPane(MasterPanel);
         this.setVisible(true);
+
+    }
+
+    @Override
+    public void update() {
+        refreshGUI();
+    }
+
+    private void refreshGUI() {
+
     }
 }
