@@ -156,6 +156,7 @@ public class MasterFrame extends JFrame implements IObserver {
     @Override
     public void update() {
         refreshGUI();
+        consoleArea.setText(controller.getStatus());
     }
 
     private void refreshGUI() {
