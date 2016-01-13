@@ -83,6 +83,8 @@ public class GameControllerTest extends TestCase {
 
     @Test
     public void testEmptyPucks() throws Exception {
+
+
         Puck p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
         controller.getCurrentPlayer().setPuck("a1", p); // p1
@@ -97,64 +99,71 @@ public class GameControllerTest extends TestCase {
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        controller.getCurrentPlayer().setPuck("b2", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        controller.getCurrentPlayer().setPuck("b4", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a7", p); // p1
+        controller.getCurrentPlayer().setPuck("b6", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        controller.getCurrentPlayer().setPuck("c3", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        controller.getCurrentPlayer().setPuck("c4", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a7", p); // p1
+        controller.getCurrentPlayer().setPuck("c5", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        controller.getCurrentPlayer().setPuck("e3", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        controller.getCurrentPlayer().setPuck("e4", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a7", p); // p1
+        controller.getCurrentPlayer().setPuck("e5", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        controller.getCurrentPlayer().setPuck("f2", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        controller.getCurrentPlayer().setPuck("f4", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a7", p); // p1
+        controller.getCurrentPlayer().setPuck("f6", p); // p1
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        controller.getCurrentPlayer().setPuck("g1", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        controller.getCurrentPlayer().setPuck("g4", p); // p2
 
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a7", p); // p1
+        controller.getCurrentPlayer().setPuck("g7", p); // p2
 
+        p = new Puck();
+        p.setPlayer(controller.getCurrentIPlayer());
+        controller.getCurrentPlayer().setPuck("d1", p); // p2
+
+        p = new Puck();
+        p.setPlayer(controller.getCurrentIPlayer());
+        controller.getCurrentPlayer().setPuck("d7", p); // p2
 
         Junction check;
 
@@ -173,12 +182,11 @@ public class GameControllerTest extends TestCase {
     public void testMovePucks() throws Exception {
 
         Puck p = new Puck();
-        p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a1", p); // p1
+        p.setPlayer(controller.getCurrentPlayer());
+        controller.getCurrentPlayer().setPuck("g7", p); // p1
 
-        p = new Puck();
-        p.setPlayer(controller.getCurrentIPlayer());
-        controller.getCurrentPlayer().setPuck("a4", p); // p2
+        p.setPlayer(controller.getOtherPlayer());
+        controller.getCurrentPlayer().setPuck("g4", p); // p2
 
         controller.getCurrentPlayer().setStatus(controller.getCurrentPlayer().getMOVE()); // p1
         controller.getCurrentPlayer().movePuck("g7", "d7");
