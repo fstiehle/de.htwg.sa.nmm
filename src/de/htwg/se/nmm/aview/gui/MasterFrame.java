@@ -2,9 +2,7 @@ package de.htwg.se.nmm.aview.gui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
-import de.htwg.se.nmm.model.IBoard;
-import de.htwg.se.nmm.model.IPlayer;
-import de.htwg.se.nmm.model.impl.Junction;
+import de.htwg.se.nmm.model.impl.Junction; // für die HashMap
 import de.htwg.se.nmm.util.observer.IObserver;
 
 import javax.imageio.ImageIO;
@@ -14,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class MasterFrame extends JFrame implements IObserver {
@@ -23,7 +20,6 @@ public class MasterFrame extends JFrame implements IObserver {
     BufferedImage boardImage;
     private final String resourcePath = "src/de/htwg/se/nmm/aview/gui/";
     private final String boardImageUrl = "board.png";
-    private final String puckImageUrl = "puck.png";
 
     /* Where everything comes together */
     JPanel MasterPanel;
@@ -31,7 +27,6 @@ public class MasterFrame extends JFrame implements IObserver {
     JTextArea consoleArea;
     JPanel consolePanel;
     String statusMessage;
-    BufferedImage puckImage;
     String manual = "\nUse Your Mouse to Interact with the Board.\n" +
             "This statusbar will give you required information about your current state.";
 
@@ -45,7 +40,6 @@ public class MasterFrame extends JFrame implements IObserver {
 
         /* Settings */
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.addComponentListener(new BoardListener());
         this.setSize(new Dimension(900, 1020));
         this.setResizable(false); // for now
 
@@ -53,14 +47,6 @@ public class MasterFrame extends JFrame implements IObserver {
             File file = new File(resourcePath + boardImageUrl);
             FileInputStream fis = new FileInputStream(file);
             boardImage = ImageIO.read(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            File file = new File(resourcePath + puckImageUrl);
-            FileInputStream fis = new FileInputStream(file);
-            puckImage = ImageIO.read(fis);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,15 +145,6 @@ public class MasterFrame extends JFrame implements IObserver {
 
     @Override
     public void update() {
-        refreshGUI();
         consoleArea.setText(controller.getStatus());
-    }
-
-    private void refreshGUI() {
-        Map<String, Junction> board = controller.getBoard().getBoardMap();
-
-        for (Map.Entry<String, Junction> entry : board.entrySet()) {
-        }
-
     }
 }
