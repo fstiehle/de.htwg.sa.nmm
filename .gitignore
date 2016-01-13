@@ -2,6 +2,9 @@
 *.iml
 target/
 
+## logger
+*.log
+
 ## Directory-based project format:
 .idea/
 out/
