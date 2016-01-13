@@ -11,11 +11,15 @@ import static org.junit.Assert.*;
 public class JunctionTest {
     Junction tJ;
     Puck puck;
+    Player player;
 
     @Before
     public void setUp() throws Exception {
         this.tJ = new Junction();
         this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
+        this.puck = new Puck();
+        this.player = new Player("tmptest", Player.Man.BLACK, new GameController(new Board()));
+        this.puck.setPlayer(this.player);
     }
 
     @After
