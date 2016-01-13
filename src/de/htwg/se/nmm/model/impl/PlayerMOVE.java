@@ -36,6 +36,10 @@ public class PlayerMOVE implements IPlayerState {
             controller.addStatusMessage("There already is a Puck.");
             return;
         }
+        if(jFrom.getPuck() == null) {
+            controller.addStatusMessage("There is nothing to move.");
+            return;
+        }
         if(!jFrom.getPuck().getPlayer().equals(controller.getCurrentPlayer())) {
             controller.addStatusMessage("That's not your puck unfortunately.");
             return;
