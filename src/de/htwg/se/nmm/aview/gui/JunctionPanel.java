@@ -25,7 +25,7 @@ public class JunctionPanel extends AbstractButton {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        setBorder(BorderFactory.createTitledBorder(this.getName()));
+        //setBorder(BorderFactory.createTitledBorder(this.getName()));
     }
 
     public void say() {
