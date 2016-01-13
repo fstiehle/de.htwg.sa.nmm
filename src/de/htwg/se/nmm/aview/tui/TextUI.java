@@ -6,10 +6,13 @@ import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.util.observer.IObserver;
+import org.apache.log4j.Logger;
 
 import java.util.Map;
 
 public class TextUI implements IObserver {
+
+    private Logger logger;
 
     private IGameController controller;
     String strBoard;
@@ -22,6 +25,7 @@ public class TextUI implements IObserver {
 
     @Inject
     public TextUI(IGameController controller) {
+        this.logger = Logger.getLogger("de.htwg.se.nmm.aview.tui");
 
         this.controller = controller;
         controller.addObserver(this);
@@ -68,6 +72,7 @@ public class TextUI implements IObserver {
         String tmpBoard = refreshBoard();
 
         if(controller.getCurrentIPlayer().hasLost()) {
+            this.logger.info("Hallo Hilfe...");
             System.out.println(ANSI_RED);
             System.out.println(tmpBoard);
             System.out.println(controller.getStatus());
