@@ -140,6 +140,43 @@ public class MasterFrame extends JFrame implements IObserver {
         MasterPanel.setLayout(new BoxLayout(MasterPanel, BoxLayout.Y_AXIS));
         this.setContentPane(MasterPanel);
         this.setVisible(true);
+
+        String p1;
+        String p2;
+
+        String s1 = (String)JOptionPane.showInputDialog(
+                MasterPanel,
+                "Please enter your playername:\n",
+                "First Playername",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "Laurel");
+
+        if ((s1 != null) && (s1.length() > 0)) {
+            p1 = s1;
+        } else {
+            p1 = "Player 1";
+        }
+
+        String s2 = (String)JOptionPane.showInputDialog(
+                MasterPanel,
+                "Please enter your playername:\n",
+                "Second Playername",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                null,
+                "Hardy");
+
+        if ((s2 != null) && (s2.length() > 0)) {
+            p2 = s2;
+        } else {
+            p2 = "Player 2";
+        }
+
+        controller.createPlayer(p1, p2);
+        controller.update();
+
     }
 
     @Override
