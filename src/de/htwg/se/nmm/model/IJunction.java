@@ -3,6 +3,9 @@ package de.htwg.se.nmm.model;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Puck;
 
+import java.awt.event.MouseAdapter;
+import java.util.Map;
+
 public interface IJunction {
 
     void setNeighbours(Junction up, Junction right, Junction down, Junction left);
@@ -28,4 +31,8 @@ public interface IJunction {
     Puck getPuck();
 
     boolean hasPuck();
+
+    String getName();
+
+    void placeOnGui(String name, int y, int x, MouseAdapter m);
 }
