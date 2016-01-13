@@ -42,8 +42,8 @@ public final class Game {
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
-        gui = injector.getInstance(MasterFrame.class);
         tui = injector.getInstance(TextUI.class);
+        gui = injector.getInstance(MasterFrame.class);
         tui.printTUI();
     }
 

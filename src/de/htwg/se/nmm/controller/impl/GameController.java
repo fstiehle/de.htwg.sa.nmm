@@ -32,7 +32,7 @@ public class GameController extends Observable implements IGameController {
         this.black = null;
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
-        this.statusMessage.append("Welcome!");
+        this.statusMessage.append("Welcome! ");
     }
 
     public void setInjector(Injector injector) {
@@ -166,6 +166,8 @@ public class GameController extends Observable implements IGameController {
         this.white = new Player(name1, Player.Man.WHITE, this);
         this.black = new Player(name2, Player.Man.BLACK, this);
         this.currentPlayer = this.white;
+        this.statusMessage.append(this.getCurrentIPlayer().getName());
+        this.statusMessage.append(" may start by setting the first puck.");
     }
 
     @Override

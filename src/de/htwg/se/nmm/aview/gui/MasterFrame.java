@@ -28,7 +28,7 @@ public class MasterFrame extends JFrame implements IObserver {
     JPanel consolePanel;
     String statusMessage;
     String manual = "\nUse Your Mouse to Interact with the Board.\n" +
-            "This statusbar will give you required information about your current state.";
+            "This statusbar will give you required information about your current state.\n";
 
     @Inject
     public MasterFrame(final IGameController controller) {
@@ -140,11 +140,15 @@ public class MasterFrame extends JFrame implements IObserver {
         MasterPanel.setLayout(new BoxLayout(MasterPanel, BoxLayout.Y_AXIS));
         this.setContentPane(MasterPanel);
         this.setVisible(true);
-
     }
 
     @Override
     public void update() {
-        consoleArea.setText(controller.getStatus());
+        String tmpMenu;
+        tmpMenu = controller.getStatus();
+        tmpMenu += "\nPuck's left: " + controller.getCurrentIPlayer().getNumPucks() + " | ";
+        tmpMenu += "You're: "  + controller.getCurrentIPlayer().getMan().toString();
+
+        consoleArea.setText(tmpMenu);
     }
 }
