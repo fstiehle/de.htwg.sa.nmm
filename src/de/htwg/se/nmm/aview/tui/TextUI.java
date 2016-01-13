@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TextUI implements IObserver {
 
-    private Logger logger;
+    private static final Logger logger = Logger.getLogger("de.htwg.se.nmm.aview.tui");
 
     private IGameController controller;
     String strBoard;
@@ -25,8 +25,6 @@ public class TextUI implements IObserver {
 
     @Inject
     public TextUI(IGameController controller) {
-        this.logger = Logger.getLogger("de.htwg.se.nmm.aview.tui");
-
         this.controller = controller;
         controller.addObserver(this);
         this.board = controller.getBoard().getBoardMap();
@@ -72,18 +70,17 @@ public class TextUI implements IObserver {
         String tmpBoard = refreshBoard();
 
         if(controller.getCurrentIPlayer().hasLost()) {
-            this.logger.info("Hallo Hilfe...");
-            System.out.println(ANSI_RED);
-            System.out.println(tmpBoard);
-            System.out.println(controller.getStatus());
+            this.logger.info(ANSI_RED);
+            this.logger.info(tmpBoard);
+            this.logger.info(controller.getStatus());
             System.exit(0);
         }
 
         String tmpMenu = refreshMenu();
 
-        System.out.println(tmpBoard);
-        System.out.println(tmpMenu);
-        System.out.println(controller.getStatus());
+        this.logger.info(tmpBoard);
+        this.logger.info(tmpMenu);
+        this.logger.info(controller.getStatus());
     }
 
     private String refreshBoard() {
