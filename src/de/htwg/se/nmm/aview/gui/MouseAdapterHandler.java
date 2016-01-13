@@ -1,7 +1,9 @@
 package de.htwg.se.nmm.aview.gui;
 
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
+import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Puck;
 
 import java.awt.event.MouseAdapter;
@@ -17,7 +19,7 @@ public class MouseAdapterHandler extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        JunctionPanel panel = (JunctionPanel)e.getSource();
+        Junction panel = (Junction)e.getSource();
         String name = panel.getName();
 
         if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getSET())) {

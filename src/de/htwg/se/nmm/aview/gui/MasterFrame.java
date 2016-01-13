@@ -2,6 +2,8 @@ package de.htwg.se.nmm.aview.gui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.model.IBoard;
+import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.util.observer.IObserver;
 
@@ -22,8 +24,6 @@ public class MasterFrame extends JFrame implements IObserver {
     private final String resourcePath = "src/de/htwg/se/nmm/aview/gui/";
     private final String boardImageUrl = "board.png";
     private final String puckImageUrl = "puck.png";
-
-    Map<String, JunctionPanel> jpMap = new HashMap<>();
 
     /* Where everything comes together */
     JPanel MasterPanel;
@@ -85,42 +85,42 @@ public class MasterFrame extends JFrame implements IObserver {
         seventhRow = gColumn = 849;
 
         //a1---------a4--------a7
-        JunctionPanel a1 = new JunctionPanel("a1", jpMap, firstRow, aColumn, mA);
-        JunctionPanel a4 = new JunctionPanel("a4", jpMap, fourthRow, aColumn, mA);
-        JunctionPanel a7 = new JunctionPanel("a7", jpMap, seventhRow, aColumn, mA);
+        controller.getBoard().getBoardMap().get("a1").placeOnGui("a1", firstRow, aColumn, mA);
+        controller.getBoard().getBoardMap().get("a4").placeOnGui("a4", fourthRow, aColumn, mA);
+        controller.getBoard().getBoardMap().get("a7").placeOnGui("a7", seventhRow, aColumn, mA);
 
         //----b2-----b4-----b6----
-        JunctionPanel b2 = new JunctionPanel("b2", jpMap, secondRow, bColumn, mA);
-        JunctionPanel b4 = new JunctionPanel("b4", jpMap, fourthRow, bColumn, mA);
-        JunctionPanel b6 = new JunctionPanel("b6", jpMap, sixthRow, bColumn, mA);
+        controller.getBoard().getBoardMap().get("b2").placeOnGui("b2", secondRow, bColumn, mA);
+        controller.getBoard().getBoardMap().get("b4").placeOnGui("b4", fourthRow, bColumn, mA);
+        controller.getBoard().getBoardMap().get("b6").placeOnGui("b6", sixthRow, bColumn, mA);
 
         //-------c3--c4--c5-------
-        JunctionPanel c3 = new JunctionPanel("c3", jpMap, thirdRow, cColumn, mA);
-        JunctionPanel c4 = new JunctionPanel("c4", jpMap, fourthRow, cColumn, mA);
-        JunctionPanel c5 = new JunctionPanel("c5", jpMap, fifthRow, cColumn, mA);
+        controller.getBoard().getBoardMap().get("c3").placeOnGui("c3", thirdRow, cColumn, mA);
+        controller.getBoard().getBoardMap().get("c4").placeOnGui("c4", fourthRow, cColumn, mA);
+        controller.getBoard().getBoardMap().get("c5").placeOnGui("c5", fifthRow, cColumn, mA);
 
         //d1--d2--d3-----d5--d6--d7
-        JunctionPanel d1 = new JunctionPanel("d1", jpMap, firstRow, dColumn, mA);
-        JunctionPanel d2 = new JunctionPanel("d2", jpMap, secondRow, dColumn, mA);
-        JunctionPanel d3 = new JunctionPanel("d3", jpMap, thirdRow, dColumn, mA);
-        JunctionPanel d5 = new JunctionPanel("d5", jpMap, fifthRow, dColumn, mA);
-        JunctionPanel d6 = new JunctionPanel("d6", jpMap, sixthRow, dColumn, mA);
-        JunctionPanel d7 = new JunctionPanel("d7", jpMap, seventhRow, dColumn, mA);;
+        controller.getBoard().getBoardMap().get("d1").placeOnGui("d1", firstRow, dColumn, mA);
+        controller.getBoard().getBoardMap().get("d2").placeOnGui("d2", secondRow, dColumn, mA);
+        controller.getBoard().getBoardMap().get("d3").placeOnGui("d3", thirdRow, dColumn, mA);
+        controller.getBoard().getBoardMap().get("d5").placeOnGui("d5", fifthRow, dColumn, mA);
+        controller.getBoard().getBoardMap().get("d6").placeOnGui("d6", sixthRow, dColumn, mA);
+        controller.getBoard().getBoardMap().get("d7").placeOnGui("d7", seventhRow, dColumn, mA);
 
         //-------e3--e4--e5-------
-        JunctionPanel e3 = new JunctionPanel("e3", jpMap, thirdRow, eColumn, mA);
-        JunctionPanel e4 = new JunctionPanel("e4", jpMap, fourthRow, eColumn, mA);
-        JunctionPanel e5 = new JunctionPanel("e5", jpMap, fifthRow, eColumn, mA);
+        controller.getBoard().getBoardMap().get("e3").placeOnGui("e3", thirdRow, eColumn, mA);
+        controller.getBoard().getBoardMap().get("e4").placeOnGui("e4", fourthRow, eColumn, mA);
+        controller.getBoard().getBoardMap().get("e5").placeOnGui("e5", fifthRow, eColumn, mA);
 
         //----f2-----f4-----f6----
-        JunctionPanel f2 = new JunctionPanel("f2", jpMap, secondRow, fColumn, mA);
-        JunctionPanel f4 = new JunctionPanel("f4", jpMap, fourthRow, fColumn, mA);
-        JunctionPanel f6 = new JunctionPanel("f6", jpMap, sixthRow, fColumn, mA);
+        controller.getBoard().getBoardMap().get("f2").placeOnGui("f2", secondRow, fColumn, mA);
+        controller.getBoard().getBoardMap().get("f4").placeOnGui("f4", fourthRow, fColumn, mA);
+        controller.getBoard().getBoardMap().get("f6").placeOnGui("f6", sixthRow, fColumn, mA);
 
         //g1---------g4--------g7
-        JunctionPanel g1 = new JunctionPanel("g1", jpMap, firstRow, gColumn, mA);
-        JunctionPanel g4 = new JunctionPanel("g4", jpMap, fourthRow, gColumn, mA);
-        JunctionPanel g7 = new JunctionPanel("g7", jpMap, seventhRow, gColumn, mA);
+        controller.getBoard().getBoardMap().get("g1").placeOnGui("g1", firstRow, gColumn, mA);
+        controller.getBoard().getBoardMap().get("g4").placeOnGui("g4", fourthRow, gColumn, mA);
+        controller.getBoard().getBoardMap().get("g7").placeOnGui("g7", seventhRow, gColumn, mA);
 
         /* Console */
         consolePanel = new JPanel();
@@ -138,7 +138,8 @@ public class MasterFrame extends JFrame implements IObserver {
         JComponent board = new BoardImage(boardImage);
         board.setLayout(null);
 
-        for (Map.Entry<String, JunctionPanel> entry: jpMap.entrySet()) {
+
+        for (Map.Entry<String, Junction> entry: controller.getBoard().getBoardMap().entrySet()) {
             board.add(entry.getValue());
         }
 
@@ -165,12 +166,7 @@ public class MasterFrame extends JFrame implements IObserver {
     private void refreshGUI() {
         Map<String, Junction> board = controller.getBoard().getBoardMap();
 
-        for (Map.Entry<String, Junction> entryx : board.entrySet()) {
-            for (Map.Entry<String, JunctionPanel> entryy: jpMap.entrySet()) {
-                if(entryx.getKey().equals(entryy.getKey()) && entryx.getValue().hasPuck()) {
-                    entryy.getValue().say();
-                }
-            }
+        for (Map.Entry<String, Junction> entry : board.entrySet()) {
         }
 
     }

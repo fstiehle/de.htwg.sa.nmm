@@ -9,7 +9,6 @@ public class BoardImage extends JComponent {
     public BoardImage(Image image) {
         this.image = image;
 
-
         LayoutManager overlay = new OverlayLayout(this);
         this.setLayout(overlay);
         setMinimumSize(new Dimension(900, 900));
@@ -19,7 +18,6 @@ public class BoardImage extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.clearRect(0,0, getWidth(), getHeight());
         super.paintComponent(g);
         g.drawImage(image, 0, 0, 900, 900, this);
     }

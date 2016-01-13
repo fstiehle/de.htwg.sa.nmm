@@ -56,7 +56,7 @@ public class TextUI implements IObserver {
 
         this.strMenu = strbuilderMenu.toString();
 
-        //controller.createPlayer("Spieler 1", "Spieler 2");
+        controller.createPlayer("Spieler 1", "Spieler 2");
     }
 
     @Override
