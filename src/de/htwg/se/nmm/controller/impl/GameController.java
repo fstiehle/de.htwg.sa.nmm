@@ -125,7 +125,6 @@ public class GameController extends Observable implements IGameController {
         if(mill >= 3) {
             return true;
         }
-
         return false;
     }
 
