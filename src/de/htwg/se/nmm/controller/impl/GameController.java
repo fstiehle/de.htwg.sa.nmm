@@ -8,9 +8,7 @@ import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
-import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Player;
-import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
@@ -162,8 +160,8 @@ public class GameController extends Observable implements IGameController {
 
     @Override
     public void createPlayer(String name1, String name2) {
-        this.white = new Player(name1, Player.Man.WHITE, this);
-        this.black = new Player(name2, Player.Man.BLACK, this);
+        this.white = new Player(name1, Player.Man.WHITE);
+        this.black = new Player(name2, Player.Man.BLACK);
         this.currentPlayer = this.white;
         this.statusMessage.append(this.getCurrentIPlayer().getName());
         this.statusMessage.append(" may start by setting the first puck.");
@@ -181,21 +179,21 @@ public class GameController extends Observable implements IGameController {
 
     @Override
     public void setPuck(String s, IPuck puck) {
-        Junction j = this.getBoard().getBoardMap().get(s);
+        IJunction j = this.getBoard().getBoardMap().get(s);
         try {
             getCurrentIPlayer().getStatus().setPuck(j, puck, this.getCurrentIPlayer());
         } catch (Exception e) {
             this.addStatusMessage(e.getMessage());
             return;
         }
-        j.setPuck((Puck) puck);
+        j.setPuck(puck);
         currentPlayer.decrementPucks();
         this.millAfterMove(j);
     }
 
     @Override
     public void pickPuck(String s) {
-        Junction j = this.getBoard().getBoardMap().get(s);
+        IJunction j = this.getBoard().getBoardMap().get(s);
         try {
             getCurrentIPlayer().getStatus().pickPuck(j, this.getCurrentIPlayer());
         } catch (Exception e) {

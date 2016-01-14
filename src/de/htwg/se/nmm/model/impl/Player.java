@@ -137,9 +137,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         if (o == null || getClass() != o.getClass()) return false;
 
         Player player = (Player) o;
-
         return getMan() == player.getMan();
-
     }
 
     @Override

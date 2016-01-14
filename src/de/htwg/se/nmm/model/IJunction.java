@@ -1,37 +1,36 @@
 package de.htwg.se.nmm.model;
 
-import de.htwg.se.nmm.model.impl.Junction;
-import de.htwg.se.nmm.model.impl.Puck;
-
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 
 public interface IJunction {
 
-    void setNeighbours(Junction up, Junction right, Junction down, Junction left);
+    void setNeighbours(IJunction up, IJunction right, IJunction down, IJunction left);
 
-    void setUp(Junction up);
+    void setUp(IJunction up);
 
     boolean isPressed();
 
     void setPressed(boolean pressed);
 
-    void setRight(Junction right);
+    void setRight(IJunction right);
 
-    void setDown(Junction down);
+    void setDown(IJunction down);
 
-    void setLeft(Junction left);
+    void setLeft(IJunction left);
 
-    void setPuck(Puck puck);
+    void setPuck(IPuck puck);
 
-    Junction getUp();
+    IJunction getUp();
 
-    Junction getRight();
+    IJunction getRight();
 
-    Junction getDown();
+    IJunction getDown();
 
-    Junction getLeft();
+    IJunction getLeft();
 
-    Puck getPuck();
+    IPuck getPuck();
 
     boolean hasPuck();
 

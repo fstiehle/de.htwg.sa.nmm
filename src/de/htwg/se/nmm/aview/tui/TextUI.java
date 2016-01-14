@@ -2,9 +2,8 @@ package de.htwg.se.nmm.aview.tui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
-import de.htwg.se.nmm.model.impl.Junction;
-import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.util.observer.IObserver;
 import org.apache.log4j.Logger;
 
@@ -17,7 +16,7 @@ public class TextUI implements IObserver {
     private IGameController controller;
     String strBoard;
     String strMenu;
-    Map<String, Junction> board;
+    Map<String, IJunction> board;
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -83,7 +82,7 @@ public class TextUI implements IObserver {
 
     private String refreshBoard() {
         String tmpBoard = this.strBoard;
-        for (Map.Entry<String, Junction> entry : board.entrySet()) {
+        for (Map.Entry<String, IJunction> entry : board.entrySet()) {
             tmpBoard = tmpBoard.replace(entry.getKey(), entry.getValue().toString());
         }
 
@@ -116,14 +115,14 @@ public class TextUI implements IObserver {
 
             IPuck p = controller.getInjector().getInstance(IPuck.class);
             p.setPlayer(controller.getCurrentIPlayer());
-            controller.getCurrentIPlayer().setPuck(pos.toString(), p);
+            controller.setPuck(pos.toString(), p);
             controller.update();
         } else if (s.matches("pick\\([a-z]\\d\\)")) {
             StringBuilder pos = new StringBuilder();
             pos.append(s.charAt(5));
             pos.append(s.charAt(6));
 
-            controller.getCurrentIPlayer().pickPuck(pos.toString());
+            controller.pickPuck(pos.toString());
             controller.update();
         } else if (s.matches("move\\([a-z]\\d,[a-z]\\d\\)")) {
             StringBuilder posFrom = new StringBuilder();
@@ -134,7 +133,7 @@ public class TextUI implements IObserver {
             posTo.append(s.charAt(8));
             posTo.append(s.charAt(9));
 
-            controller.getCurrentIPlayer().movePuck(posFrom.toString(), posTo.toString());
+            controller.movePuck(posFrom.toString(), posTo.toString());
             controller.update();
         }
         return game;

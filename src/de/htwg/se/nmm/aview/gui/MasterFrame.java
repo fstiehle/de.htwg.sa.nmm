@@ -2,7 +2,8 @@ package de.htwg.se.nmm.aview.gui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
-import de.htwg.se.nmm.model.impl.Junction; // für die HashMap
+import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.util.observer.IObserver;
 
 import javax.imageio.ImageIO;
@@ -125,8 +126,9 @@ public class MasterFrame extends JFrame implements IObserver {
         board.setLayout(null);
 
 
-        for (Map.Entry<String, Junction> entry: controller.getBoard().getBoardMap().entrySet()) {
-            board.add(entry.getValue());
+        for (Map.Entry<String, IJunction> entry: controller.getBoard().getBoardMap().entrySet()) {
+            Junction j = (Junction) entry.getValue();
+            board.add(j);
         }
 
         JPanel InteractiveBoard = new JPanel();

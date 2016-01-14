@@ -7,9 +7,9 @@ import de.htwg.se.nmm.model.IPuck;
 
 public class PlayerMOVE implements IPlayerState {
 
-    Player player;
+    IPlayer player;
 
-    public PlayerMOVE(Player player) {
+    public PlayerMOVE(IPlayer player) {
         this.player = player;
     }
 

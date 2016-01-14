@@ -1,4 +1,4 @@
-package de.htwg.se.nmm.model;
+package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.model.impl.Puck;
 import org.junit.*;

@@ -1,11 +1,17 @@
-package de.htwg.se.nmm.model;
+package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.aview.gui.MouseAdapterHandler;
 import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.model.impl.Puck;
 import org.junit.*;
+
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+
 import static org.junit.Assert.*;
 
 public class JunctionTest {
@@ -18,7 +24,7 @@ public class JunctionTest {
         this.tJ = new Junction();
         this.tJ.setNeighbours(tJ, tJ, tJ, tJ);
         this.puck = new Puck();
-        this.player = new Player("tmptest", Player.Man.BLACK, new GameController(new Board()));
+        this.player = new Player("tmptest", Player.Man.BLACK);
         this.puck.setPlayer(this.player);
     }
 
@@ -132,9 +138,28 @@ public class JunctionTest {
         tJ.setPuck(puck);
         assertEquals(tJ.toString(), black);
 
-        player = new Player("tmptest", Player.Man.WHITE, new GameController(new Board()));
+        player = new Player("tmptest", Player.Man.WHITE);
         puck.setPlayer(this.player);
         tJ.setPuck(puck);
         assertEquals(tJ.toString(), white);
     }
+
+    @Test
+    public void testPressed() throws Exception {
+        tJ.setPressed(true);
+        assertTrue(tJ.isPressed());
+    }
+
+    @Test public void testPlaceOnGui() {
+        tJ.setName("test");
+        tJ.x = 10;
+        tJ.y = 20;
+        tJ.setBounds(15, 15, 50, 50);
+
+        assertEquals(tJ.getName(), "test");
+        assertEquals(tJ.x, 10);
+        assertEquals(tJ.y, 20);
+        assertEquals(tJ.getBounds(), new Rectangle(15,15,50,50));
+    }
+
 }

@@ -1,24 +1,26 @@
 package de.htwg.se.nmm.model.impl;
 
 
+import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
+import de.htwg.se.nmm.model.IPuck;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 
 /**
- * a Junction knows its neighbours
+ * a IJunction knows its neighbours
  */
-public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJunction {
+public class Junction extends AbstractButton implements IJunction {
 
-    private Junction up;
-    private Junction right;
+    private IJunction up;
+    private IJunction right;
 
-    private Junction down;
-    private Junction left;
+    private IJunction down;
+    private IJunction left;
 
-    private Puck puck;
+    private IPuck puck;
 
     public boolean isPressed() {
         return pressed;
@@ -34,7 +36,7 @@ public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJu
     int y;
 
     @Override
-    public void setNeighbours(Junction up, Junction right, Junction down, Junction left) {
+    public void setNeighbours(IJunction up, IJunction right, IJunction down, IJunction left) {
         this.up = up;
         this.right = right;
         this.down = down;
@@ -53,52 +55,52 @@ public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJu
     }
 
     @Override
-    public void setUp(Junction up) {
+    public void setUp(IJunction up) {
         this.up = up;
     }
 
     @Override
-    public void setRight(Junction right) {
+    public void setRight(IJunction right) {
         this.right = right;
     }
 
     @Override
-    public void setDown(Junction down) {
+    public void setDown(IJunction down) {
         this.down = down;
     }
 
     @Override
-    public void setLeft(Junction left) {
+    public void setLeft(IJunction left) {
         this.left = left;
     }
 
     @Override
-    public void setPuck(Puck puck) {
+    public void setPuck(IPuck puck) {
         this.puck = puck;
     }
 
     @Override
-    public Junction getUp() {
+    public IJunction getUp() {
         return up;
     }
 
     @Override
-    public Junction getRight() {
+    public IJunction getRight() {
         return right;
     }
 
     @Override
-    public Junction getDown() {
+    public IJunction getDown() {
         return down;
     }
 
     @Override
-    public Junction getLeft() {
+    public IJunction getLeft() {
         return left;
     }
 
     @Override
-    public Puck getPuck() {
+    public IPuck getPuck() {
         return puck;
     }
 

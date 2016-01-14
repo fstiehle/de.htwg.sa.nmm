@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.model.IBoard;
+import de.htwg.se.nmm.model.IJunction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,7 @@ import java.util.Map;
  */
 public class Board extends BoardSetup implements IBoard {
 
-    private Map<String, Junction> boardMap = new HashMap<>();
+    private Map<String, IJunction> boardMap = new HashMap<>();
 
     public Board() {
 
@@ -90,8 +91,7 @@ public class Board extends BoardSetup implements IBoard {
     }
 
     @Override
-    public Map<String, Junction> getBoardMap() {
+    public Map<String, IJunction> getBoardMap() {
         return boardMap;
     }
-
 }

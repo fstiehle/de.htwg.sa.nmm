@@ -32,7 +32,7 @@ public class MouseAdapterHandler extends MouseAdapter {
         if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getSET())) {
             IPuck p = controller.getInjector().getInstance(IPuck.class);
             p.setPlayer(controller.getCurrentIPlayer());
-            controller.getCurrentIPlayer().setPuck(name, p);
+            controller.setPuck(name, p);
             controller.update();
         } else if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getMOVE())) {
             mouseClicked.add(panel);
@@ -42,7 +42,7 @@ public class MouseAdapterHandler extends MouseAdapter {
             if (mouseClicked.size() == 2) {
                 IJunction p0 = (IJunction)mouseClicked.poll();
                 IJunction p1 = (IJunction)mouseClicked.poll();
-                controller.getCurrentIPlayer().movePuck(p0.getName(), p1.getName());
+                controller.movePuck(p0.getName(), p1.getName());
                 //System.out.println("interact");
                 p0.setPressed(false);
                 p1.setPressed(false);
@@ -53,7 +53,7 @@ public class MouseAdapterHandler extends MouseAdapter {
                 //System.out.println("tear down");
             }
         } else if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getPICK())) {
-            controller.getCurrentIPlayer().pickPuck(panel.getName());
+            controller.pickPuck(panel.getName());
             controller.update();
         }
     }
