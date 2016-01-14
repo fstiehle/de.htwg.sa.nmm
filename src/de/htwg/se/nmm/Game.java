@@ -2,8 +2,6 @@ package de.htwg.se.nmm;
 
 import java.util.Scanner;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import de.htwg.se.nmm.aview.gui.MasterFrame;
 import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.aview.tui.TextUI;
@@ -49,9 +47,6 @@ public final class Game {
     }
 
     public static void main(String[] args) {
-        // Set up logging through log4j
-        PropertyConfigurator.configure("log4j.properties");
-
         Game.getInstance();
 
         boolean game = true; // quit on -q
