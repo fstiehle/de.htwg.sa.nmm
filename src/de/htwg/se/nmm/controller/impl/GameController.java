@@ -36,10 +36,12 @@ public class GameController extends Observable implements IGameController {
         this.statusMessage.append("Welcome! ");
     }
 
+    @Override
     public void setInjector(Injector injector) {
         this.injector = injector;
     }
 
+    @Override
     public Injector getInjector() {
         return this.injector;
     }
@@ -143,7 +145,7 @@ public class GameController extends Observable implements IGameController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return t;
     }

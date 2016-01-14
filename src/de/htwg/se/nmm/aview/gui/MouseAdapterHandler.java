@@ -24,7 +24,7 @@ public class MouseAdapterHandler extends MouseAdapter {
         try {
             panel = (IJunction)e.getSource();
         } catch (NullPointerException ex) {
-            return;
+            throw new RuntimeException(ex);
         }
 
         String name = panel.getName();
@@ -38,19 +38,16 @@ public class MouseAdapterHandler extends MouseAdapter {
             mouseClicked.add(panel);
             panel.setPressed(true);
             controller.update();
-            //System.out.println("pressed");
             if (mouseClicked.size() == 2) {
                 IJunction p0 = (IJunction)mouseClicked.poll();
                 IJunction p1 = (IJunction)mouseClicked.poll();
                 controller.movePuck(p0.getName(), p1.getName());
-                //System.out.println("interact");
-                p0.setPressed(false);
+                 p0.setPressed(false);
                 p1.setPressed(false);
                 mouseClicked.clear();
                 controller.update();
             } else if (mouseClicked.size() > 2) {
                 mouseClicked.clear();
-                //System.out.println("tear down");
             }
         } else if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getPICK())) {
             controller.pickPuck(panel.getName());

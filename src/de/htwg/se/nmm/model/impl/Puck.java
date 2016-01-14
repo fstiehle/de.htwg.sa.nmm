@@ -11,6 +11,7 @@ public class Puck implements de.htwg.se.nmm.model.IPuck {
         this.player = null;
     }
 
+    @Override
     public void setPlayer(IPlayer player) {
         this.player = player;
     }
