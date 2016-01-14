@@ -39,6 +39,9 @@ public final class Game {
         // Set up Google Guice Dependency Injector
         Injector injector = Guice.createInjector(new GameModule());
 
+        // Set up logging through log4j
+        PropertyConfigurator.configure("log4j.properties");
+
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
@@ -49,9 +52,6 @@ public final class Game {
     }
 
     public static void main(String[] args) {
-        // Set up logging through log4j
-        PropertyConfigurator.configure("log4j.properties");
-
         Game.getInstance();
 
         boolean game = true; // quit on -q
