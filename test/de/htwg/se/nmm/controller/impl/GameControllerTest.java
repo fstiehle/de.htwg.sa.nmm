@@ -1,5 +1,9 @@
 package de.htwg.se.nmm.controller.impl;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import de.htwg.se.nmm.GameModule;
+import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.impl.Board;
@@ -13,6 +17,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class GameControllerTest extends TestCase {
@@ -197,5 +202,16 @@ public class GameControllerTest extends TestCase {
         check = this.board.get("d7");
         assertTrue(check.hasPuck());
     }
+
+    @Test
+    public void TestInjector() {
+        Injector injector = Guice.createInjector(new GameModule());
+
+        IGameController controller = injector.getInstance(IGameController.class);
+        controller.setInjector(injector);
+
+        assertEquals(controller.getInjector(), injector);
+    }
+
 
 }

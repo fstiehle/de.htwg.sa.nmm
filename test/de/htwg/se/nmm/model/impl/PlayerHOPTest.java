@@ -33,18 +33,44 @@ public class PlayerHOPTest extends TestCase {
         }
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
         GameController c = new GameController(new Board());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerHOP ph = new PlayerHOP(p);
         Junction j = new Junction();
         Junction j2 = new Junction();
+        Puck puck = new Puck();
+        puck.setPlayer(p);
+        j.setPuck(puck);
+
         try {
             ph.movePuck(j, j2, p);
         } catch (Exception e) {
             assertNotNull(e);
         }
+
+        try {
+            ph.movePuck(j, j2, c.getOtherPlayer());
+        } catch (Exception e) {
+            assertNotNull(e);
+        }
+
+        j2.setPuck(puck);
+        try {
+            ph.movePuck(j, j2, p);
+        } catch (Exception e) {
+            assertNotNull(e);
+        }
+
+        j = null;
+        j2 = null;
+        try {
+            ph.movePuck(j, j2, p);
+        } catch (Exception e) {
+            assertNotNull(e);
+        }
+
     }
 
     @Test

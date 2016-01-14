@@ -1,5 +1,6 @@
 package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.controller.impl.GameController;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -19,11 +20,16 @@ public class PlayerSETTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testPickPuck() throws Exception {
-        Player p = new Player("a1", Player.Man.WHITE);
+        GameController c = new GameController(new Board());
+        Player p = (Player) c.getCurrentIPlayer();
         PlayerSET ph = new PlayerSET(p);
         Junction j = new Junction();
+        Puck puck = new Puck();
+        puck.setPlayer(p);
+        j.setPuck(puck);
+
         try {
-            ph.setPuck(j, new Puck(), p);
+            ph.pickPuck(j, p);
         } catch (Exception e) {
             assertNotNull(e);
         }
@@ -31,11 +37,17 @@ public class PlayerSETTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        Player p = new Player("a1", Player.Man.WHITE);
+        GameController c = new GameController(new Board());
+        Player p = (Player) c.getCurrentIPlayer();
         PlayerSET ph = new PlayerSET(p);
         Junction j = new Junction();
+        Junction j2 = new Junction();
+        Puck puck = new Puck();
+        puck.setPlayer(p);
+        j.setPuck(puck);
+
         try {
-            ph.setPuck(j, new Puck(), p);
+            ph.movePuck(j, j2, p);
         } catch (Exception e) {
             assertNotNull(e);
         }
