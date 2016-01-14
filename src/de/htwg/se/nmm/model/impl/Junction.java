@@ -21,6 +21,16 @@ public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJu
 
     private Puck puck;
 
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+
+    private boolean pressed;
+
     int x;
     int y;
 
@@ -124,7 +134,10 @@ public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJu
             super.paintComponent(g);
             int radius = 25;
             int diameter = radius * 2;
-            if(this.getPuck().getPlayer().getMan() == IPlayer.Man.WHITE) {
+            if (this.isPressed()) {
+                g.setColor(Color.BLUE);
+                g.fillOval(0, 0, diameter, diameter);
+            } else if(this.getPuck().getPlayer().getMan() == IPlayer.Man.WHITE) {
                 g.setColor(Color.WHITE);
             } else {
                 g.setColor(Color.BLACK);
@@ -134,4 +147,6 @@ public class Junction extends AbstractButton implements de.htwg.se.nmm.model.IJu
             g.fillOval(0, 0, diameter, diameter);
         }
     }
+
+
 }

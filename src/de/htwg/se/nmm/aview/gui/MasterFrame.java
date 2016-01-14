@@ -184,8 +184,8 @@ public class MasterFrame extends JFrame implements IObserver {
         String tmpMenu;
         tmpMenu = controller.getStatus();
         tmpMenu += "\nPuck's left: " + controller.getCurrentIPlayer().getNumPucks() + " | ";
-        tmpMenu += "You're: "  + controller.getCurrentIPlayer().getMan().toString();
-
+        tmpMenu += "You're: "  + controller.getCurrentIPlayer().getMan().toString() + " | ";
+        tmpMenu += "You're in modus: " + controller.getCurrentIPlayer().getStatus().toString();
         consoleArea.setText(tmpMenu);
     }
 }

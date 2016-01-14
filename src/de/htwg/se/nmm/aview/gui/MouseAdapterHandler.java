@@ -35,14 +35,22 @@ public class MouseAdapterHandler extends MouseAdapter {
             controller.getCurrentIPlayer().setPuck(name, p);
             controller.update();
         } else if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getMOVE())) {
-
             mouseClicked.add(panel);
+            panel.setPressed(true);
+            controller.update();
+            //System.out.println("pressed");
             if (mouseClicked.size() == 2) {
                 IJunction p0 = (IJunction)mouseClicked.poll();
                 IJunction p1 = (IJunction)mouseClicked.poll();
                 controller.getCurrentIPlayer().movePuck(p0.getName(), p1.getName());
+                //System.out.println("interact");
+                p0.setPressed(false);
+                p1.setPressed(false);
                 mouseClicked.clear();
                 controller.update();
+            } else if (mouseClicked.size() > 2) {
+                mouseClicked.clear();
+                //System.out.println("tear down");
             }
         } else if (controller.getCurrentIPlayer().getStatus().equals(controller.getCurrentIPlayer().getPICK())) {
             controller.getCurrentIPlayer().pickPuck(panel.getName());
