@@ -4,6 +4,7 @@ target/
 
 ## logger
 *.log
+*.log.*
 
 ## Directory-based project format:
 .idea/
