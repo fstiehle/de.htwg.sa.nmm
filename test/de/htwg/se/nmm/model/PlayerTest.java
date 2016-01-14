@@ -69,4 +69,19 @@ public class PlayerTest {
         Player p2 = new Player("p2", Player.Man.WHITE, controller);
         assertTrue(p1.equals(p2));
     }
+
+    @Test
+    public void testGetNumPucks() throws Exception {
+
+    }
+
+    @Test
+    public void testDecrementPucks() throws Exception {
+
+    }
+
+    @Test
+    public void testIncrementPucksTakenAway() throws Exception {
+        
+    }
 }
