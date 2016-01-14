@@ -22,11 +22,6 @@ public class JunctionTest {
         this.puck.setPlayer(this.player);
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void testSetNeighbours() throws Exception {
         assertNotNull(tJ.getUp());
@@ -80,8 +75,66 @@ public class JunctionTest {
         assertEquals(tJ,tJ);
     }
 
-    @Test
-    public void testHashCode() throws Exception {
 
+    @Test
+    public void testSetPuck() throws Exception {
+        assertNull(tJ.getPuck());
+
+        tJ.setPuck(puck);
+        assertEquals(tJ.getPuck(), puck);
+    }
+
+    @Test
+    public void testGetUp() throws Exception {
+        assertEquals(tJ.getUp(), tJ);
+
+        Junction tmpJ = new Junction();
+        tJ.setUp(tmpJ);
+        assertEquals(tJ.getUp(), tmpJ);
+    }
+
+    @Test
+    public void testGetRight() throws Exception {
+        assertEquals(tJ.getRight(), tJ);
+
+        Junction tmpJ = new Junction();
+        tJ.setRight(tmpJ);
+        assertEquals(tJ.getRight(), tmpJ);
+    }
+
+    @Test
+    public void testGetDown() throws Exception {
+        assertEquals(tJ.getDown(), tJ);
+
+        Junction tmpJ = new Junction();
+        tJ.setDown(tmpJ);
+        assertEquals(tJ.getDown(), tmpJ);
+    }
+
+    @Test
+    public void testGetLeft() throws Exception {
+        assertEquals(tJ.getLeft(), tJ);
+
+        Junction tmpJ = new Junction();
+        tJ.setLeft(tmpJ);
+        assertEquals(tJ.getLeft(), tmpJ);
+    }
+
+
+    @Test
+    public void testToString() throws Exception {
+        String white = "\u25CB-";
+        String black = "\u25CF-";
+        String empty = "x-";
+
+        assertEquals(tJ.toString(), empty);
+
+        tJ.setPuck(puck);
+        assertEquals(tJ.toString(), black);
+
+        player = new Player("tmptest", Player.Man.WHITE, new GameController(new Board()));
+        puck.setPlayer(this.player);
+        tJ.setPuck(puck);
+        assertEquals(tJ.toString(), white);
     }
 }
