@@ -43,6 +43,7 @@ public final class Game {
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
         gui = injector.getInstance(MasterFrame.class);
+        // this order matters!
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();
     }
