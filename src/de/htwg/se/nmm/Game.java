@@ -2,8 +2,6 @@ package de.htwg.se.nmm;
 
 import java.util.Scanner;
 
-import org.apache.log4j.PropertyConfigurator;
-
 import de.htwg.se.nmm.aview.gui.MasterFrame;
 import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.aview.tui.TextUI;
@@ -38,9 +36,6 @@ public final class Game {
     private Game() {
         // Set up Google Guice Dependency Injector
         Injector injector = Guice.createInjector(new GameModule());
-
-        // Set up logging through log4j
-        PropertyConfigurator.configure("log4j.properties");
 
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);

@@ -5,13 +5,15 @@ import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObserver;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
 
 public class TextUI implements IObserver {
 
-    private static final Logger logger = Logger.getLogger("de.htwg.se.nmm.aview.tui");
+    private static final Logger logger = LogManager.getLogger("de.htwg.se.nmm.aview.tui");
 
     private IGameController controller;
     String strBoard;
