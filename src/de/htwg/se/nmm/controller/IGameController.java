@@ -4,6 +4,7 @@ import com.google.inject.Injector;
 import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
+import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObservable;
 
 public interface IGameController extends IObservable {
@@ -33,4 +34,10 @@ public interface IGameController extends IObservable {
     public void setInjector(Injector injector);
 
     public Injector getInjector();
+
+    void setPuck(String s, IPuck puck);
+
+    void pickPuck(String s);
+
+    void movePuck(String from, String to);
 }

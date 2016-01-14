@@ -7,7 +7,10 @@ import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
+import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
@@ -83,10 +86,6 @@ public class GameController extends Observable implements IGameController {
     @Override
     public IPlayer getCurrentIPlayer() {
         return this.currentPlayer;
-    }
-
-    public Player getCurrentPlayer() {
-        return (Player) this.currentPlayer;
     }
 
     @Override
@@ -178,6 +177,53 @@ public class GameController extends Observable implements IGameController {
     @Override
     public String getStatus() {
         return this.statusMessage.toString();
+    }
+
+    @Override
+    public void setPuck(String s, IPuck puck) {
+        Junction j = this.getBoard().getBoardMap().get(s);
+        try {
+            getCurrentIPlayer().getStatus().setPuck(j, puck, this.getCurrentIPlayer());
+        } catch (Exception e) {
+            this.addStatusMessage(e.getMessage());
+            return;
+        }
+        j.setPuck((Puck) puck);
+        currentPlayer.decrementPucks();
+        this.millAfterMove(j);
+    }
+
+    @Override
+    public void pickPuck(String s) {
+        Junction j = this.getBoard().getBoardMap().get(s);
+        try {
+            getCurrentIPlayer().getStatus().pickPuck(j, this.getCurrentIPlayer());
+        } catch (Exception e) {
+        this.addStatusMessage(e.getMessage());
+        return;
+        }
+        if (this.checkformill(j, this.getOtherPlayer())) {
+            this.addStatusMessage("Can't take away a puck if it is part of a mill.");
+            return;
+        }
+        j.setPuck(null);
+        this.getOtherPlayer().incrementPucksTakenAway();
+        this.changePlayer();
+    }
+
+    @Override
+    public void movePuck(String from, String to) {
+        IJunction jFrom = this.getBoard().getBoardMap().get(from);
+        IJunction jTo = this.getBoard().getBoardMap().get(to);
+        try {
+            getCurrentIPlayer().getStatus().movePuck(jFrom, jTo, this.getCurrentIPlayer());
+        } catch (Exception e) {
+            this.addStatusMessage(e.getMessage());
+            return;
+        }
+        jTo.setPuck(jFrom.getPuck());
+        jFrom.setPuck(null);
+        millAfterMove(jTo);
     }
 
 }

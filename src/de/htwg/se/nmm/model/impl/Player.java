@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
-import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPlayerState;
 import de.htwg.se.nmm.model.IPuck;
 
@@ -21,16 +22,16 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     private int numPucks;
     private int numPucksTakenAway;
 
-    public Player(String name, Man man, GameController controller) {
+    public Player(String name, Man man) {
         this.name = name;
         this.man = man;
         this.numPucks = NUM_PUCKS;
         this.numPucksTakenAway = 0;
 
-        this.SET = new PlayerSET(this, controller);
-        this.MOVE = new PlayerMOVE(this, controller);
-        this.PICK = new PlayerPICK(this, controller);
-        this.HOP = new PlayerHOP(this, controller);
+        this.SET = new PlayerSET(this);
+        this.MOVE = new PlayerMOVE(this);
+        this.PICK = new PlayerPICK(this);
+        this.HOP = new PlayerHOP(this);
 
         this.currentState = this.SET;
         this.gameLost = false;
@@ -96,18 +97,18 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
 
     /* State behaviour */
     @Override
-    public void setPuck(String s, IPuck puck) {
-        currentState.setPuck(s, (Puck) puck);
+    public void setPuck(IJunction j, IPuck puck, IPlayer cur) {
+        currentState.setPuck(j, puck, cur);
     }
 
     @Override
-    public void pickPuck(String s) {
-        currentState.pickPuck(s);
+    public void pickPuck(IJunction j, IPlayer cur) {
+        currentState.pickPuck(j, cur);
     }
 
     @Override
-    public void movePuck(String from, String to) {
-        currentState.movePuck(from, to);
+    public void movePuck(IJunction jFrom, IJunction jTo, IPlayer currentPlayer) {
+        currentState.movePuck(jFrom, jTo, currentPlayer);
     }
 
     @Override

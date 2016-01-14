@@ -1,51 +1,40 @@
 package de.htwg.se.nmm.model.impl;
 
-import de.htwg.se.nmm.controller.impl.GameController;
+import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPlayerState;
+import de.htwg.se.nmm.model.IPuck;
 
 public class PlayerPICK implements IPlayerState {
 
-    GameController controller;
     Player player;
 
-    public PlayerPICK(Player player, GameController controller) {
-        this.controller = controller;
+    public PlayerPICK(Player player) {
         this.player = player;
     }
 
     @Override
-    public void setPuck(String s, Puck puck) {
-        controller.addStatusMessage("No more Pucks to set.");
+    public void setPuck(IJunction j, IPuck puck, IPlayer cur) {
+        throw new RuntimeException("No more Pucks to set.");
     }
 
     @Override
-    public void pickPuck(String s) {
-        Junction j = controller.getBoard().getBoardMap().get(s);
+    public void pickPuck(IJunction j, IPlayer cur) {
 
         if(j == null) {
-            controller.addStatusMessage("Illegal move, please check your coordinates.");
-            return;
+            throw new RuntimeException("Illegal move, please check your coordinates.");
         }
         if (!j.hasPuck()) {
-            controller.addStatusMessage("There is no puck to take away.");
-            return;
+            throw new RuntimeException("There is no puck to take away.");
         }
-        if (j.getPuck().getPlayer().equals(controller.getCurrentPlayer())) {
-            controller.addStatusMessage("This is your own puck!");
-            return;
+        if (j.getPuck().getPlayer().equals(cur)) {
+            throw new RuntimeException("This is your own puck!");
         }
-        if(controller.checkformill(j, controller.getOtherPlayer())) {
-            controller.addStatusMessage("Can't take away a puck if it is part of a mill.");
-            return;
-        }
-        j.setPuck(null);
-        controller.getOtherPlayer().incrementPucksTakenAway();
-        controller.changePlayer();
     }
 
     @Override
-    public void movePuck(String from, String to) {
-        controller.addStatusMessage("Don't you want to pick an enemy puck? (They won't enjoy that.)");
+    public void movePuck(IJunction from, IJunction to, IPlayer cur) {
+        throw new RuntimeException("Don't you want to pick an enemy puck? (They won't enjoy that.)");
     }
 
     @Override

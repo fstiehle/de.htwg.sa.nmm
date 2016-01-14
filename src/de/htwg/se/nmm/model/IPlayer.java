@@ -1,7 +1,5 @@
 package de.htwg.se.nmm.model;
 
-import de.htwg.se.nmm.model.impl.Puck;
-
 public interface IPlayer {
 
     int getNumPucks();
@@ -27,11 +25,11 @@ public interface IPlayer {
     String getName();
 
     /* State behaviour */
-    void setPuck(String s, IPuck puck);
+    void setPuck(IJunction j, IPuck puck, IPlayer currentPlayer);
 
-    void pickPuck(String s);
+    void pickPuck(IJunction j, IPlayer currentPlayer);
 
-    void movePuck(String from, String to);
+    void movePuck(IJunction jFrom, IJunction jTo, IPlayer currentPlayer);
 
     IPlayerState getHOP();
 

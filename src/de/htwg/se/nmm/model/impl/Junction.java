@@ -6,7 +6,6 @@ import de.htwg.se.nmm.model.IPlayer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.util.Map;
 
 /**
  * a Junction knows its neighbours
