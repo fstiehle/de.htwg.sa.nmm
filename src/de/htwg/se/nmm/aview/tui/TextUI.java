@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class TextUI implements IObserver {
 
-    private static final Logger logger = LogManager.getLogger("de.htwg.se.nmm.aview.tui");
+    private static final Logger logger = LogManager.getLogger(TextUI.class.getName());
 
     private IGameController controller;
     String strBoard;
