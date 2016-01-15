@@ -14,7 +14,6 @@ public final class Game {
 
     private static Scanner scanner;
     private static TextUI tui;
-    private static MasterFrame gui;
     private IGameController controller;
     private static Game instance = null;
 
@@ -29,18 +28,14 @@ public final class Game {
         return controller;
     }
 
-    public TextUI getTUI() {
-        return tui;
-    }
-
-    private Game() {
+    public Game() {
         // Set up Google Guice Dependency Injector
         Injector injector = Guice.createInjector(new GameModule());
 
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
-        gui = injector.getInstance(MasterFrame.class);
+        injector.getInstance(MasterFrame.class);
         // this order matters!
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();

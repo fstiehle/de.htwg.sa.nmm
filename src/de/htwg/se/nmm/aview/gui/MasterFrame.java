@@ -37,8 +37,6 @@ public class MasterFrame extends JFrame implements IObserver {
         controller.addObserver(this);
         statusMessage = controller.getStatus();
 
-        System.out.println(System.getProperty("user.dir"));
-
         /* Settings */
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(new Dimension(900, 1020));
@@ -49,7 +47,7 @@ public class MasterFrame extends JFrame implements IObserver {
             FileInputStream fis = new FileInputStream(file);
             boardImage = ImageIO.read(fis);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         /* Mouse Adapter */

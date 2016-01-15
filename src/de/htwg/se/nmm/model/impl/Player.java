@@ -1,5 +1,6 @@
 package de.htwg.se.nmm.model.impl;
 
+import de.htwg.se.nmm.controller.impl.NmmRuntimeException;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPlayerState;
@@ -50,7 +51,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     @Override
     public void decrementPucks() {
         if (this.numPucks == 0) {
-            throw new RuntimeException("No Pucks left");
+            throw new NmmRuntimeException("No Pucks left");
         }
         this.numPucks--;
     }
