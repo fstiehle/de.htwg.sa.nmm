@@ -1,4 +1,4 @@
-package de.htwg.se.nmm.controller.impl;
+package de.htwg.se.nmm.util;
 
 public class NmmRuntimeException extends RuntimeException {
     public NmmRuntimeException() { super(); }

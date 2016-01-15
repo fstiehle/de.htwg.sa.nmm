@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.util.observer;
 
+import de.htwg.se.nmm.util.observer.IObserver;
+
 import java.util.Iterator;
 import java.util.Vector;
 

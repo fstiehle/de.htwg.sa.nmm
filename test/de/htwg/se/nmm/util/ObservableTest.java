@@ -1,7 +1,9 @@
-package de.htwg.se.nmm.util.observer;
+package de.htwg.se.nmm.util;
 
 import static org.junit.Assert.*;
 
+import de.htwg.se.nmm.util.observer.IObserver;
+import de.htwg.se.nmm.util.observer.Observable;
 import org.junit.Before;
 import org.junit.Test;
 
