@@ -6,8 +6,8 @@ import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObserver;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.apache.log4j.LogManager;
 
 import java.util.Map;
 
