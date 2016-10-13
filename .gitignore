@@ -1,3 +1,5 @@
+## Meta Data
+META-INF/
 ## intellij
 *.iml
 target/
