@@ -6,8 +6,8 @@ import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObserver;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
 
@@ -66,20 +66,42 @@ public class TextUI implements IObserver {
     }
 
     public void printTUI() {
-        String tmpBoard = refreshBoard();
+        String str = this.toString();
 
         if(controller.getCurrentIPlayer().hasLost()) {
-            this.logger.info(ANSI_RED);
-            this.logger.info(tmpBoard);
-            this.logger.info(controller.getStatus());
+            this.logger.info(str);
             System.exit(0);
+        }
+
+        this.logger.info(str);
+    }
+
+    public String printHTML() {
+        String game = this.toString();
+        String result = game.replace("\n", "<br>");
+        return result;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        String tmpBoard = refreshBoard();
+
+        if (controller.getCurrentIPlayer().hasLost()) {
+            str.append(String.format("\n%s\n%s\n%s\n",
+                    ANSI_RED,
+                    tmpBoard,
+                    controller.getStatus()));
+            return str.toString();
         }
 
         String tmpMenu = refreshMenu();
 
-        this.logger.info(tmpBoard);
-        this.logger.info(tmpMenu);
-        this.logger.info(controller.getStatus());
+        str.append(String.format("\n%s\n%s\n%s\n",
+                tmpBoard,
+                tmpMenu,
+                controller.getStatus()));
+
+        return str.toString();
     }
 
     private String refreshBoard() {

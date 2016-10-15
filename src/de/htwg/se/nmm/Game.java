@@ -28,6 +28,10 @@ public final class Game {
         return controller;
     }
 
+    public TextUI getTui() {
+        return tui;
+    }
+
     public Game() {
         // Set up Google Guice Dependency Injector
         Injector injector = Guice.createInjector(new GameModule());
