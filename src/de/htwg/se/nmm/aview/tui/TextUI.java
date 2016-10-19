@@ -123,6 +123,7 @@ public class TextUI implements IObserver {
     }
 
     public boolean processInputLine(String s) {
+        System.out.println(s);
         boolean game = true;
 
         if (s == null) {
@@ -158,6 +159,9 @@ public class TextUI implements IObserver {
             posTo.append(s.charAt(9));
 
             controller.movePuck(posFrom.toString(), posTo.toString());
+            controller.update();
+        } else {
+            controller.addStatusMessage("Illegal input.");
             controller.update();
         }
         return game;
