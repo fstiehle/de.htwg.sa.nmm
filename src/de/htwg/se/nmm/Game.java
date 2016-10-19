@@ -39,8 +39,10 @@ public final class Game {
         // Build up the application, resolving dependencies automatically by Guice
         controller = injector.getInstance(IGameController.class);
         controller.setInjector(injector);
-        injector.getInstance(MasterFrame.class);
-        // this order matters!
+
+        // injector.getInstance(MasterFrame.class);
+        controller.update();
+
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();
     }

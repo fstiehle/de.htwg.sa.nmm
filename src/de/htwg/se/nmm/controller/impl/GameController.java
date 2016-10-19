@@ -34,6 +34,8 @@ public class GameController extends Observable implements IGameController {
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
         this.statusMessage.append("Welcome! ");
+
+        this.createPlayer("Player 1", "Player 2");
     }
 
     @Override
@@ -166,6 +168,11 @@ public class GameController extends Observable implements IGameController {
         this.currentPlayer = this.white;
         this.statusMessage.append(this.getCurrentIPlayer().getName());
         this.statusMessage.append(" may start by setting the first puck.");
+    }
+
+    public void changePlayer(String nameWhite, String nameBlack) {
+        this.white.setName(nameWhite);
+        this.black.setName(nameBlack);
     }
 
     @Override

@@ -31,6 +31,8 @@ public interface IPlayer {
 
     void movePuck(IJunction jFrom, IJunction jTo, IPlayer currentPlayer);
 
+    void setName(String name);
+
     IPlayerState getHOP();
 
     IPlayerState getSET();

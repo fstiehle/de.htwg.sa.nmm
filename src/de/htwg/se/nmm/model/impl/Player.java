@@ -19,7 +19,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     boolean gameLost;
 
     private final Man man;
-    private final String name;
+    private String name;
     private int numPucks;
     private int numPucksTakenAway;
 
@@ -110,6 +110,11 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     @Override
     public void movePuck(IJunction jFrom, IJunction jTo, IPlayer currentPlayer) {
         currentState.movePuck(jFrom, jTo, currentPlayer);
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
