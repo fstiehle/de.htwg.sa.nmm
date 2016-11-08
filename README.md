@@ -1,5 +1,5 @@
 # de.htwg.se.nmm
-Nine Men's Morris
+HTWG Konstanz | Software Engineering | Nine Men's Morris
 
 ### Presentation
 
