@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.controller.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -12,6 +14,9 @@ import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Singleton
 public class GameController extends Observable implements IGameController {
@@ -159,6 +164,17 @@ public class GameController extends Observable implements IGameController {
     @Override
     public IBoard getBoard() {
         return board;
+    }
+
+    public String getJson() {
+        HashMap<String, HashMap<String, Object>> objList = new HashMap<>();
+        objList.put("black", this.black.getData());
+        objList.put("white", this.white.getData());
+        objList.put("currentPlayer", this.currentPlayer.getData());
+        objList.put("board", this.board.getData());
+
+        Gson gson = new Gson();
+        return gson.toJson(objList);
     }
 
     @Override

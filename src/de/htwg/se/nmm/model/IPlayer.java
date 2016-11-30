@@ -1,5 +1,8 @@
 package de.htwg.se.nmm.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public interface IPlayer {
 
     int getNumPucks();
@@ -23,6 +26,8 @@ public interface IPlayer {
     Man getMan();
 
     String getName();
+
+    HashMap<String, Object> getData();
 
     /* State behaviour */
     void setPuck(IJunction j, IPuck puck, IPlayer currentPlayer);

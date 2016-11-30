@@ -3,6 +3,7 @@ package de.htwg.se.nmm.model;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.util.HashMap;
 
 public interface IJunction {
 
@@ -35,6 +36,8 @@ public interface IJunction {
     boolean hasPuck();
 
     String getName();
+
+    HashMap<String, Object> getData();
 
     void placeOnGui(String name, int y, int x, MouseAdapter m);
 }

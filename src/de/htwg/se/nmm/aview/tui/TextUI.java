@@ -73,6 +73,7 @@ public class TextUI implements IObserver {
             System.exit(0);
         }
 
+        System.out.println(controller.getJson());
         this.logger.info(str);
     }
 

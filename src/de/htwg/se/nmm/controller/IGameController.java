@@ -29,6 +29,8 @@ public interface IGameController extends IObservable {
 
     String getBoardString();
 
+    String getJson();
+
     String getStatus();
 
     public void setInjector(Injector injector);

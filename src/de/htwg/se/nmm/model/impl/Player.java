@@ -1,10 +1,16 @@
 package de.htwg.se.nmm.model.impl;
 
+import com.google.gson.*;
 import de.htwg.se.nmm.util.NmmRuntimeException;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPlayerState;
 import de.htwg.se.nmm.model.IPuck;
+
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player implements de.htwg.se.nmm.model.IPlayer {
 
@@ -149,5 +155,17 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     @Override
     public int hashCode() {
         return getMan().hashCode();
+    }
+
+    public HashMap<String, Object> getData() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", this.name);
+        map.put("man", this.man.toString());
+        map.put("currentState", this.currentState.toString());
+        map.put("numPucks", this.numPucks);
+        map.put("numPucksTakenAway", this.numPucksTakenAway);
+        map.put("gameLost", this.gameLost);
+
+        return map;
     }
 }

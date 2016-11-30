@@ -94,4 +94,13 @@ public class Board extends BoardSetup implements IBoard {
     public Map<String, IJunction> getBoardMap() {
         return boardMap;
     }
+
+    @Override
+    public HashMap<String, Object> getData() {
+        HashMap<String, Object> data = new HashMap<>();
+        this.boardMap.forEach((key, value) -> {
+            data.put(key, value.getData());
+        });
+        return data;
+    }
 }
