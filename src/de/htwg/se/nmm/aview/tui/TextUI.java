@@ -73,13 +73,16 @@ public class TextUI implements IObserver {
             System.exit(0);
         }
 
-        System.out.println(controller.getJson());
         this.logger.info(str);
     }
 
     public String printHTML() {
         String game = this.toString();
-        String result = game.replace("\n", "<br>");
+        String result = game
+                .replace("\n", "<br>")
+                .replace(ANSI_HIGHLIGHT, "")
+                .replace(ANSI_RED, "")
+                .replace(ANSI_RESET, "");
         return result;
     }
 
