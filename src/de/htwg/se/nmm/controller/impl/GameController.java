@@ -194,11 +194,6 @@ public class GameController extends Observable implements IGameController {
         this.statusMessage.append(" may start by setting the first puck.");
     }
 
-    public void changePlayer(String nameWhite, String nameBlack) {
-        this.white.setName(nameWhite);
-        this.black.setName(nameBlack);
-    }
-
     @Override
     public String getBoardString() {
         return board.toString();
@@ -209,11 +204,24 @@ public class GameController extends Observable implements IGameController {
         return this.statusMessage.toString();
     }
 
+    @Override
     public String getStatus(boolean clean) {
         if (clean) {
             return this.statusMessage.toString().replaceAll("\\s+", " ").trim();
         }
         return getStatus();
+    }
+
+    @Override
+    public IPlayer getPlayer(IPlayer.Man man) {
+        switch (man) {
+            case WHITE:
+                return this.white;
+            case BLACK:
+                return this.black;
+            default:
+                return null;
+        }
     }
 
     @Override

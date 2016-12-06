@@ -157,6 +157,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         return getMan().hashCode();
     }
 
+    @Override
     public HashMap<String, Object> getData() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", this.name);
