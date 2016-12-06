@@ -164,6 +164,9 @@ public class TextUI implements IObserver {
 
             controller.movePuck(posFrom.toString(), posTo.toString());
             controller.update();
+        } else if (s.matches("reset")) {
+            controller.initNewGame();
+            controller.update();
         } else {
             controller.addStatusMessage("Illegal input.");
             controller.update();
