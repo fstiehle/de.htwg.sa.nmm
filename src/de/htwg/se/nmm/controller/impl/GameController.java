@@ -17,6 +17,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class GameController extends Observable implements IGameController {
@@ -173,6 +174,13 @@ public class GameController extends Observable implements IGameController {
         objList.put("currentPlayer", this.currentPlayer.getData());
         objList.put("board", this.board.getData());
 
+        HashMap<String, Object> status = new HashMap<>();
+        status.put("message", this.getStatus(true));
+        status.put("man", this.currentPlayer.getMan().toString());
+        status.put("pucksLeft", this.currentPlayer.getNumPucks());
+        status.put("modus", this.currentPlayer.getStatus().toString());
+        objList.put("status", status);
+
         Gson gson = new Gson();
         return gson.toJson(objList);
     }
@@ -199,6 +207,13 @@ public class GameController extends Observable implements IGameController {
     @Override
     public String getStatus() {
         return this.statusMessage.toString();
+    }
+
+    public String getStatus(boolean clean) {
+        if (clean) {
+            return this.statusMessage.toString().replaceAll("\\s+", " ").trim();
+        }
+        return getStatus();
     }
 
     @Override
