@@ -48,6 +48,4 @@ public interface IGameController extends IObservable {
     void pickPuck(String s);
 
     void movePuck(String from, String to);
-
-    HashMap<String, Object> getData();
 }
