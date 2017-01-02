@@ -11,6 +11,10 @@ import java.util.HashMap;
 
 public interface IGameController extends IObservable {
 
+    void initNewGame();
+
+    void initNewGame(IBoard board);
+
     IPlayer getOtherPlayer();
 
     void changePlayer();

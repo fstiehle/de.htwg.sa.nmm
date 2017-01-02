@@ -10,6 +10,7 @@ import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.util.observer.Observable;
 
@@ -34,6 +35,16 @@ public class GameController extends Observable implements IGameController {
 
     @Inject
     public GameController(IBoard board) {
+        initNewGame(board);
+    }
+
+    @Override
+    public void initNewGame() {
+        initNewGame(new Board());
+    }
+
+    @Override
+    public void initNewGame(IBoard board) {
         this.board = board;
         this.white = null;
         this.black = null;
