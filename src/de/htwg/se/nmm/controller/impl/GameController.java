@@ -15,10 +15,7 @@ import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Singleton
 public class GameController extends Observable implements IGameController {
@@ -187,10 +184,10 @@ public class GameController extends Observable implements IGameController {
         objList.put("board", this.board.getData());
 
         HashMap<String, Object> status = new HashMap<>();
-        status.put("message", this.getStatus(true));
-        status.put("man", this.currentPlayer.getMan().toString());
-        status.put("pucksLeft", this.currentPlayer.getNumPucks());
-        status.put("modus", this.currentPlayer.getStatus().toString());
+            status.put("message", this.getStatus(true));
+            status.put("man", this.currentPlayer.getMan().toString());
+            status.put("pucksLeft", this.currentPlayer.getNumPucks());
+            status.put("modus", this.currentPlayer.getStatus().toString());
         objList.put("status", status);
 
         Gson gson = new Gson();
@@ -204,6 +201,18 @@ public class GameController extends Observable implements IGameController {
         this.currentPlayer = this.white;
         this.statusMessage.append(this.getCurrentIPlayer().getName());
         this.statusMessage.append(" may start by setting the first puck.");
+    }
+
+    @Override
+    public IPlayer getPlayerWithoutUserID(UUID userID) {
+        if (this.white.getUserID() == null && this.black.getUserID() != userID) {
+            return this.white;
+        }
+        if (this.black.getUserID() == null && this.white.getUserID() != userID) {
+            return this.black;
+        }
+
+        return null;
     }
 
     @Override

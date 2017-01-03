@@ -8,6 +8,7 @@ import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObservable;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public interface IGameController extends IObservable {
 
@@ -42,6 +43,8 @@ public interface IGameController extends IObservable {
     String getStatus(boolean clean);
 
     IPlayer getPlayer(IPlayer.Man man);
+
+    IPlayer getPlayerWithoutUserID(UUID userID);
 
     void setInjector(Injector injector);
 

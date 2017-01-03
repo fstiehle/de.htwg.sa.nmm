@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Player implements de.htwg.se.nmm.model.IPlayer {
 
@@ -26,6 +27,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
 
     private final Man man;
     private String name;
+    private UUID userID;
     private int numPucks;
     private int numPucksTakenAway;
 
@@ -34,6 +36,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         this.man = man;
         this.numPucks = NUM_PUCKS;
         this.numPucksTakenAway = 0;
+        this.userID = null;
 
         this.SET = new PlayerSET(this);
         this.MOVE = new PlayerMOVE(this);
@@ -100,6 +103,16 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public UUID getUserID() {
+        return this.userID;
+    }
+
+    @Override
+    public void setUserID(UUID userID) {
+        this.userID = userID;
     }
 
     /* State behaviour */
