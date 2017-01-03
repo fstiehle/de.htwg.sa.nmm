@@ -2,8 +2,10 @@ package de.htwg.se.nmm.aview.tui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.controller.impl.GameController;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.util.observer.IObserver;
 
 import org.apache.logging.log4j.Logger;
@@ -54,7 +56,8 @@ public class TextUI implements IObserver {
         strbuilderMenu.append("\nPlease enter a command:\n" +
                 ANSI_HIGHLIGHT + "pick(xy)" + ANSI_RESET + ": pick puck from (xy)\n" +
                 ANSI_HIGHLIGHT + "move(xy,xy)" + ANSI_RESET + ": move puck from (xy) to (xy)\n" +
-                ANSI_HIGHLIGHT + "set(xy)" + ANSI_RESET + ": place puck on (xy),\n" +
+                ANSI_HIGHLIGHT + "set(xy)" + ANSI_RESET + ": place puck on (xy)\n" +
+                ANSI_HIGHLIGHT + "reset" + ANSI_RESET + ": start a new game\n" +
                 "q - quit\n\n");
 
         this.strMenu = strbuilderMenu.toString();
@@ -166,6 +169,7 @@ public class TextUI implements IObserver {
             controller.update();
         } else if (s.matches("reset")) {
             controller.initNewGame();
+            board = controller.getBoard().getBoardMap();
             controller.update();
         } else {
             controller.addStatusMessage("Illegal input.");

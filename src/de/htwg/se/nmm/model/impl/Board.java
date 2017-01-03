@@ -13,9 +13,10 @@ import java.util.Map;
  */
 public class Board extends BoardSetup implements IBoard {
 
-    private Map<String, IJunction> boardMap = new HashMap<>();
+    private Map<String, IJunction> boardMap;
 
     public Board() {
+        boardMap = new HashMap<>();
 
         //Connections
         //directions clockwise: up, right, down, left
