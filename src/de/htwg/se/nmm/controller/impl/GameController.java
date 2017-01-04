@@ -177,7 +177,8 @@ public class GameController extends Observable implements IGameController {
 
     @Override
     public String getJson() {
-        HashMap<String, HashMap<String, Object>> objList = new HashMap<>();
+        HashMap<String, Object> objList = new HashMap<>();
+        objList.put("code", "200");
         objList.put("black", this.black.getData());
         objList.put("white", this.white.getData());
         objList.put("currentPlayer", this.currentPlayer.getData());
