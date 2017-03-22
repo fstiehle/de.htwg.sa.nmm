@@ -10,6 +10,7 @@ import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Junction;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.model.impl.Puck;
+import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class GameControllerTest extends TestCase {
 
     @Before
     public void setUp() {
-        controller = new GameController(new Board());
+        controller = new GameController(new Board(), new BoardDb4oDAO());
         controller.createPlayer("p1", "p2");
         this.board =  controller.getBoard().getBoardMap();
         mill1 = this.board.get("a1");

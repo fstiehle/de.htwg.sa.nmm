@@ -12,6 +12,7 @@ import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.persistence.IBoardDAO;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
@@ -29,9 +30,10 @@ public class GameController extends Observable implements IGameController {
     private IPlayer currentPlayer;
     private Injector injector;
     private IBoard board;
+    private IBoardDAO boardDAO;
 
-    @Inject
-    public GameController(IBoard board) {
+    public GameController(IBoard board, IBoardDAO boardDAO) {
+        this.boardDAO = boardDAO;
         initNewGame(board);
     }
 
@@ -48,7 +50,6 @@ public class GameController extends Observable implements IGameController {
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
         this.statusMessage.append("Welcome! ");
-
         this.createPlayer("Player 1", "Player 2");
     }
 

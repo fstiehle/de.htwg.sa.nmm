@@ -7,6 +7,7 @@ import de.htwg.se.nmm.model.IPlayerState;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Player;
+import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,7 +98,7 @@ public class PlayerTest {
 
     @Test
     public void testSetPuck() {
-        GameController c = new GameController(new Board());
+        GameController c = new GameController(new Board(), new BoardDb4oDAO());
         c.createPlayer("a", "b");
         Puck p = new Puck();
         p.setPlayer(c.getCurrentIPlayer());
