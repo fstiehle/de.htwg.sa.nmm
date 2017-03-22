@@ -19,6 +19,9 @@ out/
 *.ipr
 *.iws
 
+## db4o Database File
+*.data
+
 # Mac
 .DS_Store
 
