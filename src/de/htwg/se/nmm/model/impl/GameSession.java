@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
+import com.db4o.Db4o;
+import com.db4o.Db4oEmbedded;
 import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IGameSession;
 
@@ -11,9 +13,9 @@ public class GameSession implements IGameSession {
     private final String id;
     private IBoard board;
 
-    public GameSession(String ID, IBoard board) {
-        id = ID;
+    public GameSession(IBoard board, String id) {
         this.board = board;
+        this.id = id;
     }
 
     @Override

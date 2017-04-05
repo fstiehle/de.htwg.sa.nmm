@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by funkemarkus on 05.04.17.
+ * TODO: Test Generisch mit Dependency Injection
  */
 public class BoardDb4oDAOTest {
     private IBoard board;

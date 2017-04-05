@@ -7,6 +7,8 @@ import de.htwg.se.nmm.persistence.IBoardDAO;
 
 import java.util.List;
 
+// TODO: Save a Session not a board
+
 
 public class BoardDb4oDAO implements IBoardDAO {
 
