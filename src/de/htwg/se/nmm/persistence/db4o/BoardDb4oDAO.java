@@ -43,6 +43,7 @@ public class BoardDb4oDAO implements IBoardDAO {
 		return db.query(IBoard.class);
 	}
 
+	@Override
 	public void closeDb() {
 		db.close();
 	}
