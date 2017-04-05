@@ -30,7 +30,7 @@ public class GameControllerTest extends TestCase {
 
     @Before
     public void setUp() {
-        controller = new GameController(new Board(), new BoardDb4oDAO());
+        controller = new GameController(new Board(), BoardDb4oDAO.getInstance());
         controller.createPlayer("p1", "p2");
         this.board =  controller.getBoard().getBoardMap();
         mill1 = this.board.get("a1");

@@ -22,7 +22,7 @@ public class PlayerPICKTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testPickPuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerPICK ph = new PlayerPICK(p);
         Puck puck = new Puck();
@@ -52,7 +52,7 @@ public class PlayerPICKTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerPICK ph = new PlayerPICK(p);
         Junction j = new Junction();

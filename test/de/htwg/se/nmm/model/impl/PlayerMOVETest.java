@@ -10,7 +10,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testSetPuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerSET ph = new PlayerSET(p);
         Junction j = new Junction();
@@ -35,7 +35,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testPickPuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerMOVE ph = new PlayerMOVE(p);
         Junction j = new Junction();
@@ -52,7 +52,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerMOVE ph = new PlayerMOVE(p);
         Junction j = new Junction();

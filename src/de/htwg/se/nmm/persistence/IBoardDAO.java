@@ -13,4 +13,6 @@ public interface IBoardDAO {
 	void deleteBoard(IBoard board);
 	
 	List<IBoard> getAllBoards();
+
+	void closeDb();
 }

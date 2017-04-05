@@ -36,7 +36,7 @@ public class PlayerHOPTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), new BoardDb4oDAO());
+        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerHOP ph = new PlayerHOP(p);
         Junction j = new Junction();
