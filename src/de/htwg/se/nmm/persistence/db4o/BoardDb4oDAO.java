@@ -1,6 +1,5 @@
 package de.htwg.se.nmm.persistence.db4o;
 
-
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import de.htwg.se.nmm.model.IBoard;
@@ -12,11 +11,21 @@ import java.util.List;
 public class BoardDb4oDAO implements IBoardDAO {
 
 	private ObjectContainer db;
+	private static BoardDb4oDAO instance;
+
+	public static BoardDb4oDAO getInstance() {
+		if (instance == null) {
+			instance = new BoardDb4oDAO();
+		}
+		return instance;
+	}
 
 	public BoardDb4oDAO() {
 		db = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(),
 				"board.data");
 	}
+
+
 
 	@Override
 	public void saveBoard(final IBoard board) {
