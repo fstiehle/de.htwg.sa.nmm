@@ -1,10 +1,17 @@
 package de.htwg.se.nmm.model.impl;
 
+import com.google.gson.*;
 import de.htwg.se.nmm.util.NmmRuntimeException;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPlayerState;
 import de.htwg.se.nmm.model.IPuck;
+
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Player implements de.htwg.se.nmm.model.IPlayer {
 
@@ -20,6 +27,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
 
     private final Man man;
     private String name;
+    private UUID userID;
     private int numPucks;
     private int numPucksTakenAway;
 
@@ -28,6 +36,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         this.man = man;
         this.numPucks = NUM_PUCKS;
         this.numPucksTakenAway = 0;
+        this.userID = null;
 
         this.SET = new PlayerSET(this);
         this.MOVE = new PlayerMOVE(this);
@@ -96,6 +105,16 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         return this.name;
     }
 
+    @Override
+    public UUID getUserID() {
+        return this.userID;
+    }
+
+    @Override
+    public void setUserID(UUID userID) {
+        this.userID = userID;
+    }
+
     /* State behaviour */
     @Override
     public void setPuck(IJunction j, IPuck puck, IPlayer cur) {
@@ -149,5 +168,18 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
     @Override
     public int hashCode() {
         return getMan().hashCode();
+    }
+
+    @Override
+    public HashMap<String, Object> getData() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", this.name);
+        map.put("man", this.man.toString());
+        map.put("currentState", this.currentState.toString());
+        map.put("numPucks", this.numPucks);
+        map.put("numPucksTakenAway", this.numPucksTakenAway);
+        map.put("gameLost", this.gameLost);
+
+        return map;
     }
 }
