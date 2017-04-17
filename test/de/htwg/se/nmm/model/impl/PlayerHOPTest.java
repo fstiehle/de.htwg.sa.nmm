@@ -1,12 +1,9 @@
 package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.controller.impl.GameController;
-import de.htwg.se.nmm.model.IPlayer;
-import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
+import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
 import junit.framework.TestCase;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class PlayerHOPTest extends TestCase {
 
@@ -36,7 +33,7 @@ public class PlayerHOPTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerHOP ph = new PlayerHOP(p);
         Junction j = new Junction();

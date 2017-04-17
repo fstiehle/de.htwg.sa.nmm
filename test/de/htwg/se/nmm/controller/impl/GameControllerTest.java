@@ -8,9 +8,8 @@ import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Junction;
-import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.model.impl.Puck;
-import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
+import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +17,6 @@ import org.junit.Test;
 import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class GameControllerTest extends TestCase {
 
@@ -30,7 +27,7 @@ public class GameControllerTest extends TestCase {
 
     @Before
     public void setUp() {
-        controller = new GameController(new Board(), BoardDb4oDAO.getInstance());
+        controller = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
         controller.createPlayer("p1", "p2");
         this.board =  controller.getBoard().getBoardMap();
         mill1 = this.board.get("a1");

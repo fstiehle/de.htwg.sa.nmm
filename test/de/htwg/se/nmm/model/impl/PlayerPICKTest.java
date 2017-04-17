@@ -2,7 +2,7 @@ package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.controller.impl.GameController;
 import de.htwg.se.nmm.model.IPlayer;
-import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
+import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class PlayerPICKTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testPickPuck() throws Exception {
-        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerPICK ph = new PlayerPICK(p);
         Puck puck = new Puck();
@@ -52,7 +52,7 @@ public class PlayerPICKTest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerPICK ph = new PlayerPICK(p);
         Junction j = new Junction();

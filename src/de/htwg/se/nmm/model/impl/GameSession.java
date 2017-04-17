@@ -1,7 +1,5 @@
 package de.htwg.se.nmm.model.impl;
 
-import com.db4o.Db4o;
-import com.db4o.Db4oEmbedded;
 import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IGameSession;
 

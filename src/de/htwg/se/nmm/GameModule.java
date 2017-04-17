@@ -7,8 +7,8 @@ import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Puck;
-import de.htwg.se.nmm.persistence.IBoardDAO;
-import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
+import de.htwg.se.nmm.persistence.IGameSessionDAO;
+import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
 
 public class GameModule extends AbstractModule {
     @Override
@@ -17,6 +17,6 @@ public class GameModule extends AbstractModule {
         bind(IGameController.class).to(GameController.class);
         bind(IPuck.class).to(Puck.class);
         bind(IBoard.class).to(Board.class);
-        bind(IBoardDAO.class).to(BoardDb4oDAO.class);
+        bind(IGameSessionDAO.class).to(GameSessionDb4oDAO.class);
     }
 }

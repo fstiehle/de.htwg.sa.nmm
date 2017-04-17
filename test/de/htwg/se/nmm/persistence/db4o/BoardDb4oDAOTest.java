@@ -1,8 +1,10 @@
 package de.htwg.se.nmm.persistence.db4o;
 
 import de.htwg.se.nmm.model.IBoard;
+import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.model.impl.GameSession;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,27 +19,28 @@ import static org.junit.Assert.*;
  * TODO: Test Generisch mit Dependency Injection
  */
 public class BoardDb4oDAOTest {
-    private IBoard board;
+    private static final String SESSION_ID = "foo";
+    private IGameSession session;
 
     @Before
     public void setUp() throws Exception {
-        board = new Board();
+        session = new GameSession(new Board(), SESSION_ID);
     }
 
     @After
     public void tearDown() throws Exception {
-        //BoardDb4oDAO.getInstance().closeDb();
+        //GameSessionDb4oDAO.getInstance().closeDb();
     }
 
     @Test
     public void saveBoard() throws Exception {
-        BoardDb4oDAO db = BoardDb4oDAO.getInstance();
-        db.saveBoard(board);
+        GameSessionDb4oDAO db = GameSessionDb4oDAO.getInstance();
+        db.saveSession(session);
 
-        List<IBoard> dbBoards = db.getAllBoards();
-        Map<String, IJunction> dbBoardMap = dbBoards.get(0).getBoardMap();
+        List<IGameSession> dbSessions = db.getAllSessions();
+        Map<String, IJunction> dbBoardMap = dbSessions.get(0).getBoard().getBoardMap();
 
-        assertEquals(dbBoardMap.toString(), board.getBoardMap().toString());
+        assertEquals(dbBoardMap.toString(), session.getBoard().getBoardMap().toString());
     }
 
     @Test

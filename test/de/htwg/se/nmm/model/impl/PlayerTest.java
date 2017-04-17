@@ -2,7 +2,7 @@ package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.controller.impl.GameController;
 import de.htwg.se.nmm.model.IJunction;
-import de.htwg.se.nmm.persistence.db4o.BoardDb4oDAO;
+import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -92,7 +92,7 @@ public class PlayerTest {
 
     @Test
     public void testSetPuck() {
-        GameController c = new GameController(new Board(), BoardDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
         c.createPlayer("a", "b");
         Puck p = new Puck();
         p.setPlayer(c.getCurrentIPlayer());
