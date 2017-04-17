@@ -41,11 +41,21 @@ public class BoardDb4oDAOTest {
         Map<String, IJunction> dbBoardMap = dbSessions.get(0).getBoard().getBoardMap();
 
         assertEquals(dbBoardMap.toString(), session.getBoard().getBoardMap().toString());
+        assertEquals(session.getId(), db.getSession(session.getId()).getId());
     }
 
     @Test
     public void deleteBoard() throws Exception {
+        IGameSession tmpSession = new GameSession(new Board(), "tmp");
+        GameSessionDb4oDAO db = GameSessionDb4oDAO.getInstance();
+        db.saveSession(tmpSession);
 
+        assertTrue(db.containsSession(tmpSession));
+
+        db.deleteSession(tmpSession);
+
+        assertFalse(db.containsSession(tmpSession));
+        assertNull(db.getSession("tmp"));
     }
 
     @Test

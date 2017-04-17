@@ -8,7 +8,9 @@ public interface IGameSessionDAO {
 	
 	void saveSession(IGameSession session);
 
-	IGameSession getSession(String name);
+	boolean containsSession(IGameSession session);
+
+	IGameSession getSession(String id);
 	
 	void deleteSession(IGameSession board);
 	

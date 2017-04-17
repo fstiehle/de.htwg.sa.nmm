@@ -2,6 +2,7 @@ package de.htwg.se.nmm.persistence.db4o;
 
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
+import com.db4o.query.Predicate;
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
 
@@ -28,14 +29,32 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 	}
 
 	@Override
+	public boolean containsSession(final IGameSession session) {
+		final String sessionID = session.getId();
+		List<IGameSession> sessions = db.query(new Predicate<IGameSession>() {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean match(IGameSession session) {
+				return (session.getId().equals(sessionID));
+			}
+		});
+
+		if (sessions.size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public void saveSession(final IGameSession session) {
 		db.store(session);
 	}
 
 
 	@Override
-	public void deleteSession(final IGameSession board) {
-		db.delete(board);
+	public void deleteSession(final IGameSession session) {
+		db.delete(session);
 	}
 
 	@Override
@@ -49,7 +68,19 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 	}
 
 	@Override
-	public IGameSession getSession(final String name) {
+	public IGameSession getSession(final String id) {
+		List<IGameSession> sessions = db.query(new Predicate<IGameSession>() {
+
+			private static final long serialVersionUID = 1L;
+
+			public boolean match(IGameSession session) {
+				return (session.getId().equals(id));
+			}
+		});
+
+		if (sessions.size() > 0) {
+			return sessions.get(0);
+		}
 		return null;
 	}
 }
