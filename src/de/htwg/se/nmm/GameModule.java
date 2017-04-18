@@ -9,6 +9,7 @@ import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Puck;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
 import de.htwg.se.nmm.persistence.db4o.GameSessionDb4oDAO;
+import de.htwg.se.nmm.persistence.hibernate.GameSessionHibernateDAO;
 
 public class GameModule extends AbstractModule {
     @Override
@@ -17,6 +18,6 @@ public class GameModule extends AbstractModule {
         bind(IGameController.class).to(GameController.class);
         bind(IPuck.class).to(Puck.class);
         bind(IBoard.class).to(Board.class);
-        bind(IGameSessionDAO.class).to(GameSessionDb4oDAO.class);
+        bind(IGameSessionDAO.class).to(GameSessionHibernateDAO.class);
     }
 }

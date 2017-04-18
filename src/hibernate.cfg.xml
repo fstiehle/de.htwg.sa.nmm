@@ -12,5 +12,12 @@
 
         <!-- DB schema will be updated if needed -->
         <property name="hbm2ddl.auto">update</property>
+
+        <!-- Hibernate Mappings -->
+        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentGameSession" />
+        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentBoard" />
+        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentJunction" />
+        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentPlayer" />
+        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentPuck" />
     </session-factory>
 </hibernate-configuration>
