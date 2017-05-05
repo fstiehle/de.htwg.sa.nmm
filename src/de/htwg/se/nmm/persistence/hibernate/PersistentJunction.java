@@ -1,5 +1,8 @@
 package de.htwg.se.nmm.persistence.hibernate;
 
+import com.sun.istack.internal.Nullable;
+import de.htwg.se.nmm.model.IJunction;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -11,58 +14,36 @@ public class PersistentJunction implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
 
-    @OneToOne
-    private PersistentJunction up;
-    @OneToOne
-    private PersistentJunction right;
+    private String name;
 
-    @OneToOne
-    private PersistentJunction down;
-    @OneToOne
-    private PersistentJunction left;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @Nullable
     private PersistentPuck puck;
 
+    public PersistentJunction(IJunction junction) {
+        createPersistentJunction(junction);
+    }
+
+    public PersistentJunction() {
+    }
+
+    private void createPersistentJunction(IJunction junction) {
+        setName(junction.getName());
+        if (junction.getPuck() != null) { // puck can be null
+            setPuck(new PersistentPuck(junction.getPuck()));
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public PersistentJunction getUp() {
-        return up;
-    }
-
-    public void setUp(PersistentJunction up) {
-        this.up = up;
-    }
-
-    public PersistentJunction getRight() {
-        return right;
-    }
-
-    public void setRight(PersistentJunction right) {
-        this.right = right;
-    }
-
-    public PersistentJunction getDown() {
-        return down;
-    }
-
-    public void setDown(PersistentJunction down) {
-        this.down = down;
-    }
-
-    public PersistentJunction getLeft() {
-        return left;
-    }
-
-    public void setLeft(PersistentJunction left) {
-        this.left = left;
     }
 
     public PersistentPuck getPuck() {

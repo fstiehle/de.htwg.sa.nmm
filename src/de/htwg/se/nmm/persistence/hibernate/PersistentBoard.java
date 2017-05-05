@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.persistence.hibernate;
 
+import com.sun.istack.internal.Nullable;
+import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 
 import javax.persistence.*;
@@ -11,16 +13,32 @@ import java.util.Map;
 @Table(name = "board")
 public class PersistentBoard implements Serializable {
 
+    public PersistentBoard(Map<String, IJunction> boardMap) {
+        createPersistentBoard(boardMap);
+    }
+
+    public PersistentBoard() {
+    }
+
+    private void createPersistentBoard(Map<String, IJunction> boardMap) {
+        Map<String, PersistentJunction> persBoardMap = new HashMap<>();
+        for (IJunction junction : boardMap.values()) {
+            PersistentJunction persJunction = new PersistentJunction(junction);
+            persBoardMap.put(junction.getName(), persJunction);
+        }
+        this.setBoardMap(persBoardMap);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "game_session_id")
-    public PersistentGameSession gameSession;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @MapKey(name = "id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "board",
+            joinColumns = @JoinColumn(name = "junction_id"),
+            inverseJoinColumns = @JoinColumn(name = "board_id"))
+    @MapKey(name = "since")
     private Map<String, PersistentJunction> boardMap;
 
 
@@ -30,14 +48,6 @@ public class PersistentBoard implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public PersistentGameSession getGameSession() {
-        return gameSession;
-    }
-
-    public void setGameSession(PersistentGameSession gameSession) {
-        this.gameSession = gameSession;
     }
 
     public Map<String, PersistentJunction> getBoardMap() {

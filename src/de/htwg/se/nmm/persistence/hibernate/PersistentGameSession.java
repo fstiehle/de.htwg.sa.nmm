@@ -1,43 +1,76 @@
 package de.htwg.se.nmm.persistence.hibernate;
 
+import de.htwg.se.nmm.model.IGameSession;
+import de.htwg.se.nmm.model.IJunction;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Table(name = "game_session")
 public class PersistentGameSession implements Serializable {
 
     @Id
-    @Column(name = "id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-    @OneToOne
-    private PersistentBoard board;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "boards",
+            inverseJoinColumns = @JoinColumn(name = "junction_id"),
+            joinColumns = @JoinColumn(name = "game_session_id"))
+    @MapKey(name = "name")
+    private Map<String, PersistentJunction> boardMap;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer playerWhite;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer playerBlack;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer currentPlayer;
 
+    public PersistentGameSession(IGameSession gameSession) {
+        createPersistentGameSession(gameSession);
+    }
 
-    public String getId() {
+    public PersistentGameSession() {
+    }
+
+    private void createPersistentGameSession(IGameSession gameSession) {
+        Map<String, PersistentJunction> persBoardMap = new HashMap<>();
+        for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
+            PersistentJunction persJunction = new PersistentJunction(entry.getValue());
+            persBoardMap.put(entry.getKey(), persJunction);
+        }
+        this.setBoardMap(persBoardMap);
+
+        PersistentPlayer white = new PersistentPlayer(gameSession.getPlayerWhite());
+        PersistentPlayer black = new PersistentPlayer(gameSession.getPlayerBlack());
+
+        setPlayerBlack(black);
+        setPlayerWhite(white);
+
+        if (gameSession.getPlayerCurrent().equals(white)) {
+            setCurrentPlayer(white);
+        } else {
+            setCurrentPlayer(black);
+        }
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Map<String, PersistentJunction> getBoardMap() {
+        return boardMap;
     }
 
-    public PersistentBoard getBoard() {
-        return board;
-    }
-
-    public void setBoard(PersistentBoard board) {
-        this.board = board;
+    public void setBoardMap(Map<String, PersistentJunction> boardMap) {
+        this.boardMap = boardMap;
     }
 
     public PersistentPlayer getPlayerWhite() {

@@ -18,15 +18,13 @@ public class GameSessionHibernateDAO implements IGameSessionDAO {
         Transaction tx = null;
         Session session = null;
 
-        PersistentGameSession foo = new PersistentGameSession();
-        foo.setId("hallo");
-        foo.setBoard(new PersistentBoard());
+        PersistentGameSession persGameSession = new PersistentGameSession(gameSession);
 
         try {
             session = HibernateUtil.getSession().getSessionFactory().getCurrentSession();
             tx = session.beginTransaction();
 
-            session.saveOrUpdate(foo);
+            session.saveOrUpdate(persGameSession);
 
             tx.commit();
         } catch (HibernateException ex) {

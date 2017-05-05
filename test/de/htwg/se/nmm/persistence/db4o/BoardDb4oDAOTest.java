@@ -3,8 +3,10 @@ package de.htwg.se.nmm.persistence.db4o;
 import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.GameSession;
+import de.htwg.se.nmm.model.impl.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,10 +23,12 @@ import static org.junit.Assert.*;
 public class BoardDb4oDAOTest {
     private static final String SESSION_ID = "foo";
     private IGameSession session;
+    IPlayer curPlayer = new Player("2", IPlayer.Man.WHITE);
 
     @Before
     public void setUp() throws Exception {
-        session = new GameSession(new Board(), SESSION_ID);
+        session = new GameSession(SESSION_ID, new Board(), new Player("1", IPlayer.Man.BLACK),
+                curPlayer, curPlayer);
     }
 
     @After
@@ -46,7 +50,8 @@ public class BoardDb4oDAOTest {
 
     @Test
     public void deleteBoard() throws Exception {
-        IGameSession tmpSession = new GameSession(new Board(), "tmp");
+        IGameSession tmpSession = new GameSession("tmp", new Board(), new Player("1", IPlayer.Man.BLACK),
+                curPlayer, curPlayer);
         GameSessionDb4oDAO db = GameSessionDb4oDAO.getInstance();
         db.saveSession(tmpSession);
 
