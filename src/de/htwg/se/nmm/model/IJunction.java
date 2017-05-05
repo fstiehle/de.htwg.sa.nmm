@@ -35,6 +35,9 @@ public interface IJunction {
 
     boolean hasPuck();
 
+    /**
+     * ATTENTION: Name comes from JComponent - needed in GUI
+     */
     String getName();
 
     HashMap<String, Object> getData();
