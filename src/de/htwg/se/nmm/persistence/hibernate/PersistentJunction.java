@@ -20,15 +20,15 @@ public class PersistentJunction implements Serializable {
     @Nullable
     private PersistentPuck puck;
 
-    public PersistentJunction(IJunction junction) {
-        createPersistentJunction(junction);
+    public PersistentJunction(String name, IJunction junction) {
+        createPersistentJunction(name, junction);
     }
 
     public PersistentJunction() {
     }
 
-    private void createPersistentJunction(IJunction junction) {
-        setName(junction.getName());
+    private void createPersistentJunction(String name, IJunction junction) {
+        setName(name);
         if (junction.getPuck() != null) { // puck can be null
             setPuck(new PersistentPuck(junction.getPuck()));
         }

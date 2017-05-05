@@ -43,7 +43,7 @@ public class PersistentGameSession implements Serializable {
     private void createPersistentGameSession(IGameSession gameSession) {
         Map<String, PersistentJunction> persBoardMap = new HashMap<>();
         for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
-            PersistentJunction persJunction = new PersistentJunction(entry.getValue());
+            PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
             persBoardMap.put(entry.getKey(), persJunction);
         }
         this.setBoardMap(persBoardMap);
