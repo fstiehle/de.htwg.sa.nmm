@@ -1,6 +1,10 @@
-# de.htwg.se.nmm
-HTWG Konstanz | Software Engineering | Nine Men's Morris
+# de.htwg.sa.nmm
+HTWG Konstanz | Software Architecture | Nine Men's Morris
 
-### Presentation
+## DB Scheme
 
-[Prezi-Presentation](http://prezi.com/a9pww8eb7bnv/?utm_campaign=share&utm_medium=copy&rc=ex0share)
+> MySQL Workbench
+>
+> <https://dev.mysql.com/downloads/workbench/>
+
+![db_scheme](https://cdn.rawgit.com/fstiehle/de.htwg.sa.nmm/master/misc/doc/db/nmm.svg)
