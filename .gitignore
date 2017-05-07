@@ -2,6 +2,9 @@
 *.iml
 target/
 
+## MySQL Workbench
+*.bak
+
 ## logger
 *.log
 *.log.*
