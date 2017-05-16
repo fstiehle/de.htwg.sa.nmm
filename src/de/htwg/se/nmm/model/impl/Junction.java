@@ -4,6 +4,7 @@ package de.htwg.se.nmm.model.impl;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.persistence.hibernate.PersistentJunction;
 
 import javax.swing.*;
 import java.awt.*;

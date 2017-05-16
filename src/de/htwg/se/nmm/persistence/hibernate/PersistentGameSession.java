@@ -2,6 +2,7 @@ package de.htwg.se.nmm.persistence.hibernate;
 
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
+import de.htwg.se.nmm.persistence.APersistentGameSession;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "game_session")
-public class PersistentGameSession implements Serializable {
+public class PersistentGameSession extends APersistentGameSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,38 +62,47 @@ public class PersistentGameSession implements Serializable {
         }
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public Map<String, PersistentJunction> getBoardMap() {
         return boardMap;
     }
 
+    @Override
     public void setBoardMap(Map<String, PersistentJunction> boardMap) {
         this.boardMap = boardMap;
     }
 
+    @Override
     public PersistentPlayer getPlayerWhite() {
         return playerWhite;
     }
 
+    @Override
     public void setPlayerWhite(PersistentPlayer playerWhite) {
         this.playerWhite = playerWhite;
     }
 
+    @Override
     public PersistentPlayer getPlayerBlack() {
         return playerBlack;
     }
 
+    @Override
     public void setPlayerBlack(PersistentPlayer playerBlack) {
         this.playerBlack = playerBlack;
     }
 
+    @Override
     public PersistentPlayer getCurrentPlayer() {
         return currentPlayer;
     }
 
+    @Override
     public void setCurrentPlayer(PersistentPlayer currentPlayer) {
         this.currentPlayer = currentPlayer;
     }

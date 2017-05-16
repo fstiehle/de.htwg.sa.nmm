@@ -1,8 +1,9 @@
 package de.htwg.se.nmm.persistence.hibernate;
 
 import de.htwg.se.nmm.model.IGameSession;
-import de.htwg.se.nmm.model.impl.Board;
+import de.htwg.se.nmm.model.impl.GameSession;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
+import de.htwg.se.nmm.persistence.APersistentGameSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -13,12 +14,13 @@ import java.util.List;
  * Created by funkemarkus on 18.04.17.
  */
 public class GameSessionHibernateDAO implements IGameSessionDAO {
+
     @Override
     public void saveSession(IGameSession gameSession) {
         Transaction tx = null;
-        Session session = null;
+        Session session;
 
-        PersistentGameSession persGameSession = new PersistentGameSession(gameSession);
+        APersistentGameSession persGameSession = new PersistentGameSession(gameSession);
 
         try {
             session = HibernateUtil.getSession().getSessionFactory().getCurrentSession();
@@ -42,7 +44,28 @@ public class GameSessionHibernateDAO implements IGameSessionDAO {
 
     @Override
     public IGameSession getSession(String id) {
-        return null;
+        Session s = HibernateUtil.getSession().getSessionFactory().getCurrentSession();
+        Transaction tx = null;
+        PersistentGameSession persistentGameSession = null;
+        try {
+
+            tx = s.beginTransaction();
+
+            // here get object
+            persistentGameSession = s.get(PersistentGameSession.class, id);
+
+            tx.commit();
+
+        } catch (HibernateException ex) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            ex.printStackTrace(System.err);
+        } finally {
+            s.close();
+        }
+
+        return new GameSession(persistentGameSession);
     }
 
     @Override

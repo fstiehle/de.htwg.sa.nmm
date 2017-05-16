@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
 import com.google.gson.*;
+import de.htwg.se.nmm.persistence.hibernate.PersistentPlayer;
 import de.htwg.se.nmm.util.NmmRuntimeException;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
@@ -45,6 +46,24 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
 
         this.currentState = this.SET;
         this.gameLost = false;
+    }
+
+    public Player(PersistentPlayer persPlayer) {
+        name = persPlayer.getName();
+        man = persPlayer.getMan();
+        numPucks = persPlayer.getNumPucks();
+        numPucksTakenAway = persPlayer.getNumPucksTakenAway();
+
+        switch (persPlayer.getPlayerState().toString()) {
+            case "SET": currentState = this.SET;
+                break;
+            case "MOVE": currentState = this.MOVE;
+                break;
+            case "PICK": currentState = this.PICK;
+                break;
+            case "HOP": currentState = this.HOP;
+                break;
+        }
     }
 
     @Override

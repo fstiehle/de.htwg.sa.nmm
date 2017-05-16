@@ -6,10 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.htwg.se.nmm.controller.IGameController;
-import de.htwg.se.nmm.model.IBoard;
-import de.htwg.se.nmm.model.IJunction;
-import de.htwg.se.nmm.model.IPlayer;
-import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.*;
 import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
@@ -25,16 +22,16 @@ public class GameController extends Observable implements IGameController {
     private final MillController millController = new MillController(this);
 
     private StringBuilder statusMessage;
-    private IPlayer white;
-    private IPlayer black;
+    private IPlayer whitePlayer;
+    private IPlayer blackPlayer;
     private IPlayer currentPlayer;
     private Injector injector;
     private IBoard board;
-    private IGameSessionDAO boardDAO;
+    private IGameSessionDAO sessionDAO;
 
     @Inject
     public GameController(IBoard board, IGameSessionDAO boardDAO) {
-        this.boardDAO = boardDAO;
+        this.sessionDAO = boardDAO;
         initNewGame(board);
     }
 
@@ -46,8 +43,8 @@ public class GameController extends Observable implements IGameController {
     @Override
     public void initNewGame(IBoard board) {
         this.board = board;
-        this.white = null;
-        this.black = null;
+        this.whitePlayer = null;
+        this.blackPlayer = null;
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
         this.statusMessage.append("Welcome! ");
@@ -66,10 +63,10 @@ public class GameController extends Observable implements IGameController {
 
     @Override
     public IPlayer getOtherPlayer() {
-        if (this.currentPlayer == this.white) {
-            return this.black;
+        if (this.currentPlayer == this.whitePlayer) {
+            return this.blackPlayer;
         } else {
-            return this.white;
+            return this.whitePlayer;
         }
     }
 
@@ -131,8 +128,8 @@ public class GameController extends Observable implements IGameController {
     public String getJson() {
         HashMap<String, Object> objList = new HashMap<>();
         objList.put("code", "200");
-        objList.put("black", this.black.getData());
-        objList.put("white", this.white.getData());
+        objList.put("black", this.blackPlayer.getData());
+        objList.put("white", this.whitePlayer.getData());
         objList.put("currentPlayer", this.currentPlayer.getData());
         objList.put("board", this.board.getData());
 
@@ -149,20 +146,20 @@ public class GameController extends Observable implements IGameController {
 
     @Override
     public void createPlayer(String name1, String name2) {
-        this.white = new Player(name1, Player.Man.WHITE);
-        this.black = new Player(name2, Player.Man.BLACK);
-        this.currentPlayer = this.white;
+        this.whitePlayer = new Player(name1, Player.Man.WHITE);
+        this.blackPlayer = new Player(name2, Player.Man.BLACK);
+        this.currentPlayer = this.whitePlayer;
         this.statusMessage.append(this.getCurrentIPlayer().getName());
         this.statusMessage.append(" may start by setting the first puck.");
     }
 
     @Override
     public IPlayer getPlayerWithoutUserID(UUID userID) {
-        if (this.white.getUserID() == null && this.black.getUserID() != userID) {
-            return this.white;
+        if (this.whitePlayer.getUserID() == null && this.blackPlayer.getUserID() != userID) {
+            return this.whitePlayer;
         }
-        if (this.black.getUserID() == null && this.white.getUserID() != userID) {
-            return this.black;
+        if (this.blackPlayer.getUserID() == null && this.whitePlayer.getUserID() != userID) {
+            return this.blackPlayer;
         }
 
         return null;
@@ -190,9 +187,9 @@ public class GameController extends Observable implements IGameController {
     public IPlayer getPlayer(IPlayer.Man man) {
         switch (man) {
             case WHITE:
-                return this.white;
+                return this.whitePlayer;
             case BLACK:
-                return this.black;
+                return this.blackPlayer;
             default:
                 return null;
         }
@@ -243,6 +240,23 @@ public class GameController extends Observable implements IGameController {
         jTo.setPuck(jFrom.getPuck());
         jFrom.setPuck(null);
         millController.millAfterMove(jTo);
+    }
+
+    public void loadGame() {
+        IGameSession gameSession = sessionDAO.getSession("0");
+        board = gameSession.getBoard();
+        blackPlayer = gameSession.getPlayerBlack();
+        whitePlayer = gameSession.getPlayerWhite();
+        currentPlayer = gameSession.getPlayerCurrent();
+    }
+
+    public void saveGame() {
+        IGameSession session = injector.getInstance(IGameSession.class);
+        session.setBoard(board);
+        session.setPlayerBlack(blackPlayer);
+        session.setPlayerCurrent(currentPlayer);
+        session.setPlayerWhite(whitePlayer);
+        sessionDAO.saveSession(session);
     }
 
 }
