@@ -15,7 +15,6 @@ import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
 import de.htwg.se.nmm.util.observer.Observable;
 
-import java.lang.reflect.Method;
 import java.util.*;
 
 @Singleton
@@ -23,6 +22,7 @@ public class GameController extends Observable implements IGameController {
 
     private static final int HOP_THRESHOLD = 6;
     private static final int LOST_THRESHOLD = 7;
+    private final MillController millController = new MillController(this);
 
     private StringBuilder statusMessage;
     private IPlayer white;
@@ -118,56 +118,6 @@ public class GameController extends Observable implements IGameController {
     }
 
     @Override
-    public void millAfterMove(IJunction j) {
-        if (checkformill(j, this.currentPlayer)) {
-            this.addStatusMessage("Congratulations, Sir!\n" +
-                    "You may now pick one of your opponents pucks that is not part of a mill.");
-            this.currentPlayer.setStatus(this.currentPlayer.getPICK());
-        } else {
-            this.changePlayer();
-        }
-    }
-
-    @Override
-    public boolean checkformill(IJunction j, IPlayer p) {
-        int mill = -1;
-        mill += checkformillR(j, 0, "Down", p);
-        mill += checkformillR(j, 0, "Up", p);
-        if(mill >= 3) {
-            return true;
-        }
-
-        mill = -1;
-        mill += checkformillR(j, 0, "Left", p);
-        mill += checkformillR(j, 0, "Right", p);
-        if(mill >= 3) {
-            return true;
-        }
-        return false;
-    }
-
-    private int checkformillR(IJunction j, int sum, String direction, IPlayer p) {
-        int t = 1;
-        Method method;
-
-        String m = "get" + direction;
-        try {
-            method = j.getClass().getMethod(m);
-
-            if (method.invoke(j) != null) {
-                if (((IJunction) method.invoke(j)).hasPuck() &&
-                        ((IJunction) method.invoke(j)).getPuck().getPlayer().equals(p)) {
-                    t += sum;
-                    t += checkformillR((IJunction) method.invoke(j), sum + 1, direction, p);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return t;
-    }
-
-    @Override
     public void update() {
         notifyObservers();
     }
@@ -259,7 +209,7 @@ public class GameController extends Observable implements IGameController {
         }
         j.setPuck(puck);
         currentPlayer.decrementPucks();
-        this.millAfterMove(j);
+        millController.millAfterMove(j);
     }
 
     @Override
@@ -271,7 +221,7 @@ public class GameController extends Observable implements IGameController {
         this.addStatusMessage(e.getMessage());
         return;
         }
-        if (this.checkformill(j, this.getOtherPlayer())) {
+        if (millController.checkformill(j, this.getOtherPlayer())) {
             this.addStatusMessage("Can't take away a puck if it is part of a mill.");
             return;
         }
@@ -292,7 +242,7 @@ public class GameController extends Observable implements IGameController {
         }
         jTo.setPuck(jFrom.getPuck());
         jFrom.setPuck(null);
-        millAfterMove(jTo);
+        millController.millAfterMove(jTo);
     }
 
 }

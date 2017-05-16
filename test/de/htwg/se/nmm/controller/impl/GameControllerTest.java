@@ -23,11 +23,13 @@ public class GameControllerTest extends TestCase {
     Map<String, IJunction> board;
     Junction j;
     GameController controller;
+    MillController  millController;
     IJunction mill1, mill2;
 
     @Before
     public void setUp() {
         controller = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
+        millController = new MillController(controller);
         controller.createPlayer("p1", "p2");
         this.board =  controller.getBoard().getBoardMap();
         mill1 = this.board.get("a1");
@@ -74,7 +76,7 @@ public class GameControllerTest extends TestCase {
         controller.setPuck("d7", p); // p1
 
         mill1 = this.board.get("a1"); // p2
-        assertFalse(controller.checkformill(mill1, controller.getCurrentIPlayer())); // p2
+        assertFalse(millController.checkformill(mill1, controller.getCurrentIPlayer())); // p2
         p = new Puck();
         p.setPlayer(controller.getCurrentIPlayer());
         controller.setPuck("c4", p); // p2
@@ -83,7 +85,7 @@ public class GameControllerTest extends TestCase {
         p.setPlayer(controller.getCurrentIPlayer());
         controller.setPuck("g1", p); // p1
         mill2 = this.board.get("c4"); // p2
-        assertTrue(controller.checkformill(mill2, controller.getCurrentIPlayer())); // p2
+        assertTrue(millController.checkformill(mill2, controller.getCurrentIPlayer())); // p2
     }
 
     @Test

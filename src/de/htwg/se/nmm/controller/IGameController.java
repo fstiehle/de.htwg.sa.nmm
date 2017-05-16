@@ -24,10 +24,6 @@ public interface IGameController extends IObservable {
 
     void addStatusMessage(String statusMessage);
 
-    void millAfterMove(IJunction j);
-
-    boolean checkformill(IJunction j, IPlayer p);
-
     void update();
 
     IBoard getBoard();
