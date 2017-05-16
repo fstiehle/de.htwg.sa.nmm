@@ -2,7 +2,7 @@ package de.htwg.se.nmm.persistence.hibernate;
 
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
-import de.htwg.se.nmm.persistence.APersistentGameSession;
+import de.htwg.se.nmm.persistence.IPersistentGameSession;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "game_session")
-public class PersistentGameSession extends APersistentGameSession {
+public class PersistentGameSession implements Serializable, IPersistentGameSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

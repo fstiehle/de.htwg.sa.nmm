@@ -3,7 +3,7 @@ package de.htwg.se.nmm.persistence.hibernate;
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.impl.GameSession;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
-import de.htwg.se.nmm.persistence.APersistentGameSession;
+import de.htwg.se.nmm.persistence.IPersistentGameSession;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,7 +20,7 @@ public class GameSessionHibernateDAO implements IGameSessionDAO {
         Transaction tx = null;
         Session session;
 
-        APersistentGameSession persGameSession = new PersistentGameSession(gameSession);
+        IPersistentGameSession persGameSession = new PersistentGameSession(gameSession);
 
         try {
             session = HibernateUtil.getSession().getSessionFactory().getCurrentSession();
