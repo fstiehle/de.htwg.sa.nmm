@@ -8,6 +8,7 @@ import de.htwg.se.nmm.model.IPuck;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.util.HashMap;
 
 /**
  * a IJunction knows its neighbours
@@ -124,6 +125,18 @@ public class Junction extends AbstractButton implements IJunction {
         } else {
             return "\u25CF-";
         }
+    }
+
+    public HashMap<String, Object> getData() {
+        HashMap<String, Object> map = new HashMap<>();
+
+        String man = null;
+        if (this.puck != null) {
+            man = this.puck.getPlayer().getMan().toString();
+        }
+
+        map.put("man", man);
+        return map;
     }
 
     @Override

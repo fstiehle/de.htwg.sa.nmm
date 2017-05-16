@@ -2,12 +2,14 @@ package de.htwg.se.nmm.aview.tui;
 
 import com.google.inject.Inject;
 import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.controller.impl.GameController;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.util.observer.IObserver;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
 
@@ -54,7 +56,8 @@ public class TextUI implements IObserver {
         strbuilderMenu.append("\nPlease enter a command:\n" +
                 ANSI_HIGHLIGHT + "pick(xy)" + ANSI_RESET + ": pick puck from (xy)\n" +
                 ANSI_HIGHLIGHT + "move(xy,xy)" + ANSI_RESET + ": move puck from (xy) to (xy)\n" +
-                ANSI_HIGHLIGHT + "set(xy)" + ANSI_RESET + ": place puck on (xy),\n" +
+                ANSI_HIGHLIGHT + "set(xy)" + ANSI_RESET + ": place puck on (xy)\n" +
+                ANSI_HIGHLIGHT + "reset" + ANSI_RESET + ": start a new game\n" +
                 "q - quit\n\n");
 
         this.strMenu = strbuilderMenu.toString();
@@ -66,20 +69,46 @@ public class TextUI implements IObserver {
     }
 
     public void printTUI() {
-        String tmpBoard = refreshBoard();
+        String str = this.toString();
 
         if(controller.getCurrentIPlayer().hasLost()) {
-            this.logger.info(ANSI_RED);
-            this.logger.info(tmpBoard);
-            this.logger.info(controller.getStatus());
+            this.logger.info(str);
             System.exit(0);
+        }
+
+        this.logger.info(str);
+    }
+
+    public String printHTML() {
+        String game = this.toString();
+        String result = game
+                .replace("\n", "<br>")
+                .replace(ANSI_HIGHLIGHT, "")
+                .replace(ANSI_RED, "")
+                .replace(ANSI_RESET, "");
+        return result;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        String tmpBoard = refreshBoard();
+
+        if (controller.getCurrentIPlayer().hasLost()) {
+            str.append(String.format("\n%s\n%s\n%s\n",
+                    ANSI_RED,
+                    tmpBoard,
+                    controller.getStatus()));
+            return str.toString();
         }
 
         String tmpMenu = refreshMenu();
 
-        this.logger.info(tmpBoard);
-        this.logger.info(tmpMenu);
-        this.logger.info(controller.getStatus());
+        str.append(String.format("\n%s\n%s\n%s\n",
+                tmpBoard,
+                tmpMenu,
+                controller.getStatus()));
+
+        return str.toString();
     }
 
     private String refreshBoard() {
@@ -101,6 +130,7 @@ public class TextUI implements IObserver {
     }
 
     public boolean processInputLine(String s) {
+        System.out.println(s);
         boolean game = true;
 
         if (s == null) {
@@ -136,6 +166,13 @@ public class TextUI implements IObserver {
             posTo.append(s.charAt(9));
 
             controller.movePuck(posFrom.toString(), posTo.toString());
+            controller.update();
+        } else if (s.matches("reset")) {
+            controller.initNewGame();
+            board = controller.getBoard().getBoardMap();
+            controller.update();
+        } else {
+            controller.addStatusMessage("Illegal input.");
             controller.update();
         }
         return game;

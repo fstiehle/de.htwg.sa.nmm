@@ -1,5 +1,7 @@
 package de.htwg.se.nmm.controller.impl;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -8,10 +10,12 @@ import de.htwg.se.nmm.model.IBoard;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
+import de.htwg.se.nmm.model.impl.Board;
 import de.htwg.se.nmm.model.impl.Player;
 import de.htwg.se.nmm.util.observer.Observable;
 
 import java.lang.reflect.Method;
+import java.util.*;
 
 @Singleton
 public class GameController extends Observable implements IGameController {
@@ -28,12 +32,24 @@ public class GameController extends Observable implements IGameController {
 
     @Inject
     public GameController(IBoard board) {
+        initNewGame(board);
+    }
+
+    @Override
+    public void initNewGame() {
+        initNewGame(new Board());
+    }
+
+    @Override
+    public void initNewGame(IBoard board) {
         this.board = board;
         this.white = null;
         this.black = null;
         this.currentPlayer = null;
         this.statusMessage = new StringBuilder();
         this.statusMessage.append("Welcome! ");
+
+        this.createPlayer("Player 1", "Player 2");
     }
 
     @Override
@@ -160,12 +176,44 @@ public class GameController extends Observable implements IGameController {
     }
 
     @Override
+    public String getJson() {
+        HashMap<String, Object> objList = new HashMap<>();
+        objList.put("code", "200");
+        objList.put("black", this.black.getData());
+        objList.put("white", this.white.getData());
+        objList.put("currentPlayer", this.currentPlayer.getData());
+        objList.put("board", this.board.getData());
+
+        HashMap<String, Object> status = new HashMap<>();
+            status.put("message", this.getStatus(true));
+            status.put("man", this.currentPlayer.getMan().toString());
+            status.put("pucksLeft", this.currentPlayer.getNumPucks());
+            status.put("modus", this.currentPlayer.getStatus().toString());
+        objList.put("status", status);
+
+        Gson gson = new Gson();
+        return gson.toJson(objList);
+    }
+
+    @Override
     public void createPlayer(String name1, String name2) {
         this.white = new Player(name1, Player.Man.WHITE);
         this.black = new Player(name2, Player.Man.BLACK);
         this.currentPlayer = this.white;
         this.statusMessage.append(this.getCurrentIPlayer().getName());
         this.statusMessage.append(" may start by setting the first puck.");
+    }
+
+    @Override
+    public IPlayer getPlayerWithoutUserID(UUID userID) {
+        if (this.white.getUserID() == null && this.black.getUserID() != userID) {
+            return this.white;
+        }
+        if (this.black.getUserID() == null && this.white.getUserID() != userID) {
+            return this.black;
+        }
+
+        return null;
     }
 
     @Override
@@ -176,6 +224,26 @@ public class GameController extends Observable implements IGameController {
     @Override
     public String getStatus() {
         return this.statusMessage.toString();
+    }
+
+    @Override
+    public String getStatus(boolean clean) {
+        if (clean) {
+            return this.statusMessage.toString().replaceAll("\\s+", " ").trim();
+        }
+        return getStatus();
+    }
+
+    @Override
+    public IPlayer getPlayer(IPlayer.Man man) {
+        switch (man) {
+            case WHITE:
+                return this.white;
+            case BLACK:
+                return this.black;
+            default:
+                return null;
+        }
     }
 
     @Override

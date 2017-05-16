@@ -7,7 +7,14 @@ import de.htwg.se.nmm.model.IPlayer;
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.util.observer.IObservable;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public interface IGameController extends IObservable {
+
+    void initNewGame();
+
+    void initNewGame(IBoard board);
 
     IPlayer getOtherPlayer();
 
@@ -29,11 +36,19 @@ public interface IGameController extends IObservable {
 
     String getBoardString();
 
+    String getJson();
+
     String getStatus();
 
-    public void setInjector(Injector injector);
+    String getStatus(boolean clean);
 
-    public Injector getInjector();
+    IPlayer getPlayer(IPlayer.Man man);
+
+    IPlayer getPlayerWithoutUserID(UUID userID);
+
+    void setInjector(Injector injector);
+
+    Injector getInjector();
 
     void setPuck(String s, IPuck puck);
 

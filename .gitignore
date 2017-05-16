@@ -1,3 +1,5 @@
+## Meta Data
+META-INF/
 ## intellij
 *.iml
 target/
@@ -19,3 +21,6 @@ out/
 
 # Mac
 .DS_Store
+
+# Build
+build/
