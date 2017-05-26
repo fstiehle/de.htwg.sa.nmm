@@ -1,40 +1,27 @@
-package de.htwg.se.nmm.persistence.hibernate;
+package de.htwg.se.nmm.persistence.couch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.persistence.IPersistentGameSession;
 import de.htwg.se.nmm.persistence.IPersistentJunction;
 import de.htwg.se.nmm.persistence.IPersistentPlayer;
+import org.ektorp.support.CouchDbDocument;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "game_session")
-    public class PersistentGameSession implements IPersistentGameSession {
+public class PersistentGameSession extends CouchDbDocument implements IPersistentGameSession {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer id = 155;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinTable(
-            name = "boards",
-            inverseJoinColumns = @JoinColumn(name = "junction_id"),
-            joinColumns = @JoinColumn(name = "game_session_id"))
-    @MapKey(name = "name")
-    private Map<String, PersistentJunction> boardMap;
+    private Map<String, PersistentJunction> DBboardMap;
 
-    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer playerWhite;
 
-    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer playerBlack;
 
-    @OneToOne(cascade = CascadeType.ALL)
     private PersistentPlayer currentPlayer;
 
     public PersistentGameSession(IGameSession gameSession) {
@@ -50,7 +37,7 @@ import java.util.stream.Collectors;
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
             persBoardMap.put(entry.getKey(), persJunction);
         }
-        this.boardMap = persBoardMap;
+        this.DBboardMap = persBoardMap;
 
         PersistentPlayer white = new PersistentPlayer(gameSession.getPlayerWhite());
         PersistentPlayer black = new PersistentPlayer(gameSession.getPlayerBlack());
@@ -101,8 +88,13 @@ import java.util.stream.Collectors;
     }
 
     @Override
+    @JsonIgnore
     public Map<String, IPersistentJunction> getBoardMap() {
-        return boardMap.entrySet().stream()
+        return DBboardMap.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (IPersistentJunction) e));
+    }
+
+    public Map<String, PersistentJunction> getDBBoardMap() {
+        return DBboardMap;
     }
 }

@@ -1,21 +1,16 @@
-package de.htwg.se.nmm.persistence.hibernate;
+package de.htwg.se.nmm.persistence.couch;
 
 import de.htwg.se.nmm.model.IPuck;
 import de.htwg.se.nmm.persistence.IPersistentPlayer;
+import de.htwg.se.nmm.persistence.IPersistentPuck;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
-@Table(name = "puck")
-public class PersistentPuck implements de.htwg.se.nmm.persistence.IPersistentPuck {
+public class PersistentPuck implements IPersistentPuck {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private PersistentPlayer player;
+    private IPersistentPlayer player;
 
     public PersistentPuck(IPuck puck) {
         createPersistentPuck(puck);
@@ -40,6 +35,6 @@ public class PersistentPuck implements de.htwg.se.nmm.persistence.IPersistentPuc
 
     @Override
     public void setPlayer(IPersistentPlayer player) {
-        this.player = (PersistentPlayer) player;
+        this.player = player;
     }
 }

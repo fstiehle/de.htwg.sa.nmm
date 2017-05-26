@@ -1,4 +1,4 @@
-package de.htwg.se.nmm.persistence.hibernate;
+package de.htwg.se.nmm.persistence.couch;
 
 import com.sun.istack.internal.Nullable;
 import de.htwg.se.nmm.model.IJunction;
@@ -6,20 +6,13 @@ import de.htwg.se.nmm.persistence.IPersistentJunction;
 import de.htwg.se.nmm.persistence.IPersistentPuck;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
-@Table(name = "junction")
 public class PersistentJunction implements IPersistentJunction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer id;
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @Nullable
     private PersistentPuck puck;
 
     public PersistentJunction(String name, IJunction junction) {

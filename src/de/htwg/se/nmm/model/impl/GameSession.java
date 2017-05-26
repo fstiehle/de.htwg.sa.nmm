@@ -2,6 +2,8 @@ package de.htwg.se.nmm.model.impl;
 
 import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.model.*;
+import de.htwg.se.nmm.persistence.IPersistentGameSession;
+import de.htwg.se.nmm.persistence.IPersistentJunction;
 import de.htwg.se.nmm.persistence.hibernate.PersistentGameSession;
 import de.htwg.se.nmm.persistence.hibernate.PersistentJunction;
 
@@ -32,7 +34,7 @@ public class GameSession implements IGameSession {
         this.playerCurrent = playerCurrent;
     }
 
-    public GameSession(PersistentGameSession persGameSession) {
+    public GameSession(IPersistentGameSession persGameSession) {
         IPlayer white = new Player(persGameSession.getPlayerWhite());
         IPlayer black = new Player(persGameSession.getPlayerBlack());
 
@@ -47,9 +49,9 @@ public class GameSession implements IGameSession {
 
         IBoard tmpBoard = new Board();
         // we only need to load information about the puck on the junction from DB
-        for (Map.Entry<String, PersistentJunction> entry : persGameSession.getBoardMap().entrySet()) {
+        for (Map.Entry<String, IPersistentJunction> entry : persGameSession.getBoardMap().entrySet()) {
             IJunction j = tmpBoard.getBoardMap().get(entry.getKey());
-            PersistentJunction jP = entry.getValue();
+            IPersistentJunction jP = entry.getValue();
             IPuck puck = new Puck();
             if (jP.getPuck().getPlayer().equals(white)) {
                 puck.setPlayer(white);

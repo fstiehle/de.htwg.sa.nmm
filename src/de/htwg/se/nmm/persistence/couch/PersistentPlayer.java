@@ -1,36 +1,24 @@
-package de.htwg.se.nmm.persistence.hibernate;
+package de.htwg.se.nmm.persistence.couch;
 
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent;
 import de.htwg.se.nmm.model.IPlayer;
-import de.htwg.se.nmm.model.IPlayerState;
 import de.htwg.se.nmm.persistence.IPersistentPlayer;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 
-
-@Entity
-@Table(name = "player")
 public class PersistentPlayer implements IPersistentPlayer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Enumerated(EnumType.ORDINAL)
     private State playerState;
 
-    @Enumerated(EnumType.ORDINAL)
     private IPlayer.Man man;
 
     private String name;
 
-    @Column(name = "num_pucks")
     private int numPucks;
 
-    @Column(name = "num_pucks_taken_away")
     private int numPucksTakenAway;
 
 

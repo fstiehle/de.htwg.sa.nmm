@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.model.impl;
 
 import com.google.gson.*;
+import de.htwg.se.nmm.persistence.IPersistentPlayer;
 import de.htwg.se.nmm.persistence.hibernate.PersistentPlayer;
 import de.htwg.se.nmm.util.NmmRuntimeException;
 import de.htwg.se.nmm.model.IJunction;
@@ -48,7 +49,7 @@ public class Player implements de.htwg.se.nmm.model.IPlayer {
         this.gameLost = false;
     }
 
-    public Player(PersistentPlayer persPlayer) {
+    public Player(IPersistentPlayer persPlayer) {
         name = persPlayer.getName();
         man = persPlayer.getMan();
         numPucks = persPlayer.getNumPucks();

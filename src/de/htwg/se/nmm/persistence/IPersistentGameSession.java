@@ -1,9 +1,11 @@
 package de.htwg.se.nmm.persistence;
 
+import de.htwg.se.nmm.model.IGameSession;
+import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.persistence.hibernate.PersistentJunction;
 import de.htwg.se.nmm.persistence.hibernate.PersistentPlayer;
 
-import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -11,22 +13,22 @@ import java.util.Map;
  */
 public interface IPersistentGameSession {
 
-    int getId();
+    int getSessionID();
 
-    Map<String, PersistentJunction> getBoardMap();
+    IPersistentPlayer getPlayerWhite();
 
-    void setBoardMap(Map<String, PersistentJunction> boardMap);
+    void setPlayerWhite(IPersistentPlayer playerWhite);
 
-    PersistentPlayer getPlayerWhite();
+    IPersistentPlayer getPlayerBlack();
 
-    void setPlayerWhite(PersistentPlayer playerWhite);
+    void setPlayerBlack(IPersistentPlayer playerBlack);
 
-    PersistentPlayer getPlayerBlack();
+    IPersistentPlayer getCurrentPlayer();
 
-    void setPlayerBlack(PersistentPlayer playerBlack);
+    void setCurrentPlayer(IPersistentPlayer currentPlayer);
 
-    PersistentPlayer getCurrentPlayer();
+    Map<String, IPersistentJunction> getBoardMap();
 
-    void setCurrentPlayer(PersistentPlayer currentPlayer);
+    // TODO: create createPersistentGameSession in util class
 
 }
