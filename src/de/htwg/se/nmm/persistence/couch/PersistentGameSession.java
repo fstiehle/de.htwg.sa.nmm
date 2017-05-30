@@ -1,6 +1,7 @@
 package de.htwg.se.nmm.persistence.couch;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.htwg.se.nmm.model.IGameSession;
 import de.htwg.se.nmm.model.IJunction;
 import de.htwg.se.nmm.persistence.IPersistentGameSession;
@@ -14,9 +15,9 @@ import java.util.stream.Collectors;
 
 public class PersistentGameSession extends CouchDbDocument implements IPersistentGameSession {
 
-    private Integer id = 155;
+    private Integer sessionID = 155;
 
-    private Map<String, PersistentJunction> DBboardMap;
+    private Map<String, PersistentJunction> boardMap;
 
     private PersistentPlayer playerWhite;
 
@@ -37,7 +38,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
             persBoardMap.put(entry.getKey(), persJunction);
         }
-        this.DBboardMap = persBoardMap;
+        this.boardMap = persBoardMap;
 
         PersistentPlayer white = new PersistentPlayer(gameSession.getPlayerWhite());
         PersistentPlayer black = new PersistentPlayer(gameSession.getPlayerBlack());
@@ -54,7 +55,11 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
 
     @Override
     public int getSessionID() {
-        return id;
+        return sessionID;
+    }
+
+    public void setSessionID(Integer sessionID) {
+        this.sessionID = sessionID;
     }
 
     @Override
@@ -63,6 +68,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     @Override
+    @JsonIgnore
     public void setPlayerWhite(IPersistentPlayer playerWhite) {
         this.playerWhite = (PersistentPlayer) playerWhite;
     }
@@ -73,6 +79,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     @Override
+    @JsonIgnore
     public void setPlayerBlack(IPersistentPlayer playerBlack) {
         this.playerBlack = (PersistentPlayer) playerBlack;
     }
@@ -83,6 +90,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     @Override
+    @JsonIgnore
     public void setCurrentPlayer(IPersistentPlayer currentPlayer) {
         this.currentPlayer = (PersistentPlayer) currentPlayer;
     }
@@ -90,11 +98,36 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     @Override
     @JsonIgnore
     public Map<String, IPersistentJunction> getBoardMap() {
-        return DBboardMap.entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> (IPersistentJunction) e));
+        Map<String, IPersistentJunction> tmp = new HashMap<>();
+        boardMap.entrySet().stream().forEach((e) -> tmp.put(e.getKey(), e.getValue()));
+        return tmp;
     }
 
-    public Map<String, PersistentJunction> getDBBoardMap() {
-        return DBboardMap;
+    /* Setters for Couch DB */
+    /* ---------------------------------------------*/
+
+    @JsonProperty("boardMap")
+    public Map<String, PersistentJunction> getJsonBoardMap() {
+        return boardMap;
+    }
+
+    @JsonProperty("boardMap")
+    public void setBoardMap(Map<String, PersistentJunction> boardMap) {
+        this.boardMap = boardMap;
+    }
+
+    @JsonProperty("playerWhite")
+    public void setPlayerWhite(PersistentPlayer playerWhite) {
+        this.playerWhite = playerWhite;
+    }
+
+    @JsonProperty("playerBlack")
+    public void setPlayerBlack(PersistentPlayer playerBlack) {
+        this.playerBlack = playerBlack;
+    }
+
+    @JsonProperty("currentPlayer")
+    public void setCurrentPlayer(PersistentPlayer currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

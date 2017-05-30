@@ -53,12 +53,16 @@ public class GameSession implements IGameSession {
             IJunction j = tmpBoard.getBoardMap().get(entry.getKey());
             IPersistentJunction jP = entry.getValue();
             IPuck puck = new Puck();
-            if (jP.getPuck().getPlayer().equals(white)) {
-                puck.setPlayer(white);
-            } else {
-                puck.setPlayer(black);
+
+            if (jP.getPuck() != null) {
+                if (jP.getPuck().getPlayer().equals(white)) {
+                    puck.setPlayer(white);
+                } else {
+                    puck.setPlayer(black);
+                }
+                j.setPuck(puck);
             }
-            j.setPuck(puck);
+
             tmpBoard.getBoardMap().put(entry.getKey(), j);
         }
         board = tmpBoard;

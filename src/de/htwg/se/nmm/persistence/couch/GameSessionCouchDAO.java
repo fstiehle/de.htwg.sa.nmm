@@ -1,7 +1,9 @@
 package de.htwg.se.nmm.persistence.couch;
 
 import de.htwg.se.nmm.model.IGameSession;
+import de.htwg.se.nmm.model.impl.GameSession;
 import de.htwg.se.nmm.persistence.IGameSessionDAO;
+import de.htwg.se.nmm.persistence.IPersistentGameSession;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
@@ -49,7 +51,11 @@ public class GameSessionCouchDAO implements IGameSessionDAO {
 
     @Override
     public IGameSession getSession(String id) {
-        return null;
+        IPersistentGameSession persGameSession = db.find(PersistentGameSession.class, id);
+        if (persGameSession == null) {
+            return null;
+        }
+        return new GameSession(persGameSession);
     }
 
     @Override
