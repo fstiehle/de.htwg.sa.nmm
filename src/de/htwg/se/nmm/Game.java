@@ -3,6 +3,7 @@ package de.htwg.se.nmm;
 import java.util.Scanner;
 
 import de.htwg.se.nmm.aview.gui.MasterFrame;
+import de.htwg.se.nmm.aview.http.HttpServer;
 import de.htwg.se.nmm.controller.IGameController;
 import de.htwg.se.nmm.aview.tui.TextUI;
 
@@ -14,6 +15,7 @@ public final class Game {
 
     private static Scanner scanner;
     private static TextUI tui;
+    private static HttpServer httpServer;
     private IGameController controller;
     private static Game instance = null;
 
@@ -45,6 +47,12 @@ public final class Game {
 
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();
+
+        try {
+            HttpServer.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
