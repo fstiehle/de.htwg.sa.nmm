@@ -47,6 +47,8 @@ public final class Game {
         tui = injector.getInstance(TextUI.class);
         tui.printTUI();
 
+        httpServer = injector.getInstance(HttpServer.class);
+        httpServer.run();
     }
 
     public static void main(String[] args) {

@@ -16,24 +16,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.htwg.sa.nmm.controller.IGameController;
-import de.htwg.sa.nmm.controller.IJsonController;
 
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 @Singleton
 public class HttpServer extends AllDirectives {
 
     private final IGameController gameController;
-    private final IJsonController jsonController;
+
+    private static final Logger logger = LogManager.getLogger(HttpServer.class.getName());
 
     @Inject
-    public HttpServer(IGameController gameController, IJsonController jsonController) {
+    public HttpServer(IGameController gameController) {
         this.gameController = gameController;
-        this.jsonController = jsonController;
     }
 
-    public void run() throws Exception {
+    public void run() {
         // boot up server using the route as defined below
         ActorSystem system = ActorSystem.create("routes");
 
@@ -44,8 +46,13 @@ public class HttpServer extends AllDirectives {
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
                 ConnectHttp.toHost("localhost", 8080), materializer);
 
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
-        System.in.read(); // let it run until user presses return
+        this.logger.debug("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        try {
+            System.in.read(); // let it run until user presses return
+        } catch (IOException e) {
+            this.logger.error("HttpServer failed!");
+            e.printStackTrace();
+        }
 
         binding
                 .thenCompose(ServerBinding::unbind) // trigger unbinding from the port

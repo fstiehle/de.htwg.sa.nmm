@@ -15,14 +15,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonController implements IJsonController {
 
+    private final IGameController gameController;
+
+    public JsonController(IGameController gameController) {
+        this.gameController = gameController;
+    }
+
     @Override
-    public JsonNode refreshGame(IGameController gameController, JsonNode json) throws IllegalArgumentException {
+    public JsonNode refreshGame(JsonNode json) throws IllegalArgumentException {
         gameController.update();
         return null;
     }
 
     @Override
-    public JsonNode setPlayerName(IGameController gameController, JsonNode json) throws IllegalArgumentException {
+    public JsonNode setPlayerName(JsonNode json) throws IllegalArgumentException {
 
         // convert params to String
         String man = json.findPath("command").textValue();
@@ -49,14 +55,14 @@ public class JsonController implements IJsonController {
     }
 
     @Override
-    public JsonNode resetGame(IGameController gameController, JsonNode json) throws IllegalArgumentException {
+    public JsonNode resetGame(JsonNode json) throws IllegalArgumentException {
         gameController.initNewGame();
         gameController.update();
         return null;
     }
 
     @Override
-    public JsonNode processCommand(IGameController gameController, JsonNode json) throws IllegalArgumentException {
+    public JsonNode processCommand(JsonNode json) throws IllegalArgumentException {
         String command = null;
         JsonNode queryNode = null;
         List<String> queryList = null;

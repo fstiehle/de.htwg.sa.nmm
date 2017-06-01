@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public interface IJsonController {
 
-    JsonNode setPlayerName(IGameController controller, JsonNode jsonNode);
-    JsonNode resetGame(IGameController controller, JsonNode jsonNode);
-    JsonNode processCommand(IGameController controller, JsonNode jsonNode);
-    JsonNode refreshGame(IGameController controller, JsonNode jsonNode);
+    JsonNode setPlayerName(JsonNode jsonNode);
+    JsonNode resetGame(JsonNode jsonNode);
+    JsonNode processCommand(JsonNode jsonNode);
+    JsonNode refreshGame(JsonNode jsonNode);
 
 }
