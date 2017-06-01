@@ -11,22 +11,36 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import de.htwg.se.nmm.controller.IGameController;
+import de.htwg.se.nmm.controller.IJsonController;
 
+import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
+@Singleton
 public class HttpServer extends AllDirectives {
 
-    public static void run() throws Exception {
+    private final IGameController gameController;
+    private final IJsonController jsonController;
+
+    @Inject
+    public HttpServer(IGameController gameController, IJsonController jsonController) {
+        this.gameController = gameController;
+        this.jsonController = jsonController;
+    }
+
+    public void run() throws Exception {
         // boot up server using the route as defined below
         ActorSystem system = ActorSystem.create("routes");
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-        //In order to access all directives we need an instance where the routes are define.
-        HttpServer app = new HttpServer();
-
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = app.createRoute().flow(system, materializer);
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = this.createRoute().flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
                 ConnectHttp.toHost("localhost", 8080), materializer);
 
@@ -40,8 +54,53 @@ public class HttpServer extends AllDirectives {
 
     private Route createRoute() {
         return route(
-                path("hello", () ->
+                path("setPlayerName", () ->
                         get(() ->
-                                complete("<h1>Say hello to akka-http</h1>"))));
+                                complete("<h1>Say hello to akka-http</h1>"))),
+
+                path("resetGame", () ->
+                        get(() ->
+                                complete("<h1>Say hello to akka-http</h1>"))),
+
+                path("processCommand", () ->
+                        get(() ->
+                                complete("<h1>Say hello to akka-http</h1>"))),
+
+                path("refreshGame", () ->
+                        get(() ->
+                                complete("<h1>Say hello to akka-http</h1>")))
+                );
+    }
+
+    /**
+     * ProcessJson
+     *
+     * @param jsonStr
+     * @throws IllegalArgumentException
+     */
+    private JsonNode processJson(String jsonStr) throws IllegalArgumentException, IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readValue(jsonStr, JsonNode.class);
+        String type = json.findPath("type").textValue();
+        if(type == null) {
+            throw new IllegalArgumentException("Parameter [type] not found");
+        }
+
+        switch (type) {
+            case "setPlayerName":
+                setPlayerName(json);
+                break;
+            case "resetGame":
+                resetGame(json);
+                break;
+            case "processCommand":
+                processCommand(json);
+                break;
+            case "refreshGame":
+                refreshGame(json);
+                break;
+            default:
+                throw new IllegalArgumentException("Illegal parameter [type] found");
+        }
     }
 }
