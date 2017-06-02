@@ -6,27 +6,22 @@ import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.*;
-import akka.http.javadsl.model.ContentType;
-import akka.http.javadsl.model.headers.*;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.Unmarshaller;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.JacksonDeserializers;
-import akka.http.javadsl.unmarshalling.StringUnmarshaller;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.htwg.sa.nmm.controller.IGameController;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.concurrent.CompletionStage;
 
+import de.htwg.sa.nmm.controller.IJsonController;
+import de.htwg.sa.nmm.controller.impl.JsonController;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -34,12 +29,14 @@ import org.apache.logging.log4j.LogManager;
 public class HttpServer extends AllDirectives {
 
     private final IGameController gameController;
+    private final IJsonController jsonController;
 
     private static final Logger logger = LogManager.getLogger(HttpServer.class.getName());
 
     @Inject
     public HttpServer(IGameController gameController) {
         this.gameController = gameController;
+        this.jsonController = new JsonController(gameController);
     }
 
     public void run() {
@@ -68,41 +65,29 @@ public class HttpServer extends AllDirectives {
 
     private Route createRoute() {
         return route(
-                path("setPlayerName", () ->
-                        get(() -> complete("<h1>Say hello to akka-http</h1>"))),
+
+                path("game", () ->
+                        get(() -> this.jsonController.getGameSession())
+                ),
 
                 path("resetGame", () ->
-                        get(() -> complete("<h1>Say hello to akka-http</h1>"))),
-
-                path("processCommand", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content -> fooo(content)))),
+                        get(() -> this.jsonController.resetGame())
+                ),
 
                 path("refreshGame", () ->
-                        get(() -> complete("<h1>Say hello to akka-http</h1>")))
-                );
-    }
+                        get(() -> this.jsonController.refreshGame())
+                ),
 
-    public Route fooo(String json) {
-        return complete(
-                StatusCodes.OK,
-                HttpEntities.create(ContentTypes.APPLICATION_JSON, json.toString())
+                path("setPlayerName", () ->
+                        post(() -> entity(Unmarshaller.entityToString(), content ->
+                                this.jsonController.setPlayerName(content)))
+                ),
+
+                path("processCommand", () ->
+                        post(() -> entity(Unmarshaller.entityToString(), content ->
+                                this.jsonController.processCommand(content)))
+                )
+
         );
-    }
-
-    /**
-     * ProcessJson
-     *
-     * @param jsonStr
-     * @throws IllegalArgumentException
-     */
-    private JsonNode processJson(String jsonStr) throws IllegalArgumentException, IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode json = mapper.readValue(jsonStr, JsonNode.class);
-        String type = json.findPath("type").textValue();
-        if(type == null) {
-            throw new IllegalArgumentException("Parameter [type] not found");
-        }
-
-        return null;
     }
 }

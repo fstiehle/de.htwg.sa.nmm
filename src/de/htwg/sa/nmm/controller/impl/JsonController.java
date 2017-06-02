@@ -1,19 +1,22 @@
 package de.htwg.sa.nmm.controller.impl;
 
+import java.io.IOException;
 import java.util.*;
 
+import akka.http.javadsl.model.ContentTypes;
 import akka.http.javadsl.server.Route;
 import de.htwg.sa.nmm.controller.IJsonController;
 import de.htwg.sa.nmm.controller.IGameController;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.model.IPlayer;
 
+import akka.http.javadsl.model.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static akka.http.javadsl.server.Directives.*;
 
 import akka.http.javadsl.model.StatusCodes;
 
-import static akka.http.javadsl.server.Directives.*;
 
 
 
@@ -26,13 +29,21 @@ public class JsonController implements IJsonController {
     }
 
     @Override
-    public JsonNode refreshGame(JsonNode json) throws IllegalArgumentException {
+    public Route refreshGame() {
         gameController.update();
-        return null;
+        return complete(StatusCodes.OK);
     }
 
     @Override
-    public JsonNode setPlayerName(JsonNode json) throws IllegalArgumentException {
+    public Route setPlayerName(String jsonStr) throws IllegalArgumentException {
+        // convert string to JsonNode
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = null;
+        try {
+            json = mapper.readTree(jsonStr);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Illegal Json format");
+        }
 
         // convert params to String
         String man = json.findPath("command").textValue();
@@ -54,19 +65,30 @@ public class JsonController implements IJsonController {
             default:
                 throw new IllegalArgumentException("Bad parameter [man]");
         }
+
         gameController.update();
-        return null;
+        return complete(StatusCodes.OK);
     }
 
     @Override
-    public JsonNode resetGame(JsonNode json) throws IllegalArgumentException {
+    public Route resetGame() {
         gameController.initNewGame();
         gameController.update();
-        return null;
+
+        return complete(StatusCodes.OK);
     }
 
     @Override
-    public Route processCommand(JsonNode json) throws IllegalArgumentException {
+    public Route processCommand(String jsonStr) throws IllegalArgumentException {
+        // convert string to JsonNode
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = null;
+        try {
+            json = mapper.readTree(jsonStr);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Illegal Json format");
+        }
+
         String command = null;
         JsonNode queryNode = null;
         List<String> queryList = null;
@@ -100,8 +122,18 @@ public class JsonController implements IJsonController {
             default:
                 throw new IllegalArgumentException("Bad parameter [command]");
         }
+
         gameController.update();
-        return null;
-        //return complete(StatusCodes.OK, RawHeader("Content-Type", "application/json"), "");
+        return complete(StatusCodes.OK);
+    }
+
+    @Override
+    public Route getGameSession() {
+        String jsonData = gameController.getJson();
+
+        return complete(
+                StatusCodes.OK,
+                HttpEntities.create(ContentTypes.APPLICATION_JSON, jsonData)
+        );
     }
 }
