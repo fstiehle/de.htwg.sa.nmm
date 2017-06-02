@@ -1,5 +1,6 @@
 package de.htwg.sa.nmm.controller;
 
+import akka.http.javadsl.server.Route;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -9,7 +10,7 @@ public interface IJsonController {
 
     JsonNode setPlayerName(JsonNode jsonNode);
     JsonNode resetGame(JsonNode jsonNode);
-    JsonNode processCommand(JsonNode jsonNode);
+    Route processCommand(JsonNode jsonNode);
     JsonNode refreshGame(JsonNode jsonNode);
 
 }

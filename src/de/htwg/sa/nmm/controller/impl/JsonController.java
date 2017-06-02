@@ -1,8 +1,8 @@
 package de.htwg.sa.nmm.controller.impl;
 
-import java.io.IOException;
 import java.util.*;
 
+import akka.http.javadsl.server.Route;
 import de.htwg.sa.nmm.controller.IJsonController;
 import de.htwg.sa.nmm.controller.IGameController;
 import de.htwg.sa.nmm.model.IPuck;
@@ -10,6 +10,10 @@ import de.htwg.sa.nmm.model.IPlayer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import akka.http.javadsl.model.StatusCodes;
+
+import static akka.http.javadsl.server.Directives.*;
 
 
 
@@ -62,7 +66,7 @@ public class JsonController implements IJsonController {
     }
 
     @Override
-    public JsonNode processCommand(JsonNode json) throws IllegalArgumentException {
+    public Route processCommand(JsonNode json) throws IllegalArgumentException {
         String command = null;
         JsonNode queryNode = null;
         List<String> queryList = null;
@@ -98,5 +102,6 @@ public class JsonController implements IJsonController {
         }
         gameController.update();
         return null;
+        //return complete(StatusCodes.OK, RawHeader("Content-Type", "application/json"), "");
     }
 }

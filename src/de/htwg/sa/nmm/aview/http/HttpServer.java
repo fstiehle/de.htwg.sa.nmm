@@ -5,19 +5,26 @@ import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
-import akka.http.javadsl.model.HttpRequest;
-import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.model.*;
+import akka.http.javadsl.model.ContentType;
+import akka.http.javadsl.model.headers.*;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.Route;
+import akka.http.javadsl.unmarshalling.Unmarshaller;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.JacksonDeserializers;
+import akka.http.javadsl.unmarshalling.StringUnmarshaller;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
 import de.htwg.sa.nmm.controller.IGameController;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.concurrent.CompletionStage;
 
 import org.apache.logging.log4j.Logger;
@@ -62,21 +69,24 @@ public class HttpServer extends AllDirectives {
     private Route createRoute() {
         return route(
                 path("setPlayerName", () ->
-                        get(() ->
-                                complete("<h1>Say hello to akka-http</h1>"))),
+                        get(() -> complete("<h1>Say hello to akka-http</h1>"))),
 
                 path("resetGame", () ->
-                        get(() ->
-                                complete("<h1>Say hello to akka-http</h1>"))),
+                        get(() -> complete("<h1>Say hello to akka-http</h1>"))),
 
                 path("processCommand", () ->
-                        get(() ->
-                                complete("<h1>Say hello to akka-http</h1>"))),
+                        post(() -> entity(Unmarshaller.entityToString(), content -> fooo(content)))),
 
                 path("refreshGame", () ->
-                        get(() ->
-                                complete("<h1>Say hello to akka-http</h1>")))
+                        get(() -> complete("<h1>Say hello to akka-http</h1>")))
                 );
+    }
+
+    public Route fooo(String json) {
+        return complete(
+                StatusCodes.OK,
+                HttpEntities.create(ContentTypes.APPLICATION_JSON, json.toString())
+        );
     }
 
     /**
