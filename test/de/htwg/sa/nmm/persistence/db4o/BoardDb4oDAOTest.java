@@ -8,6 +8,7 @@ import de.htwg.sa.nmm.model.IPlayer;
 import de.htwg.sa.nmm.model.impl.Board;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import static org.junit.Assert.*;
  * Created by funkemarkus on 05.04.17.
  * TODO: Test Generisch mit Dependency Injection
  */
+@Ignore
 public class BoardDb4oDAOTest {
     private static final String SESSION_ID = "foo";
     private IGameSession session;
