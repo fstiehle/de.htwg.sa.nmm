@@ -53,6 +53,12 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>db40</groupId>
+      <artifactId>db40</artifactId>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/db4o-8.0.249.16098-all-java5.jar</systemPath>
+    </dependency>
+    <dependency>
       <groupId>com.typesafe.akka</groupId>
       <artifactId>akka-http_2.11</artifactId>
       <version>10.0.6</version>
