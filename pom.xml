@@ -55,6 +55,7 @@
     <dependency>
       <groupId>db40</groupId>
       <artifactId>db40</artifactId>
+      <version>8.0.249.16098</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/db4o-8.0.249.16098-all-java5.jar</systemPath>
     </dependency>
