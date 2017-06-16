@@ -1,6 +1,5 @@
 package de.htwg.sa.nmm.persistence.couch;
 
-import com.sun.istack.internal.Nullable;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
 import de.htwg.sa.nmm.persistence.IPersistentPuck;
 import de.htwg.sa.nmm.model.IJunction;
