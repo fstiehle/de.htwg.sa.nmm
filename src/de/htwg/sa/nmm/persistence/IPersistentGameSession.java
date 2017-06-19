@@ -13,6 +13,10 @@ public interface IPersistentGameSession {
 
     void setSessionID(UUID id);
 
+    String getSessionName();
+
+    void setSessionName(String name);
+
     IPersistentPlayer getPlayerWhite();
 
     void setPlayerWhite(IPersistentPlayer playerWhite);

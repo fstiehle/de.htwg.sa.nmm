@@ -12,17 +12,22 @@ import java.util.UUID;
  */
 public class GameSession implements IGameSession {
 
-    private UUID id = UUID.randomUUID();
+    private UUID id;
     private IBoard board;
     private IPlayer playerBlack;
     private IPlayer playerWhite;
     private IPlayer playerCurrent;
+    private String sessionName;
 
-    public GameSession(IBoard board,
+    public GameSession(UUID id,
+                       String name,
+                       IBoard board,
                        IPlayer playerBlack,
                        IPlayer playerWhite,
                        IPlayer playerCurrent) {
 
+        this.id = id;
+        this.sessionName = name;
         this.board = board;
         this.playerBlack = playerBlack;
         this.playerWhite = playerWhite;
@@ -30,6 +35,8 @@ public class GameSession implements IGameSession {
     }
 
     public GameSession(IPersistentGameSession persGameSession) {
+        sessionName = persGameSession.getSessionName();
+        id = persGameSession.getSessionID();
         IPlayer white = new Player(persGameSession.getPlayerWhite());
         IPlayer black = new Player(persGameSession.getPlayerBlack());
 
@@ -111,5 +118,15 @@ public class GameSession implements IGameSession {
     @Override
     public UUID getSessionID() {
         return id;
+    }
+
+    @Override
+    public void setSessionName(String name) {
+        sessionName = name;
+    }
+
+    @Override
+    public String getSessionName() {
+        return sessionName;
     }
 }

@@ -9,6 +9,8 @@ import de.htwg.sa.nmm.persistence.IGameSessionDAO;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.UUID;
+
 /**
  * Created by fabianstiehle on 26.05.17.
  * ad66d1381fc666b038629fa1a1000cfa
@@ -21,7 +23,7 @@ public class GameSessionCouchDAOTest {
         IGameSessionDAO dao = new GameSessionCouchDAO();
         Board board = new Board();
         IPlayer curPlayer = new Player("player1", IPlayer.Man.WHITE);
-        dao.saveSession(new GameSession(board, new Player("player2", IPlayer.Man.BLACK),
+        dao.saveSession(new GameSession(UUID.randomUUID(), "hallo", board, new Player("player2", IPlayer.Man.BLACK),
                 curPlayer, curPlayer));
     }
 

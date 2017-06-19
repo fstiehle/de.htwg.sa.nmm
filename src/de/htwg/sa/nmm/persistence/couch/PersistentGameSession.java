@@ -17,6 +17,8 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
 
     private UUID sessionID;
 
+    private String sessionName;
+
     private Map<String, PersistentJunction> boardMap;
 
     private PersistentPlayer playerWhite;
@@ -34,6 +36,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
 
     public void createPersistentGameSession(IGameSession gameSession) {
         setSessionID(gameSession.getSessionID());
+        setSessionName(gameSession.getSessionName());
         Map<String, PersistentJunction> persBoardMap = new HashMap<>();
         for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
@@ -62,6 +65,16 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     @Override
     public void setSessionID(UUID sessionID) {
         this.sessionID = sessionID;
+    }
+
+    @Override
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    @Override
+    public void setSessionName(String name) {
+        sessionName = name;
     }
 
     @Override

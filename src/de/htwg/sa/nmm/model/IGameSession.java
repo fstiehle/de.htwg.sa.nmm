@@ -26,4 +26,8 @@ public interface IGameSession {
     void setSessionID(UUID id);
 
     UUID getSessionID();
+
+    void setSessionName(String name);
+
+    String getSessionName();
 }

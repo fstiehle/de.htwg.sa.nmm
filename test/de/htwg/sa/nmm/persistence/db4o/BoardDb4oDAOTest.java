@@ -23,15 +23,15 @@ import static org.junit.Assert.*;
  */
 @Ignore
 public class BoardDb4oDAOTest {
-    private static final String SESSION_ID = "foo";
+    private static final String SESSION_NAME = "foo";
+    private static final UUID SESSION_ID = UUID.randomUUID();
     private IGameSession session;
     IPlayer curPlayer = new Player("2", IPlayer.Man.WHITE);
 
     @Before
     public void setUp() throws Exception {
-        session = new GameSession(new Board(), new Player("1", IPlayer.Man.BLACK),
+        session = new GameSession(SESSION_ID, SESSION_NAME, new Board(), new Player("1", IPlayer.Man.BLACK),
                 curPlayer, curPlayer);
-        session.setSessionID(UUID.fromString(SESSION_ID));
     }
 
     @After
@@ -53,9 +53,8 @@ public class BoardDb4oDAOTest {
 
     @Test
     public void deleteBoard() throws Exception {
-        IGameSession tmpSession = new GameSession(new Board(), new Player("1", IPlayer.Man.BLACK),
+        IGameSession tmpSession = new GameSession(SESSION_ID, SESSION_NAME, new Board(), new Player("1", IPlayer.Man.BLACK),
                 curPlayer, curPlayer);
-        session.setSessionID(UUID.fromString(SESSION_ID));
         GameSessionDb4oDAO db = GameSessionDb4oDAO.getInstance();
         db.saveSession(tmpSession);
 
