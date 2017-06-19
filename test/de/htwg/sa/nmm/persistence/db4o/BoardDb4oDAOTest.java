@@ -48,7 +48,7 @@ public class BoardDb4oDAOTest {
         Map<String, IJunction> dbBoardMap = dbSessions.get(0).getBoard().getBoardMap();
 
         assertEquals(dbBoardMap.toString(), session.getBoard().getBoardMap().toString());
-        assertEquals(session.getSessionID().toString(), db.getSession(session.getSessionID().toString()));
+        assertEquals(session.getSessionID().toString(), db.getSession(session.getSessionID()));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class BoardDb4oDAOTest {
         db.deleteSession(tmpSession);
 
         assertFalse(db.containsSession(tmpSession));
-        assertNull(db.getSession("tmp"));
+        assertNull(db.getSession(SESSION_ID));
     }
 
     @Test

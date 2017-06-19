@@ -7,6 +7,7 @@ import de.htwg.sa.nmm.model.IGameSession;
 import de.htwg.sa.nmm.persistence.IGameSessionDAO;
 
 import java.util.List;
+import java.util.UUID;
 
 // TODO: Save a Session not a board
 
@@ -68,13 +69,10 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 	}
 
 	@Override
-	public IGameSession getSession(final String id) {
+	public IGameSession getSession(UUID id) {
 		List<IGameSession> sessions = db.query(new Predicate<IGameSession>() {
-
-			private static final long serialVersionUID = 1L;
-
 			public boolean match(IGameSession session) {
-				return (session.getSessionID().toString().equals(id));
+				return (session.getSessionID().toString().equals(id.toString()));
 			}
 		});
 

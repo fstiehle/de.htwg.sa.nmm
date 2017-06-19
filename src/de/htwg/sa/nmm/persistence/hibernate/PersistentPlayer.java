@@ -41,6 +41,7 @@ public class PersistentPlayer implements IPersistentPlayer {
     }
 
     private void createPersistentPlayer(IPlayer player) {
+        setID(player.getUserID());
         setName(player.getName());
         setNumPucks(player.getNumPucks());
         setNumPucksTakenAway(player.getPucksTakenAway());

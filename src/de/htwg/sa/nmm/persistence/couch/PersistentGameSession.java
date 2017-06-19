@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class PersistentGameSession extends CouchDbDocument implements IPersistentGameSession {
 
-    private UUID sessionID;
+    private UUID id;
 
     private String sessionName;
 
@@ -59,12 +59,12 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
 
     @Override
     public UUID getSessionID() {
-        return sessionID;
+        return id;
     }
 
     @Override
     public void setSessionID(UUID sessionID) {
-        this.sessionID = sessionID;
+        this.id = sessionID;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
         return tmp;
     }
 
-    /* Setters for Couch DB */
+    /* Setters for Ektorp */
     /* ---------------------------------------------*/
 
     @JsonProperty("boardMap")
@@ -144,5 +144,13 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     @JsonProperty("currentPlayer")
     public void setCurrentPlayer(PersistentPlayer currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public String getId() {
+        return id.toString();
+    }
+
+    public void setId(String s) {
+        id = UUID.fromString(s);
     }
 }
