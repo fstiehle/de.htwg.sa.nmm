@@ -30,13 +30,13 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 
 	@Override
 	public boolean containsSession(final IGameSession session) {
-		final String sessionID = session.getId();
+		final String sessionID = session.getSessionID().toString();
 		List<IGameSession> sessions = db.query(new Predicate<IGameSession>() {
 
 			private static final long serialVersionUID = 1L;
 
 			public boolean match(IGameSession session) {
-				return (session.getId().equals(sessionID));
+				return (session.getSessionID().toString().equals(sessionID));
 			}
 		});
 
@@ -74,7 +74,7 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 			private static final long serialVersionUID = 1L;
 
 			public boolean match(IGameSession session) {
-				return (session.getId().equals(id));
+				return (session.getSessionID().toString().equals(id));
 			}
 		});
 

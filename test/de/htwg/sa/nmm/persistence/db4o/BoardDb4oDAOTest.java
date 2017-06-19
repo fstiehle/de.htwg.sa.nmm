@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -28,8 +29,9 @@ public class BoardDb4oDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        session = new GameSession(SESSION_ID, new Board(), new Player("1", IPlayer.Man.BLACK),
+        session = new GameSession(new Board(), new Player("1", IPlayer.Man.BLACK),
                 curPlayer, curPlayer);
+        session.setSessionID(UUID.fromString(SESSION_ID));
     }
 
     @After
@@ -46,13 +48,14 @@ public class BoardDb4oDAOTest {
         Map<String, IJunction> dbBoardMap = dbSessions.get(0).getBoard().getBoardMap();
 
         assertEquals(dbBoardMap.toString(), session.getBoard().getBoardMap().toString());
-        assertEquals(session.getId(), db.getSession(session.getId()).getId());
+        assertEquals(session.getSessionID().toString(), db.getSession(session.getSessionID().toString()));
     }
 
     @Test
     public void deleteBoard() throws Exception {
-        IGameSession tmpSession = new GameSession("tmp", new Board(), new Player("1", IPlayer.Man.BLACK),
+        IGameSession tmpSession = new GameSession(new Board(), new Player("1", IPlayer.Man.BLACK),
                 curPlayer, curPlayer);
+        session.setSessionID(UUID.fromString(SESSION_ID));
         GameSessionDb4oDAO db = GameSessionDb4oDAO.getInstance();
         db.saveSession(tmpSession);
 

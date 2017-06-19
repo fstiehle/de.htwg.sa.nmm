@@ -4,10 +4,12 @@ package de.htwg.sa.nmm.persistence.couch;
 import de.htwg.sa.nmm.model.IPlayer;
 import de.htwg.sa.nmm.persistence.IPersistentPlayer;
 
+import java.util.UUID;
+
 
 public class PersistentPlayer implements IPersistentPlayer {
 
-    private Integer id;
+    private UUID id;
 
     private State playerState;
 
@@ -36,13 +38,18 @@ public class PersistentPlayer implements IPersistentPlayer {
     }
 
     @Override
-    public Integer getId() {
+    public State getPlayerState() {
+        return playerState;
+    }
+
+    @Override
+    public UUID getID() {
         return id;
     }
 
     @Override
-    public State getPlayerState() {
-        return playerState;
+    public void setID(UUID id) {
+        this.id = id;
     }
 
     @Override

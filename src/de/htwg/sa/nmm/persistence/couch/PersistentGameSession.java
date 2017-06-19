@@ -11,11 +11,11 @@ import org.ektorp.support.CouchDbDocument;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class PersistentGameSession extends CouchDbDocument implements IPersistentGameSession {
 
-    private Integer sessionID = 155;
+    private UUID sessionID;
 
     private Map<String, PersistentJunction> boardMap;
 
@@ -33,6 +33,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     public void createPersistentGameSession(IGameSession gameSession) {
+        setSessionID(gameSession.getSessionID());
         Map<String, PersistentJunction> persBoardMap = new HashMap<>();
         for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
@@ -54,11 +55,12 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     @Override
-    public int getSessionID() {
+    public UUID getSessionID() {
         return sessionID;
     }
 
-    public void setSessionID(Integer sessionID) {
+    @Override
+    public void setSessionID(UUID sessionID) {
         this.sessionID = sessionID;
     }
 

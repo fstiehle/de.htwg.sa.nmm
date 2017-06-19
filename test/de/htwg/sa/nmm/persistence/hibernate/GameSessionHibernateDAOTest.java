@@ -18,7 +18,7 @@ public class GameSessionHibernateDAOTest {
         IGameSessionDAO dao = new GameSessionHibernateDAO();
         Board board = new Board();
         IPlayer curPlayer = new Player("player1", IPlayer.Man.WHITE);
-        dao.saveSession(new GameSession("1", board, new Player("player2", IPlayer.Man.BLACK),
+        dao.saveSession(new GameSession(board, new Player("player2", IPlayer.Man.BLACK),
                 curPlayer, curPlayer));
     }
 

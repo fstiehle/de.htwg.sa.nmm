@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private UUID id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(
@@ -45,6 +46,7 @@ import java.util.stream.Collectors;
     }
 
     public void createPersistentGameSession(IGameSession gameSession) {
+        setSessionID(gameSession.getSessionID());
         Map<String, PersistentJunction> persBoardMap = new HashMap<>();
         for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
@@ -66,8 +68,13 @@ import java.util.stream.Collectors;
     }
 
     @Override
-    public int getSessionID() {
+    public UUID getSessionID() {
         return id;
+    }
+
+    @Override
+    public void setSessionID(UUID id) {
+        this.id = id;
     }
 
     @Override

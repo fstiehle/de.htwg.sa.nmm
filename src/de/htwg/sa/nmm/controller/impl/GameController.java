@@ -27,10 +27,12 @@ public class GameController extends Observable implements IGameController {
     private Injector injector;
     private IBoard board;
     private IGameSessionDAO sessionDAO;
+    private UUID sessionID;
 
     @Inject
     public GameController(IBoard board, IGameSessionDAO boardDAO) {
         this.sessionDAO = boardDAO;
+        this.sessionID = null;
         initNewGame(board);
     }
 
@@ -251,6 +253,9 @@ public class GameController extends Observable implements IGameController {
 
     public void saveGame() {
         IGameSession session = injector.getInstance(IGameSession.class);
+        if (generateSessionID() != null)
+            session.setSessionID(generateSessionID());
+
         session.setBoard(board);
         session.setPlayerBlack(blackPlayer);
         session.setPlayerCurrent(currentPlayer);
@@ -258,4 +263,11 @@ public class GameController extends Observable implements IGameController {
         sessionDAO.saveSession(session);
     }
 
+    public UUID generateSessionID() {
+        if (whitePlayer.getUserID() == null || blackPlayer.getUserID() == null) {
+            return null;
+        }
+        return UUID.fromString(whitePlayer.getUserID().toString()
+                + blackPlayer.getUserID().toString());
+    }
 }

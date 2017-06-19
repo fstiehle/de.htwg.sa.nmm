@@ -7,7 +7,7 @@ import de.htwg.sa.nmm.persistence.IPersistentPlayer;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.util.UUID;
 
 
 @Entity
@@ -16,7 +16,7 @@ public class PersistentPlayer implements IPersistentPlayer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private UUID id;
 
     @Enumerated(EnumType.ORDINAL)
     private State playerState;
@@ -49,13 +49,18 @@ public class PersistentPlayer implements IPersistentPlayer {
     }
 
     @Override
-    public Integer getId() {
+    public State getPlayerState() {
+        return playerState;
+    }
+
+    @Override
+    public UUID getID() {
         return id;
     }
 
     @Override
-    public State getPlayerState() {
-        return playerState;
+    public void setID(UUID id) {
+        this.id = id;
     }
 
     @Override
