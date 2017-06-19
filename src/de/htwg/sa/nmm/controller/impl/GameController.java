@@ -19,6 +19,7 @@ public class GameController extends Observable implements IGameController {
     private static final int HOP_THRESHOLD = 6;
     private static final int LOST_THRESHOLD = 7;
     private final MillController millController = new MillController(this);
+    private final HttpController httpController = new HttpController(this);
 
     private StringBuilder statusMessage;
     private IPlayer whitePlayer;
@@ -32,6 +33,7 @@ public class GameController extends Observable implements IGameController {
     public GameController(IBoard board, IGameSessionDAO boardDAO) {
         this.sessionDAO = boardDAO;
         initNewGame(board);
+        httpController.httpRequest();
     }
 
     @Override
