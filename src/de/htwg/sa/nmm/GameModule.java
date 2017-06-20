@@ -2,7 +2,10 @@ package de.htwg.sa.nmm;
 
 import com.google.inject.AbstractModule;
 import de.htwg.sa.nmm.controller.IGameController;
+import de.htwg.sa.nmm.controller.IMillController;
 import de.htwg.sa.nmm.controller.impl.GameController;
+import de.htwg.sa.nmm.controller.impl.MillController;
+import de.htwg.sa.nmm.controller.impl.MillHttpController;
 import de.htwg.sa.nmm.model.IBoard;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
@@ -22,5 +25,7 @@ public class GameModule extends AbstractModule {
         bind(IBoard.class).to(Board.class);
         bind(IGameSessionDAO.class).to(GameSessionCouchDAO.class);
         bind(IPersistentJunction.class).to(PersistentJunction.class);
+        bind(IMillController.class).to(MillHttpController.class);
+
     }
 }

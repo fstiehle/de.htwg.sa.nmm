@@ -6,7 +6,6 @@ import de.htwg.sa.nmm.model.IPlayer;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.util.observer.IObservable;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public interface IGameController extends IObservable {

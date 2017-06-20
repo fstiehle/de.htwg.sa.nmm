@@ -1,6 +1,7 @@
 package de.htwg.sa.nmm.model.impl;
 
 import de.htwg.sa.nmm.controller.impl.GameController;
+import de.htwg.sa.nmm.controller.impl.MillController;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.persistence.db4o.GameSessionDb4oDAO;
 import junit.framework.TestCase;
@@ -10,7 +11,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testSetPuck() throws Exception {
-        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance(), new MillController());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerSET ph = new PlayerSET(p);
         Junction j = new Junction();
@@ -35,7 +36,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testPickPuck() throws Exception {
-        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance(), new MillController());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerMOVE ph = new PlayerMOVE(p);
         Junction j = new Junction();
@@ -52,7 +53,7 @@ public class PlayerMOVETest extends TestCase {
 
     @Test(expected = RuntimeException.class)
     public void testMovePuck() throws Exception {
-        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance());
+        GameController c = new GameController(new Board(), GameSessionDb4oDAO.getInstance(), new MillController());
         Player p = (Player) c.getCurrentIPlayer();
         PlayerMOVE ph = new PlayerMOVE(p);
         Junction j = new Junction();
