@@ -36,7 +36,7 @@ public class GameControllerPersistenceTest {
     public void setUp() {
         injector = Guice.createInjector(new GameModule());
         db = injector.getInstance(IGameSessionDAO.class);
-        controller = new GameController(new Board(), db);
+        controller = new GameController(new Board(), db, new MillController());
     }
 
     @After
