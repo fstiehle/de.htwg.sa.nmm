@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.htwg.sa.nmm.controller.IGameController;
+import de.htwg.sa.nmm.controller.IMillController;
 import de.htwg.sa.nmm.model.*;
 import de.htwg.sa.nmm.model.impl.Player;
 import de.htwg.sa.nmm.model.impl.Board;
@@ -18,8 +19,6 @@ public class GameController extends Observable implements IGameController {
 
     private static final int HOP_THRESHOLD = 6;
     private static final int LOST_THRESHOLD = 7;
-    private final MillController millController = new MillController(this);
-    private final HttpController httpController = new HttpController(this);
 
     private StringBuilder statusMessage;
     private IPlayer whitePlayer;
@@ -28,12 +27,13 @@ public class GameController extends Observable implements IGameController {
     private Injector injector;
     private IBoard board;
     private IGameSessionDAO sessionDAO;
+    private IMillController millController;
 
     @Inject
-    public GameController(IBoard board, IGameSessionDAO boardDAO) {
+    public GameController(IBoard board, IGameSessionDAO boardDAO, IMillController millController) {
         this.sessionDAO = boardDAO;
+        this.millController = millController;
         initNewGame(board);
-        httpController.httpRequest();
     }
 
     @Override
@@ -207,7 +207,7 @@ public class GameController extends Observable implements IGameController {
         }
         j.setPuck(puck);
         currentPlayer.decrementPucks();
-        millController.millAfterMove(j);
+        millAfterMove(s);
     }
 
     @Override
@@ -219,7 +219,7 @@ public class GameController extends Observable implements IGameController {
         this.addStatusMessage(e.getMessage());
         return;
         }
-        if (millController.checkformill(j, this.getOtherPlayer())) {
+        if (millController.checkForMill(this.getBoard(), s, this.getOtherPlayer())) {
             this.addStatusMessage("Can't take away a puck if it is part of a mill.");
             return;
         }
@@ -240,7 +240,7 @@ public class GameController extends Observable implements IGameController {
         }
         jTo.setPuck(jFrom.getPuck());
         jFrom.setPuck(null);
-        millController.millAfterMove(jTo);
+        millAfterMove(to);
     }
 
     public void loadGame() {
@@ -258,6 +258,17 @@ public class GameController extends Observable implements IGameController {
         session.setPlayerCurrent(currentPlayer);
         session.setPlayerWhite(whitePlayer);
         sessionDAO.saveSession(session);
+    }
+
+
+    private void millAfterMove(String junctionName) {
+        if (millController.checkForMill(this.getBoard(), junctionName, getCurrentIPlayer())) {
+            addStatusMessage("Congratulations, Sir!\n" +
+                    "You may now pick one of your opponents pucks that is not part of a mill.");
+            getCurrentIPlayer().setStatus(getCurrentIPlayer().getPICK());
+        } else {
+            changePlayer();
+        }
     }
 
 }
