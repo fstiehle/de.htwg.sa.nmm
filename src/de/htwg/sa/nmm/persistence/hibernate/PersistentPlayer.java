@@ -37,8 +37,7 @@ public class PersistentPlayer implements IPersistentPlayer {
         createPersistentPlayer(player);
     }
 
-    public PersistentPlayer() {
-    }
+    public PersistentPlayer() {}
 
     private void createPersistentPlayer(IPlayer player) {
         setID(player.getUserID());

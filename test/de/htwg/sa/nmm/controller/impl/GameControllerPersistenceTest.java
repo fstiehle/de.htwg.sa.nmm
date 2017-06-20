@@ -14,6 +14,7 @@ import de.htwg.sa.nmm.persistence.couch.GameSessionCouchDAO;
 import de.htwg.sa.nmm.persistence.db4o.GameSessionDb4oDAO;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Map;
@@ -24,6 +25,7 @@ import static org.junit.Assert.*;
 /**
  * Created by fabianstiehle on 19.06.17.
  */
+@Ignore
 public class GameControllerPersistenceTest {
 
     GameController controller;
