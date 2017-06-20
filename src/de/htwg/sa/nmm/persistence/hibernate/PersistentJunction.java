@@ -1,12 +1,10 @@
 package de.htwg.sa.nmm.persistence.hibernate;
 
-import com.sun.istack.internal.Nullable;
 import de.htwg.sa.nmm.persistence.IPersistentPuck;
 import de.htwg.sa.nmm.model.IJunction;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "junction")
@@ -19,7 +17,6 @@ public class PersistentJunction implements IPersistentJunction {
     private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Nullable
     private PersistentPuck puck;
 
     public PersistentJunction(String name, IJunction junction) {

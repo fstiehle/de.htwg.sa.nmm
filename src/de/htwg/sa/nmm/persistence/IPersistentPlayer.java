@@ -3,6 +3,7 @@ package de.htwg.sa.nmm.persistence;
 import de.htwg.sa.nmm.model.IPlayer;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Created by fabianstiehle on 26.05.17.
@@ -16,8 +17,9 @@ public interface IPersistentPlayer extends Serializable {
         PICK
     }
 
+    UUID getID();
 
-    Integer getId();
+    void setID(UUID id);
 
     IPlayer.Man getMan();
 

@@ -1,6 +1,7 @@
 package de.htwg.sa.nmm.persistence;
 
 import java.util.List;
+import java.util.UUID;
 
 import de.htwg.sa.nmm.model.IGameSession;
 
@@ -10,7 +11,7 @@ public interface IGameSessionDAO {
 
 	boolean containsSession(IGameSession session);
 
-	IGameSession getSession(String id);
+	IGameSession getSession(UUID id);
 	
 	void deleteSession(IGameSession board);
 	

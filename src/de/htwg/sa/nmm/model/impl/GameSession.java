@@ -5,32 +5,38 @@ import de.htwg.sa.nmm.persistence.IPersistentGameSession;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by funkemarkus on 05.04.17.
  */
 public class GameSession implements IGameSession {
 
-    private String id;
+    private UUID id;
     private IBoard board;
     private IPlayer playerBlack;
     private IPlayer playerWhite;
     private IPlayer playerCurrent;
+    private String sessionName;
 
-    public GameSession(String id,
+    public GameSession(UUID id,
+                       String name,
                        IBoard board,
                        IPlayer playerBlack,
                        IPlayer playerWhite,
                        IPlayer playerCurrent) {
 
-        this.board = board;
         this.id = id;
+        this.sessionName = name;
+        this.board = board;
         this.playerBlack = playerBlack;
         this.playerWhite = playerWhite;
         this.playerCurrent = playerCurrent;
     }
 
     public GameSession(IPersistentGameSession persGameSession) {
+        sessionName = persGameSession.getSessionName();
+        id = persGameSession.getSessionID();
         IPlayer white = new Player(persGameSession.getPlayerWhite());
         IPlayer black = new Player(persGameSession.getPlayerBlack());
 
@@ -75,11 +81,6 @@ public class GameSession implements IGameSession {
     }
 
     @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
     public IPlayer getPlayerBlack() {
         return playerBlack;
     }
@@ -107,5 +108,25 @@ public class GameSession implements IGameSession {
     @Override
     public void setPlayerCurrent(IPlayer playerCurrent) {
         this.playerCurrent = playerCurrent;
+    }
+
+    @Override
+    public void setSessionID(UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public UUID getSessionID() {
+        return id;
+    }
+
+    @Override
+    public void setSessionName(String name) {
+        sessionName = name;
+    }
+
+    @Override
+    public String getSessionName() {
+        return sessionName;
     }
 }

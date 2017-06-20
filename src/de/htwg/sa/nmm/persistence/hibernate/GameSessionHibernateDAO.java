@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by funkemarkus on 18.04.17.
@@ -43,7 +44,7 @@ public class GameSessionHibernateDAO implements IGameSessionDAO {
     }
 
     @Override
-    public IGameSession getSession(String id) {
+    public IGameSession getSession(UUID id) {
         Session s = HibernateUtil.getSession().getSessionFactory().getCurrentSession();
         Transaction tx = null;
         PersistentGameSession persistentGameSession = null;

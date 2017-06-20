@@ -11,11 +11,13 @@ import org.ektorp.support.CouchDbDocument;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class PersistentGameSession extends CouchDbDocument implements IPersistentGameSession {
 
-    private Integer sessionID = 155;
+    private UUID id;
+
+    private String sessionName;
 
     private Map<String, PersistentJunction> boardMap;
 
@@ -33,6 +35,8 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     public void createPersistentGameSession(IGameSession gameSession) {
+        setSessionID(gameSession.getSessionID());
+        setSessionName(gameSession.getSessionName());
         Map<String, PersistentJunction> persBoardMap = new HashMap<>();
         for (Map.Entry<String, IJunction> entry : gameSession.getBoard().getBoardMap().entrySet()) {
             PersistentJunction persJunction = new PersistentJunction(entry.getKey(), entry.getValue());
@@ -54,12 +58,23 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     }
 
     @Override
-    public int getSessionID() {
-        return sessionID;
+    public UUID getSessionID() {
+        return id;
     }
 
-    public void setSessionID(Integer sessionID) {
-        this.sessionID = sessionID;
+    @Override
+    public void setSessionID(UUID sessionID) {
+        this.id = sessionID;
+    }
+
+    @Override
+    public String getSessionName() {
+        return sessionName;
+    }
+
+    @Override
+    public void setSessionName(String name) {
+        sessionName = name;
     }
 
     @Override
@@ -103,7 +118,7 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
         return tmp;
     }
 
-    /* Setters for Couch DB */
+    /* Setters for Ektorp */
     /* ---------------------------------------------*/
 
     @JsonProperty("boardMap")
@@ -129,5 +144,13 @@ public class PersistentGameSession extends CouchDbDocument implements IPersisten
     @JsonProperty("currentPlayer")
     public void setCurrentPlayer(PersistentPlayer currentPlayer) {
         this.currentPlayer = currentPlayer;
+    }
+
+    public String getId() {
+        return id.toString();
+    }
+
+    public void setId(String s) {
+        id = UUID.fromString(s);
     }
 }

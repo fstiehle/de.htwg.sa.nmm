@@ -6,6 +6,7 @@ import de.htwg.sa.nmm.controller.impl.GameController;
 import de.htwg.sa.nmm.model.IBoard;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
+import de.htwg.sa.nmm.persistence.couch.GameSessionCouchDAO;
 import de.htwg.sa.nmm.persistence.hibernate.GameSessionHibernateDAO;
 import de.htwg.sa.nmm.persistence.hibernate.PersistentJunction;
 import de.htwg.sa.nmm.model.impl.Board;
@@ -19,7 +20,7 @@ public class GameModule extends AbstractModule {
         bind(IGameController.class).to(GameController.class);
         bind(IPuck.class).to(Puck.class);
         bind(IBoard.class).to(Board.class);
-        bind(IGameSessionDAO.class).to(GameSessionHibernateDAO.class);
+        bind(IGameSessionDAO.class).to(GameSessionCouchDAO.class);
         bind(IPersistentJunction.class).to(PersistentJunction.class);
     }
 }

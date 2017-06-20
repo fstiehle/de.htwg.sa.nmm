@@ -2,13 +2,20 @@ package de.htwg.sa.nmm.persistence;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by fabianstiehle on 17.05.17.
  */
 public interface IPersistentGameSession {
 
-    int getSessionID();
+    UUID getSessionID();
+
+    void setSessionID(UUID id);
+
+    String getSessionName();
+
+    void setSessionName(String name);
 
     IPersistentPlayer getPlayerWhite();
 

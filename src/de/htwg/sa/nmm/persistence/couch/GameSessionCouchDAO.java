@@ -12,6 +12,7 @@ import org.ektorp.impl.StdCouchDbInstance;
 
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,8 +51,8 @@ public class GameSessionCouchDAO implements IGameSessionDAO {
     }
 
     @Override
-    public IGameSession getSession(String id) {
-        IPersistentGameSession persGameSession = db.find(PersistentGameSession.class, id);
+    public IGameSession getSession(UUID id) {
+        IPersistentGameSession persGameSession = db.find(PersistentGameSession.class, id.toString());
         if (persGameSession == null) {
             return null;
         }

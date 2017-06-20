@@ -48,6 +48,7 @@ public class Player implements IPlayer {
     }
 
     public Player(IPersistentPlayer persPlayer) {
+        userID = persPlayer.getID();
         name = persPlayer.getName();
         man = persPlayer.getMan();
         numPucks = persPlayer.getNumPucks();

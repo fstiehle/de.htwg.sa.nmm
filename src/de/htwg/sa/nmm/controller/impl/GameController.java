@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import de.htwg.sa.nmm.controller.IGameController;
 import de.htwg.sa.nmm.model.*;
+import de.htwg.sa.nmm.model.impl.GameSession;
 import de.htwg.sa.nmm.model.impl.Player;
 import de.htwg.sa.nmm.model.impl.Board;
 import de.htwg.sa.nmm.persistence.IGameSessionDAO;
@@ -27,10 +28,12 @@ public class GameController extends Observable implements IGameController {
     private Injector injector;
     private IBoard board;
     private IGameSessionDAO sessionDAO;
+    private UUID sessionID;
 
     @Inject
-    public GameController(IBoard board, IGameSessionDAO boardDAO) {
-        this.sessionDAO = boardDAO;
+    public GameController(IBoard board, IGameSessionDAO sessionDAO) {
+        this.sessionDAO = sessionDAO;
+        this.sessionID = null;
         initNewGame(board);
     }
 
@@ -160,7 +163,6 @@ public class GameController extends Observable implements IGameController {
         if (this.blackPlayer.getUserID() == null && this.whitePlayer.getUserID() != userID) {
             return this.blackPlayer;
         }
-
         return null;
     }
 
@@ -241,21 +243,27 @@ public class GameController extends Observable implements IGameController {
         millController.millAfterMove(jTo);
     }
 
-    public void loadGame() {
-        IGameSession gameSession = sessionDAO.getSession("0");
+    public void loadGame(UUID sessionID) {
+        IGameSession gameSession = sessionDAO.getSession(sessionID);
         board = gameSession.getBoard();
         blackPlayer = gameSession.getPlayerBlack();
         whitePlayer = gameSession.getPlayerWhite();
         currentPlayer = gameSession.getPlayerCurrent();
     }
 
-    public void saveGame() {
-        IGameSession session = injector.getInstance(IGameSession.class);
-        session.setBoard(board);
-        session.setPlayerBlack(blackPlayer);
-        session.setPlayerCurrent(currentPlayer);
-        session.setPlayerWhite(whitePlayer);
-        sessionDAO.saveSession(session);
+    public void saveGame(String sessionName) {
+        sessionDAO.saveSession(new GameSession(generateSessionID(sessionName),
+                sessionName,
+                board,
+                blackPlayer,
+                whitePlayer,
+                currentPlayer));
     }
 
+    public UUID generateSessionID(String sessionName) {
+        if (whitePlayer.getUserID() == null || blackPlayer.getUserID() == null || sessionName == null) {
+            return UUID.randomUUID();
+        }
+        return UUID.nameUUIDFromBytes(whitePlayer.getUserID().toString().concat(blackPlayer.getUserID().toString()).concat(sessionName).getBytes());
+    }
 }
