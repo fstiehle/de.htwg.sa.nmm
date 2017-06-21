@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.htwg.se.nmm</groupId>
-  <artifactId>de.htwg.se.nmm</artifactId>
+  <groupId>de.htwg.sa.nmm</groupId>
+  <artifactId>de.htwg.sa.nmm</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>SE2015WS-03-Mühle</name>
-  <description>A NMM in Java for the lecture Software Engineering at HTWG Konstanz</description>
+  <name>SA2017-SoSe-NMM</name>
+  <description>A NMM in Java for the lecture Software Architecture at HTWG Konstanz</description>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
@@ -36,6 +36,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.ektorp</groupId>
+      <artifactId>org.ektorp</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>2.2</version>
@@ -46,6 +51,11 @@
       <artifactId>log4j-api</artifactId>
       <version>2.2</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.typesafe.akka</groupId>
+      <artifactId>akka-http_2.11</artifactId>
+      <version>10.0.6</version>
     </dependency>
     <dependency>
       <groupId>com.google.inject</groupId>
@@ -61,6 +71,16 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>5.2.10.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.9</version>
     </dependency>
   </dependencies>
 </project>

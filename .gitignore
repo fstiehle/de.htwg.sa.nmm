@@ -4,6 +4,9 @@ META-INF/
 *.iml
 target/
 
+## MySQL Workbench
+*.bak
+
 ## logger
 *.log
 *.log.*
@@ -15,6 +18,9 @@ out/
 ## File-based project format:
 *.ipr
 *.iws
+
+## db4o Database File
+*.data
 
 # Mac
 .DS_Store
