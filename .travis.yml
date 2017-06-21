@@ -1,1 +1,19 @@
 language: java
+sudo: false
+install: true
+addons:
+  sonarqube:
+    organization: fstiehle-github
+    token:
+      secure: B4OHg4C+9OpHaWENLslTs15FWXQ0IWnRZgY4rSQjEjX7DTJf4kxcHwG8TcRAqh1+daoDdkhJx2QmEkjTswdjJ1/Rnsi3m4esZLx2Zt6WOmOfAZ+H1b+SBS97dtADYeLOVw0LIndiryuIW2b4t6O84wxg+ZXQ+gq8oWP8+G6t+hu1E078Rj8U2G5dezKMaBfskVOIWZ3ASq3wDcfIGLVl2pim6lARYWm9eIGgk8PcbLdJzW+HOBobQ7xHWF4J51IqCjk3mDG8+xMFODPde44rgtCSi3R8BacBM3dLFHag6qDLJEh6TkYnIpXXSVHL6YECH3i79wlXbrAj2lSb0OTwaYeZzmjWCW+xKQ36YCdoPFO4cUlUa+F1jWi2INfUB5IMo1dh06/GX5OcNOsFgpCTSpRr+quur5fPtCXoOdZA+pYi0g1zWAunOMIotM6OyF/uztc2CufsI1LKtgmLWKnffK+RLyQUJvVJ7YG5IS9G6+p0vVwLjmc08VVbv4Y/fT1R+/AJWvg3/py3VbzLe26Qi3ByXvIebRnFhWwMGDUsJg8gAVvANXsMyQEv+svfcvOQKAtpQ+GhXadDs5ttC6by8NLyIHe+O2Cax9PaViYsUHzRboNXJ+OuWTMfC6739x7AC0twWvX7vh/mm/aR7P6w0nwgFutvpk6tUcFBzlRdjJ0=
+    github_token:
+      secure: S+/VqYR3ZebE4oBjtXCxO/eBrjOmX/lwfhvFhdmQwlc41rDezq7IdwxQZUUhIk24Sf14ryYBNrB3FjXOXOwnvRLHBBcsrOhgBVCCbOlbCHYY6ERtk7ceYUZwyqMirtsnSsIHkgD/cY6tML9gE/ZfCDNkxso3pxx5gPznT4bxxkq56mRwdOYxLM/f6a7ksnKBI4uGsVLr4xiq5if91rRbyHHCSHGZCr/Hb4NZdsuQEeIMSRCe18wKY6/XjeYktwfg0Y+/EgFohTUExOn4F+TdbHyfRwkWxtQtXX8dcAYLYywcbGNxKJb1Gz8QCVeopbcWdqiVZRROo1x8AyAclEpIXtcOt1uX6Kx55zMCePm/ixkcmGVN25Gky45TQHsqNcwY9XIhWHvH+XXEGrDJXCP2rfFLoj+UTHthncJ+sb9OuDUIiwDajga/OFxAWD9w2MG3Rl1sZ1ZUwWY8wlXDPJVPRyhMZyNBsv4myCWnVoW0NsKRRUZsp7uy/JirZ2P9u2roHi0ulmkKBIpNKindMec9uu60zTqc+rWdxQTNmRXVMy2J4HqOz/wmfV2CSZsyvud7n//DmAdcuMVuJMzs4Xr/tOxxCULVC3MGRkdKpbFF4j8IdGY0ChF1IwvmQAYAoNmZg2CzUWiFgLZZ+l3SoxRf4NHWUCrD8icCDbatRgSk6Gk=
+
+jdk:
+- oraclejdk8
+script:
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+cache:
+  directories:
+  - $HOME/.m2/repository
+  - $HOME/.sonar/cache

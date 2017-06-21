@@ -16,9 +16,9 @@
         <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- Hibernate Mappings -->
-        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentGameSession" />
-        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentJunction" />
-        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentPlayer" />
-        <mapping class="de.htwg.se.nmm.persistence.hibernate.PersistentPuck" />
+        <mapping class="de.htwg.sa.nmm.persistence.hibernate.PersistentGameSession" />
+        <mapping class="de.htwg.sa.nmm.persistence.hibernate.PersistentJunction" />
+        <mapping class="de.htwg.sa.nmm.persistence.hibernate.PersistentPlayer" />
+        <mapping class="de.htwg.sa.nmm.persistence.hibernate.PersistentPuck" />
     </session-factory>
 </hibernate-configuration>
