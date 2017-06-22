@@ -16,9 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import static akka.http.javadsl.server.Directives.*;
 
 import akka.http.javadsl.model.StatusCodes;
-
-
-
+import de.htwg.sa.nmm.model.impl.Player;
 
 public class JsonController implements IJsonController {
 
@@ -36,6 +34,9 @@ public class JsonController implements IJsonController {
 
     @Override
     public Route setPlayerName(String jsonStr) throws IllegalArgumentException {
+
+        System.out.println(jsonStr);
+
         // convert string to JsonNode
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = null;
@@ -135,5 +136,36 @@ public class JsonController implements IJsonController {
                 StatusCodes.OK,
                 HttpEntities.create(ContentTypes.APPLICATION_JSON, jsonData)
         );
+    }
+
+    @Override
+    public Route getPlayerWithoutUID(String content) {
+        // convert string to JsonNode
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+        try {
+            json = mapper.readTree(content);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Illegal Json format");
+        }
+
+        List<String> list;
+        try {
+            list = new ObjectMapper().convertValue(json, ArrayList.class);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Bad parameter [query]");
+        }
+
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("Bad parameter [query]");
+        }
+
+        IPlayer player = gameController.getPlayerWithoutUserID(UUID.fromString(list.get(0)));
+        if (player != null) {
+            player.setName(list.get(1));
+            player.setUserID(UUID.fromString(list.get(0)));
+        }
+        return complete(StatusCodes.OK,
+            HttpEntities.create(ContentTypes.APPLICATION_JSON, gameController.getJson()));
     }
 }

@@ -50,11 +50,11 @@ public class HttpServer extends AllDirectives {
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(routeFlow,
                 ConnectHttp.toHost("localhost", 8080), materializer);
 
-        this.logger.debug("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
         try {
             System.in.read(); // let it run until user presses return
         } catch (IOException e) {
-            this.logger.error("HttpServer failed!");
+            System.out.println("HttpServer failed!");
             e.printStackTrace();
         }
 
@@ -86,6 +86,11 @@ public class HttpServer extends AllDirectives {
                 path("processCommand", () ->
                         post(() -> entity(Unmarshaller.entityToString(), content ->
                                 this.jsonController.processCommand(content)))
+                ),
+
+                path("getPlayerWithoutUID", () ->
+                        post(() -> entity(Unmarshaller.entityToString(), content ->
+                                this.jsonController.getPlayerWithoutUID(content)))
                 )
 
         );

@@ -10,5 +10,6 @@ public interface IJsonController {
     Route processCommand(String jsonNode);
     Route refreshGame();
     Route getGameSession();
+    Route getPlayerWithoutUID(String content);
 
 }

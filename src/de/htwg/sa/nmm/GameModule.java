@@ -23,7 +23,7 @@ public class GameModule extends AbstractModule {
         bind(IGameController.class).to(GameController.class);
         bind(IPuck.class).to(Puck.class);
         bind(IBoard.class).to(Board.class);
-        bind(IGameSessionDAO.class).to(GameSessionCouchDAO.class);
+        bind(IGameSessionDAO.class).to(GameSessionHibernateDAO.class);
         bind(IPersistentJunction.class).to(PersistentJunction.class);
         bind(IMillController.class).to(MillHttpController.class);
 
