@@ -1,5 +1,7 @@
 package de.htwg.sa.nmm.persistence;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,4 +20,6 @@ public interface IGameSessionDAO {
 	List<IGameSession> getAllSessions();
 
 	void closeDb();
+
+	ArrayList<HashMap<String, String>> getData(UUID id1, UUID id2);
 }

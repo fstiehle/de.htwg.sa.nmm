@@ -9,6 +9,7 @@ import de.htwg.sa.nmm.persistence.IGameSessionDAO;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,12 @@ public class GameSessionCouchDAOTest {
     public void getSession() throws Exception {
         IGameSessionDAO dao = new GameSessionCouchDAO();
         dao.getAllSessions();
+    }
+
+    @Test
+    public void getData() throws Exception {
+        IGameSessionDAO dao = new GameSessionCouchDAO();
+        dao.getData(UUID.randomUUID(), UUID.randomUUID());
     }
 
 }

@@ -8,6 +8,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -82,5 +84,10 @@ public class GameSessionHibernateDAO implements IGameSessionDAO {
     @Override
     public void closeDb() {
 
+    }
+
+    @Override
+    public ArrayList<HashMap<String, String>> getData(UUID id1, UUID id2) {
+        return null;
     }
 }

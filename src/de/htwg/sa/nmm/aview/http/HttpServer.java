@@ -91,8 +91,15 @@ public class HttpServer extends AllDirectives {
                 path("getPlayerWithoutUID", () ->
                         post(() -> entity(Unmarshaller.entityToString(), content ->
                                 this.jsonController.getPlayerWithoutUID(content)))
+                ),
+                path("loadGame", () ->
+                        post(() -> entity(Unmarshaller.entityToString(), content ->
+                                this.jsonController.loadGame(content)))
+                ),
+                path("saveGame", () ->
+                        post(() -> entity(Unmarshaller.entityToString(), content ->
+                                this.jsonController.saveGame(content)))
                 )
-
         );
     }
 }

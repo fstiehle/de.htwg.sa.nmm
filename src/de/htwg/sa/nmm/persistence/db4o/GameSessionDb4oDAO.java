@@ -6,6 +6,8 @@ import com.db4o.query.Predicate;
 import de.htwg.sa.nmm.model.IGameSession;
 import de.htwg.sa.nmm.persistence.IGameSessionDAO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +68,11 @@ public class GameSessionDb4oDAO implements IGameSessionDAO {
 	@Override
 	public void closeDb() {
 		db.close();
+	}
+
+	@Override
+	public ArrayList<HashMap<String, String>> getData(UUID id1, UUID id2) {
+		return null;
 	}
 
 	@Override

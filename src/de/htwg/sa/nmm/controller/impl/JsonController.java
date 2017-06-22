@@ -165,7 +165,54 @@ public class JsonController implements IJsonController {
             player.setName(list.get(1));
             player.setUserID(UUID.fromString(list.get(0)));
         }
-        return complete(StatusCodes.OK,
-            HttpEntities.create(ContentTypes.APPLICATION_JSON, gameController.getJson()));
+        gameController.update();
+        return complete(StatusCodes.OK);
+    }
+
+    @Override
+    public Route loadGame(String content) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+        try {
+            json = mapper.readTree(content);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Illegal Json format");
+        }
+        List<String> queryList = parseQuery(json);
+        gameController.loadGame(UUID.fromString(queryList.get(0)));
+        gameController.update();
+        return complete(StatusCodes.OK);
+    }
+
+    @Override
+    public Route saveGame(String content) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+        try {
+            json = mapper.readTree(content);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Illegal Json format");
+        }
+        List<String> queryList = parseQuery(json);
+        gameController.saveGame(queryList.get(0));
+        gameController.update();
+        return complete(StatusCodes.OK);
+    }
+
+    private List<String> parseQuery(JsonNode json) {
+        JsonNode queryNode;
+        List<String> queryList;
+        // convert query to ArrayList
+        try {
+            queryNode = json.findPath("query");
+            queryList = new ObjectMapper().convertValue(queryNode, ArrayList.class);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Bad parameter [query]");
+        }
+
+        if (queryList.isEmpty()) {
+            throw new IllegalArgumentException("Bad parameter [query]");
+        }
+        return queryList;
     }
 }

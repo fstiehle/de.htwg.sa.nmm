@@ -49,4 +49,8 @@ public interface IGameController extends IObservable {
     void pickPuck(String s);
 
     void movePuck(String from, String to);
+
+    void loadGame(UUID sessionID);
+
+    void saveGame(String sessionName);
 }

@@ -137,6 +137,7 @@ public class GameController extends Observable implements IGameController {
         objList.put("white", this.whitePlayer.getData());
         objList.put("currentPlayer", this.currentPlayer.getData());
         objList.put("board", this.board.getData());
+        objList.put("load", sessionDAO.getData(blackPlayer.getUserID(), whitePlayer.getUserID()));
 
         HashMap<String, Object> status = new HashMap<>();
             status.put("message", this.getStatus(true));
@@ -255,12 +256,13 @@ public class GameController extends Observable implements IGameController {
     }
 
     public void saveGame(String sessionName) {
+        System.out.println(sessionName);
         sessionDAO.saveSession(new GameSession(generateSessionID(sessionName),
-                sessionName,
-                board,
-                blackPlayer,
-                whitePlayer,
-                currentPlayer));
+            sessionName,
+            board,
+            blackPlayer,
+            whitePlayer,
+            currentPlayer));
     }
 
     public UUID generateSessionID(String sessionName) {
@@ -279,4 +281,5 @@ public class GameController extends Observable implements IGameController {
             changePlayer();
         }
     }
+
 }

@@ -1,20 +1,20 @@
 package de.htwg.sa.nmm.persistence.couch;
 
+import de.htwg.sa.nmm.Game;
 import de.htwg.sa.nmm.model.IGameSession;
 import de.htwg.sa.nmm.model.impl.GameSession;
 import de.htwg.sa.nmm.persistence.IPersistentGameSession;
 import de.htwg.sa.nmm.persistence.IGameSessionDAO;
+import de.htwg.sa.nmm.persistence.IPersistentPlayer;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
+import org.ektorp.ViewQuery;
 import org.ektorp.http.HttpClient;
 import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 
 import java.net.MalformedURLException;
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
 
 /**
  * Created by fabianstiehle on 26.05.17.
@@ -42,7 +42,7 @@ public class GameSessionCouchDAO implements IGameSessionDAO {
 
     @Override
     public void saveSession(IGameSession session) {
-        db.create(new PersistentGameSession(session));
+        db.update(new PersistentGameSession(session));
     }
 
     @Override
@@ -66,11 +66,27 @@ public class GameSessionCouchDAO implements IGameSessionDAO {
 
     @Override
     public List<IGameSession> getAllSessions() {
-        return null;
+       return null;
     }
 
     @Override
-    public void closeDb() {
+    public void closeDb() { }
 
+    @Override
+    public ArrayList<HashMap<String, String>> getData(UUID id1, UUID id2) {
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
+        ViewQuery q = new ViewQuery()
+            .allDocs()
+            .includeDocs(true)
+            .key(id1)
+            .key(id2);
+        List<PersistentGameSession> persGameSession = db.queryView(q, PersistentGameSession.class);
+        persGameSession.forEach((session) -> {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("name", session.getSessionName());
+            map.put("id", session.getSessionID().toString());
+            list.add(map);
+        });
+        return list;
     }
 }
