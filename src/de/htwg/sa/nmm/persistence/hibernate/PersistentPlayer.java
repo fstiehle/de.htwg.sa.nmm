@@ -1,12 +1,9 @@
 package de.htwg.sa.nmm.persistence.hibernate;
 
-
-import com.sun.media.jfxmedia.events.PlayerStateEvent;
 import de.htwg.sa.nmm.model.IPlayer;
 import de.htwg.sa.nmm.persistence.IPersistentPlayer;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.UUID;
 
 
