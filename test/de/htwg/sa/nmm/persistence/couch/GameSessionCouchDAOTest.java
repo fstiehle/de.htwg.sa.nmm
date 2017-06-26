@@ -1,6 +1,5 @@
 package de.htwg.sa.nmm.persistence.couch;
 
-import de.htwg.sa.nmm.model.IGameSession;
 import de.htwg.sa.nmm.model.impl.GameSession;
 import de.htwg.sa.nmm.model.impl.Player;
 import de.htwg.sa.nmm.model.IPlayer;
@@ -9,7 +8,10 @@ import de.htwg.sa.nmm.persistence.IGameSessionDAO;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -20,24 +22,28 @@ import java.util.UUID;
 public class GameSessionCouchDAOTest {
 
     @Test
-    public void saveSession() throws Exception {
+    public void completeSessionHandling() throws Exception {
+        UUID whiteID = UUID.randomUUID();
+        UUID blackID = UUID.randomUUID();
+        UUID sessID = UUID.randomUUID();
+
         IGameSessionDAO dao = new GameSessionCouchDAO();
         Board board = new Board();
+
         IPlayer curPlayer = new Player("player1", IPlayer.Man.WHITE);
-        dao.saveSession(new GameSession(UUID.randomUUID(), "hallo", board, new Player("player2", IPlayer.Man.BLACK),
-                curPlayer, curPlayer));
-    }
+        curPlayer.setUserID(whiteID);
+        IPlayer black = new Player("player2", IPlayer.Man.BLACK);
+        black.setUserID(blackID);
 
-    @Test
-    public void getSession() throws Exception {
-        IGameSessionDAO dao = new GameSessionCouchDAO();
-        dao.getAllSessions();
-    }
+        dao.saveSession(new GameSession(sessID, "testSession", board, black, curPlayer, curPlayer));
+        ArrayList<HashMap<String, String>> data = new ArrayList<>();
+        HashMap<String, String> sessData = new HashMap<>();
+        sessData.put("name", "testSession");
+        sessData.put("id", sessID.toString());
+        data.add(sessData);
 
-    @Test
-    public void getData() throws Exception {
-        IGameSessionDAO dao = new GameSessionCouchDAO();
-        dao.getData(UUID.randomUUID(), UUID.randomUUID());
+        ArrayList<HashMap<String, String>> dbData = dao.getData(blackID, whiteID);
+        assertArrayEquals(data.toArray(), dbData.toArray());
     }
 
 }
