@@ -57,7 +57,7 @@ public class GameSession implements IGameSession {
             IPuck puck = new Puck();
 
             if (jP.getPuck() != null) {
-                if (jP.getPuck().getPlayer().equals(white)) {
+                if (jP.getPuck().getPlayer().getMan().equals(white.getMan())) {
                     puck.setPlayer(white);
                 } else {
                     puck.setPlayer(black);

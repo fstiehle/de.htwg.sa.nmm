@@ -253,6 +253,7 @@ public class GameController extends Observable implements IGameController {
         blackPlayer = gameSession.getPlayerBlack();
         whitePlayer = gameSession.getPlayerWhite();
         currentPlayer = gameSession.getPlayerCurrent();
+        addStatusMessage("Successfully loaded");
     }
 
     public void saveGame(String sessionName) {

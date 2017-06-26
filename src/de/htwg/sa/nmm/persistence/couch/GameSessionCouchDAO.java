@@ -87,19 +87,24 @@ public class GameSessionCouchDAO implements IGameSessionDAO {
      */
     @Override
     public ArrayList<HashMap<String, String>> getData(UUID blackID, UUID whiteID) {
-
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
-        ViewQuery query = new ViewQuery()
-                .designDocId("_design/nmm")
-                .viewName("game_session_by_UIDs")
-                .key(new String[]{blackID.toString(), whiteID.toString()});
-        List<PersistentGameSession> persGameSession = db.queryView(query, PersistentGameSession.class);
-        persGameSession.forEach((session) -> {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("name", session.getSessionName());
-            map.put("id", session.getSessionID().toString());
-            list.add(map);
-        });
+
+        try {
+
+            ViewQuery query = new ViewQuery()
+                    .designDocId("_design/nmm")
+                    .viewName("game_session_by_UIDs")
+                    .key(new String[]{blackID.toString(), whiteID.toString()});
+            List<PersistentGameSession> persGameSession = db.queryView(query, PersistentGameSession.class);
+            persGameSession.forEach((session) -> {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("name", session.getSessionName());
+                map.put("id", session.getSessionID().toString());
+                list.add(map);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return list;
     }

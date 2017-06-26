@@ -1,5 +1,7 @@
 package de.htwg.sa.nmm.persistence.couch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.htwg.sa.nmm.model.IPuck;
 import de.htwg.sa.nmm.persistence.IPersistentPlayer;
 import de.htwg.sa.nmm.persistence.IPersistentPuck;
@@ -8,7 +10,7 @@ public class PersistentPuck implements IPersistentPuck {
 
     private Integer id;
 
-    private IPersistentPlayer player;
+    private PersistentPlayer player;
 
     public PersistentPuck(IPuck puck) {
         createPersistentPuck(puck);
@@ -32,7 +34,14 @@ public class PersistentPuck implements IPersistentPuck {
     }
 
     @Override
+    @JsonIgnore
     public void setPlayer(IPersistentPlayer player) {
+        this.player = (PersistentPlayer) player;
+    }
+
+    @JsonProperty("player")
+    public void setPlayer(PersistentPlayer player) {
         this.player = player;
     }
 }
+

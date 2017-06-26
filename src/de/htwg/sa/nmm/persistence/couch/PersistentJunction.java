@@ -1,5 +1,7 @@
 package de.htwg.sa.nmm.persistence.couch;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.htwg.sa.nmm.persistence.IPersistentJunction;
 import de.htwg.sa.nmm.persistence.IPersistentPuck;
 import de.htwg.sa.nmm.model.IJunction;
@@ -46,7 +48,13 @@ public class PersistentJunction implements IPersistentJunction {
     }
 
     @Override
+    @JsonIgnore
     public void setPuck(IPersistentPuck puck) {
         this.puck = (PersistentPuck) puck;
+    }
+
+    @JsonProperty("puck")
+    public void setPuck(PersistentPuck puck) {
+        this.puck = puck;
     }
 }

@@ -32,29 +32,32 @@ public class Player implements IPlayer {
     private int numPucksTakenAway;
 
     public Player(String name, Man man) {
+        initState();
         this.name = name;
         this.man = man;
         this.numPucks = NUM_PUCKS;
         this.numPucksTakenAway = 0;
         this.userID = null;
-
-        this.SET = new PlayerSET(this);
-        this.MOVE = new PlayerMOVE(this);
-        this.PICK = new PlayerPICK(this);
-        this.HOP = new PlayerHOP(this);
-
         this.currentState = this.SET;
         this.gameLost = false;
     }
 
+    private void initState() {
+        this.SET = new PlayerSET(this);
+        this.MOVE = new PlayerMOVE(this);
+        this.PICK = new PlayerPICK(this);
+        this.HOP = new PlayerHOP(this);
+    }
+
     public Player(IPersistentPlayer persPlayer) {
+        initState();
         userID = persPlayer.getID();
         name = persPlayer.getName();
         man = persPlayer.getMan();
         numPucks = persPlayer.getNumPucks();
         numPucksTakenAway = persPlayer.getNumPucksTakenAway();
 
-        switch (persPlayer.getPlayerState().toString()) {
+        switch (persPlayer.getPlayerState().name()) {
             case "SET": currentState = this.SET;
                 break;
             case "MOVE": currentState = this.MOVE;
