@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fstiehle/de.htwg.sa.nmm.svg?branch=master)](https://travis-ci.org/fstiehle/de.htwg.sa.nmm)
+
 # de.htwg.sa.nmm
 HTWG Konstanz | Software Architecture | Nine Men's Morris
 
