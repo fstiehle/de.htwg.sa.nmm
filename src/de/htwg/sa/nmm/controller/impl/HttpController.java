@@ -1,32 +1,33 @@
 package de.htwg.sa.nmm.controller.impl;
 
-import akka.actor.AbstractActor;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
-import akka.http.javadsl.model.ResponseEntity;
-import akka.japi.pf.ReceiveBuilder;
 import akka.stream.ActorMaterializer;
 import akka.stream.Materializer;
 import akka.util.ByteString;
-import scala.concurrent.ExecutionContextExecutor;
+import com.google.inject.Inject;
 
-import static akka.pattern.Patterns.pipe;
-
-import java.net.URI;
 import java.util.concurrent.CompletionStage;
 
 public class HttpController {
 
-    final static String ACTOR_SYSTEM_NAME = "out";
-    final Materializer materializer;
-    final ActorSystem system;
-    final String uri;
+    private final static String ACTOR_SYSTEM_NAME = "out";
+    private static Materializer materializer = null;
+    private static ActorSystem system = null;
+    private static HttpController instance = null;
+    private String uri;
 
-    public HttpController(String uri) {
-        this.uri = uri;
+    public static HttpController getInstance(String uri) {
+        if (instance == null) {
+            instance = new HttpController();
+        }
+        instance.setUri(uri);
+        return instance;
+    }
 
+    private HttpController() {
         system = ActorSystem.create(ACTOR_SYSTEM_NAME);
         materializer = ActorMaterializer.create(system);
     }
@@ -44,7 +45,6 @@ public class HttpController {
                             String.format("%s/%s", this.uri, path)).withEntity(body),
                             this.materializer
         );
-
     }
 
     /**
@@ -60,5 +60,9 @@ public class HttpController {
                 this.materializer
         );
 
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

@@ -133,8 +133,8 @@ public class JsonController implements IJsonController {
         String jsonData = gameController.getJson();
 
         return complete(
-                StatusCodes.OK,
-                HttpEntities.create(ContentTypes.APPLICATION_JSON, jsonData)
+            StatusCodes.OK,
+            HttpEntities.create(ContentTypes.APPLICATION_JSON, jsonData)
         );
     }
 

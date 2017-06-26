@@ -12,6 +12,7 @@ import akka.http.javadsl.unmarshalling.Unmarshaller;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
+import akka.util.ByteString;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -21,22 +22,27 @@ import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
 import de.htwg.sa.nmm.controller.IJsonController;
+import de.htwg.sa.nmm.controller.impl.HttpController;
 import de.htwg.sa.nmm.controller.impl.JsonController;
+import de.htwg.sa.nmm.util.observer.IObserver;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 @Singleton
-public class HttpServer extends AllDirectives {
+public class HttpServer extends AllDirectives implements IObserver {
 
-    private final IGameController gameController;
     private final IJsonController jsonController;
 
     private static final Logger logger = LogManager.getLogger(HttpServer.class.getName());
+    private final IGameController gameController;
+    private final HttpController httpController; // Send Requests
 
     @Inject
     public HttpServer(IGameController gameController) {
         this.gameController = gameController;
+        this.gameController.addObserver(this);
         this.jsonController = new JsonController(gameController);
+        this.httpController = HttpController.getInstance("http://localhost:9000");
     }
 
     public void run() {
@@ -65,41 +71,54 @@ public class HttpServer extends AllDirectives {
 
     private Route createRoute() {
         return route(
+            path("game", () ->
+                    get(() -> this.jsonController.getGameSession())
+            ),
 
-                path("game", () ->
-                        get(() -> this.jsonController.getGameSession())
-                ),
+            path("resetGame", () ->
+                    get(() -> this.jsonController.resetGame())
+            ),
 
-                path("resetGame", () ->
-                        get(() -> this.jsonController.resetGame())
-                ),
+            path("refreshGame", () ->
+                    get(() -> this.jsonController.refreshGame())
+            ),
 
-                path("refreshGame", () ->
-                        get(() -> this.jsonController.refreshGame())
-                ),
+            path("setPlayerName", () ->
+                    post(() -> entity(Unmarshaller.entityToString(), content ->
+                            this.jsonController.setPlayerName(content)))
+            ),
 
-                path("setPlayerName", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content ->
-                                this.jsonController.setPlayerName(content)))
-                ),
+            path("processCommand", () ->
+                    post(() -> entity(Unmarshaller.entityToString(), content ->
+                            this.jsonController.processCommand(content)))
+            ),
 
-                path("processCommand", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content ->
-                                this.jsonController.processCommand(content)))
-                ),
+            path("getPlayerWithoutUID", () ->
+                    post(() -> entity(Unmarshaller.entityToString(), content ->
+                            this.jsonController.getPlayerWithoutUID(content)))
+            ),
+            path("loadGame", () ->
+                    post(() -> entity(Unmarshaller.entityToString(), content ->
+                            this.jsonController.loadGame(content)))
+            ),
+            path("saveGame", () ->
+                    post(() -> entity(Unmarshaller.entityToString(), content ->
+                            this.jsonController.saveGame(content)))
+            )
+        );
+    }
 
-                path("getPlayerWithoutUID", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content ->
-                                this.jsonController.getPlayerWithoutUID(content)))
-                ),
-                path("loadGame", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content ->
-                                this.jsonController.loadGame(content)))
-                ),
-                path("saveGame", () ->
-                        post(() -> entity(Unmarshaller.entityToString(), content ->
-                                this.jsonController.saveGame(content)))
-                )
+    @Override
+    public void update() {
+        System.out.println("Update");
+        String jsonData = gameController.getJson();
+        this.httpController.httpPOSTRequest("updateGame", ByteString.fromString(jsonData))
+            .whenComplete((msg, error) -> {
+                if (error != null) {
+                    System.out.println(error);
+                }
+                System.out.println(msg);
+            }
         );
     }
 }

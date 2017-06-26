@@ -29,7 +29,7 @@ public class MillHttpController implements IMillController {
     private Condition complete = lock.newCondition();
 
     public MillHttpController() {
-        this.httpController = new HttpController("http://localhost:8081");
+        this.httpController = HttpController.getInstance("http://localhost:8081");
     }
 
 
