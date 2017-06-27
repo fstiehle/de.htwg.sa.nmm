@@ -42,7 +42,7 @@ public class HttpServer extends AllDirectives implements IObserver {
         this.gameController = gameController;
         this.gameController.addObserver(this);
         this.jsonController = new JsonController(gameController);
-        this.httpController = HttpController.getInstance("http://localhost:9000");
+        this.httpController = HttpController.getInstance();
     }
 
     public void run() {
@@ -112,7 +112,7 @@ public class HttpServer extends AllDirectives implements IObserver {
     public void update() {
         System.out.println("Update");
         String jsonData = gameController.getJson();
-        this.httpController.httpPOSTRequest("updateGame", ByteString.fromString(jsonData))
+        this.httpController.httpPOSTRequest("http://localhost:9000", "updateGame", ByteString.fromString(jsonData))
             .whenComplete((msg, error) -> {
                 if (error != null) {
                     System.out.println(error);

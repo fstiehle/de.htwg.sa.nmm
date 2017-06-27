@@ -29,7 +29,7 @@ public class MillHttpController implements IMillController {
     private Condition complete = lock.newCondition();
 
     public MillHttpController() {
-        this.httpController = HttpController.getInstance("http://localhost:8081");
+        this.httpController = HttpController.getInstance();
     }
 
 
@@ -50,7 +50,7 @@ public class MillHttpController implements IMillController {
         ByteString data = ByteString.fromString(gson.toJson(objList));
 
         this.isMill = false;
-        CompletionStage<HttpResponse> responseFuture = this.httpController.httpPOSTRequest("checkMill", data);
+        CompletionStage<HttpResponse> responseFuture = this.httpController.httpPOSTRequest("http://localhost:8081", "checkMill", data);
 
             responseFuture.whenComplete((response, error) -> {
                 lock.lock();

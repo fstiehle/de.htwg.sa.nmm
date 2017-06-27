@@ -17,13 +17,11 @@ public class HttpController {
     private static Materializer materializer = null;
     private static ActorSystem system = null;
     private static HttpController instance = null;
-    private String uri;
 
-    public static HttpController getInstance(String uri) {
+    public static HttpController getInstance() {
         if (instance == null) {
             instance = new HttpController();
         }
-        instance.setUri(uri);
         return instance;
     }
 
@@ -39,10 +37,10 @@ public class HttpController {
      * @param body
      * @return
      */
-    public CompletionStage<HttpResponse> httpPOSTRequest(String path, ByteString body) {
+    public CompletionStage<HttpResponse> httpPOSTRequest(String uri, String path, ByteString body) {
 
         return Http.get(system).singleRequest(HttpRequest.POST(
-                            String.format("%s/%s", this.uri, path)).withEntity(body),
+                            String.format("%s/%s", uri, path)).withEntity(body),
                             this.materializer
         );
     }
@@ -53,16 +51,13 @@ public class HttpController {
      * @param path
      * @return
      */
-    public CompletionStage<HttpResponse> httpGETRequest(String path) {
+    public CompletionStage<HttpResponse> httpGETRequest(String uri, String path) {
 
         return Http.get(system).singleRequest(HttpRequest.GET(
-                String.format("%s/%s", this.uri.toString(), path)),
+                String.format("%s/%s", uri.toString(), path)),
                 this.materializer
         );
 
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
 }
